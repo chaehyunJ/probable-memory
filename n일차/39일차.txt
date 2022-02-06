@@ -1,0 +1,91 @@
+39일차
+https://mvnrepository.com/
+-> 자바 라이브러리 묶음
+
+web-inf -> lib 에 바로 넣어주면 된다
+여기는 서버를 담당하기 때문에 접근할 수 없다. 그래서 여기에 파일을 만들면 접근이 안되는 거다
+
+JSTL : 5가지 종류
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%-- 라이브러리 파일을 통해서 새로운 태그를 사용할 것이고, 내용은 uri를 참조하며, 태그는 c로 시작하는 형식으로 사용한다 --%>
+
+
+태그 앞에 붙는 접두사 : c (core)
+
+
+<li>JSP Standard Tag Library</li>
+<li>JSP는 원래 자바로 작동할 내용을 스크립트 형식의 언어로 만들었기 때문에 임의로 태그를 만들어서 사용할 수 있다</li>
+<li>여러 개발자들이 필요에 따라 각자의 태그를 만들어서 사용하다보니, 표준이 없어 여러 문제가 발생했다</li>
+<li>여러 태그들을 모아서, 표준을 맞추고, 묶어서 라이브러리화 시킨게 현재의 JSTL이다</li>
+<li>core : 객체 생성 및 삭제 가능(attribute), 제어문(if, for), web(url, redirect) - > core</li>
+<li>fmt :  날짜 및 시간, 다국화 표현에 대해 서식을 지정할 수 있는 태그 - fmt</li>
+<li>functions : 데이터를 잘라내거나, 합치거나, 기본적인 문자열 처리를 수행하는 함수 모음</li>
+<li>sql : 자바코드를 통하지 않고서도, JDBC에 접근 및 DBCP를 활용할 수 있는 형식의 태그 지원</li>
+
+DTO : 데이터의 형식을 정의
+
+DAO : 데이터 저장소와 직접 통신
+
+Handler : 프로그램 내부에서 작동하는 기능
+
+Main : 프로그램 표면에서 사용자와 상호작용하는 기능
+
+=================================================================
+
+JSP(JAVA) -> JSTL -> HTML -> Javascript -> JQuery
+순서 차이? Javascript -> HTML -> JQuery
+HTML -> Javascript -> JQuery 가 기본순서이고 구동방식에 따라 Javascript -> HTML -> JQuery 처럼 순서가 변경될수도있다. 기본순서를 외워두자.
+JSTL에서는 JS값을 받아올 수 있을까? NOPE!
+JS에서는 JSTL값을 사용할 수 있을까? YES!
+
+===============================================================
+
+header 파일에 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+사용가능
+
+=============================================================
+
+process에서 처리할 내용이 많으면 스크립틀릿을 열어서 자바코드로 처리하기
+
+=============================================================
+
+		<%-- instance of로 자동으로 판단해서 확인해서 다운캐스팅을 하는 것이다 --%>
+		<%-- EL태그로 접근해서 따로 다운캐스팅을 하지 않아도 된다 --%>
+		<%-- index를 사용하고 싶을 때 varStatus를 사용 --%>
+		<%-- VarStatus.first : 첫번째 값이 true 
+			 VarStatus.last : 마지막 값이 true
+		--%>
+		<%-- step : 증감식 --%>
+		<c:forEach var="dto" items="${list }" varStatus="st">
+			<tr>
+				<td> ${dto.name }</td>
+				<td> ${dto.pnum }</td>
+				<td> ${st.first }</td>
+				<td> ${st.last }</td>
+				<td> ${st.index }</td>
+				<td> ${st.count }</td>
+			</tr>
+		</c:forEach>
+
+==========================================================
+
+
+<c:set> : 객체를 생성하거나, 객체의 속성을 지정한다(객체는 attribute로 등록된다)
+/ scope="page/ session / request / application" 자바빈의 scope랑 동일한 개념이다
+<c:if> : 조건을 판단하여, 내부 코드를 실행한다
+<c:forEach> : 컬랙션을 대상으로 반복문을 수행하거나, 회수를 전달받아서 반복문을 수행한다
+<c:redirect> : 클라이언트에게 redirect 응답을 보낸다
+<c:remove> : 지정한 scope의 attribute를 제거한다
+<c:choose> : switch~case 처럼 여러 조건에 대한 분기를 설정한다. 하위로 c:when, c:otherwise가 있다
+항상 !!!! 자바코드가 우선순위
+
+===============================================================
+
+else 의 개념이 없다
+조건은 c:if 태그의 test 속성에 작성하며, 보통 EL Tag형식으로 처리한다
+조건문은 자바가 처리하기 때문에 소스코드를 보면 조건에 맞지 않으면 나타나지 않는다
+
+==========================================================

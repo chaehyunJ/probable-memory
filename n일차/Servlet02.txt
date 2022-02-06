@@ -1,0 +1,73 @@
+package myServlet;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
+
+public class Servlet02 extends HttpServlet{
+
+	@Override
+	public void init() throws ServletException {
+		//	 메모리 상에 클래스를 띄워두는 역할
+		System.out.println("init : WAS(톰캣)에 컴파일된 클래스가 없어서 서블릿 초기화(생성)를 진행함");
+	}
+	
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("service : 요청 메서드를 확인하고 그에 맞는 세부 함수를 호출함");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String date = sdf.format(new Date());
+		
+		req.setAttribute("now", date);
+		
+		req.setCharacterEncoding("UTF-8");
+		switch(req.getMethod()) {
+		case "GET":
+			doGet(req, resp);
+			break;
+		case "POST":
+			doPost(req, resp);
+			break;
+		}
+	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("doGet : 요청메서드가 get이므로 적절한 jsp로 포워딩");
+		
+		if(req.getSession().getAttribute("name") == null) {
+			req.setAttribute("name", "손");			
+		}
+		req.getRequestDispatcher("/WEB-INF/view/ex02.jsp").forward(req, resp);
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("doPost : 요청메서드가 Post이므로, 필요한 처리를 진행하고 포워드 혹은 리다이렉트");
+		
+		String name = req.getParameter("name");
+		req.getSession().setAttribute("name", name);
+		
+		req.removeAttribute("name");
+		
+		resp.sendRedirect(req.getContextPath() + "/ex02");
+	}
+
+
+	@Override
+	public void destroy() {
+		System.out.println("destory : 서버를 종료하거나, 소스코드 수정에 의해 새로 컴파일이 필요하여 기존 객체를 소멸시킴");
+	}
+
+
+	
+	
+}

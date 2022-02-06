@@ -1,0 +1,118 @@
+비회원으로 이미지파일과 간단한 코멘트를 남길 수 있느 게시판을 작성하세요
+
+DB테이블의 이름은 Gallery1 로 작성하세요
+
+글 번호
+
+작성자(수동으로 쓸 수 있게)
+
+이미지 경로
+
+메모
+
+업로드 날짜
+
+비밀번호
+
+
+기능은 작성, 목록, 삭제가 있습니다
+
+최신 작성 글이 가장 상단에 노출되어야 하며
+
+목록에서도 이미지를 출력하지만 100*100크기로 작게 출력합니다
+
+읽기에서는 이미지를 가로 300px 사이즈에 맞게 출력하며
+
+이미지를 클릭하면 새 탭에서 본래 크기대로 띄워줄 수 있어야 한다
+
+삭제는 누구나 가능하다(가능하면 테이블에 비밀번호를 추가하여 삭제)
+
+
+create sequence gallery1_seq
+	start with 1
+	maxvalue 999999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+		자료형			제약조건
+idx		number			default galley1_seq.nextval primary key
+writer		varchar2(500)		not null
+memo		varchar2(2000)		not null
+writeDate	date			default sysdate	
+uploadFileName	varchar2(1000)		not null,
+writepw		varchar(500)		not null
+
+
+1. DB 생성 완료
+
+2. DTO, DAO 생성 
+
+3. 
+	
+	<c:choose>
+		<c:when test="${ dao.insert(dto) == 1 }">
+			<script>
+				alert('등록 성공')
+				location.href='list.jsp'
+			</script>
+		</c:when>
+		<c:otherwise>
+			<script>
+				alert('등록 실패')
+				history.go(-1)
+			</script>
+		</c:otherwise>
+	</c:choose>
+
+select * from tabs;
+
+create sequence gallery1_seq
+	start with 1
+	maxvalue 999999999
+	increment by 1
+	nocache
+	nocycle;
+    
+commit;
+
+create table gallery1(
+    idx		        number			    default gallery1_seq.nextval primary key,
+    writer		    varchar2(500)		not null,
+    memo		    varchar2(2000)		not null,
+    writeDate	    date			    default sysdate,	
+    uploadFileName	varchar2(1000)		not null,
+    writepw		    varchar(500)		not null
+    );
+
+drop table gallery1;
+
+commit;
+
+insert into gallery1 values(GALLERY1_SEQ.nextval, 'ccc','fff', '2021-11-11', 'dda','ccc');
+
+select * from gallery1;
+delete from gallery1 where writepw = 'ccc';
+
+
+drop SEQUENCE board3_seq;
+drop table board3;
+create sequence board3_seq
+    start with 1
+    maxvalue 9999999999
+    increment by 1
+    nocache
+    nocycle;
+    
+create table board3(
+    idx             number          default board3_seq.nextval primary key,
+    wrtiter         varchar2(500)   constraint board3_member_fk references member(userid) on delete set null,
+    title           varchar2(500)   not null,
+    content         varchar2(2000)  not null,
+    writeDate       date            default sysdate,
+    ipAddress       varchar2(100)   not null,
+    uploadFileName  varchar2(1000)  default null
+    );
+    
+commit;

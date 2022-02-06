@@ -1,0 +1,30 @@
+필터링하고 정렬해서 띄워준다
+
+스크립트 필터랑 정렬을 같이 사용하는 것이 목표
+
+
+1 메뉴 이름 순으로 정렬된 상태의 
+2 정렬 상태를 유지하면서 2만원 미만인 객체를 불러와야 한다
+3 이때 
+
+0 1 2 3
+for(let i = 0; i < checked.length; i++){
+	// let a = checked[i] + 10000
+	if(checked[i] == 2){
+	let a += 10000
+	checked[i]
+}
+
+select a.userid, b.title, b.content, b.writeDate from member a inner join board b on a.userid = b.writer;
+
+select member.* 
+    from member
+    join board
+        on member.userid = board.writer
+    where
+        member.gender = '여성';
+        
+--select a.userid, b.title, b.content, b.writeDate from member a join board b on a.userid = b.writer(+);
+
+select member.userid, board.title, board.content, board.writedate from member  join board  on member.userid = board.writer;
+select a.userid, b.title, b.content, b.writeDate from member a inner join board b on a.userid = b.writer;

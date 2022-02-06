@@ -1,0 +1,51 @@
+브릿지로 공용 DB만들기
+
+1. 리눅스를 클릭하고 오른쪽 마우스로 setting에 들어간다
+2. Network Adapter 를 bridge로 설정
+
+3. 그리고 service oracle-xe-18c restart로 restart
+
+4. vi /etc/sysconfig/network-scripts/ifcfg-ens33
+에 들어가서 bootproto에서 static을 dhcp로 변경해서 주소를 받아온다
+
+5. ifconfig로 현재 주소를 받아온다
+
+6. 그리고 받아온 주소를 vi /etc/sysconfig/network-scripts/ifcfg-ens33에 
+들어가서 IPADDR에 받아온 주소를 넣어준다
+
+7. 그리고 service network restart 해준다
+
+8. ifconfig로 들어가서 확인해보면 변경된 주소를 확인할 수 있다
+
+=================================================
+
+
+sql 새 계정 만들기
+
+
+1. su - oracle
+
+2. . oraenv
+
+3. sqlplus / as sysdba로 들어간다
+
+4. sql> create user c##mango identified by it; 로 새 계정 생성
+
+5. sql> grant connect, resource, dba to c##mango; 로 권한을 준다
+
+-> 이렇게 하면 새로운 계정이 생성됨
+
+
+=================================================
+
+sql developer에서 접속하는 방법
+
+1. developer에 접속해서 새로운 접속을 연다
+
+2. 그리고 첨부한 사진처럼 입력을 한다
+
+3. 아이디는 c##mango 비번은 it
+
+4. ip는 221.164.9.200 이고 포트번호는 50000으로 해서 테스트 해보고 접속이 되는지 확인한다
+
+5. 테스트가 성공한 것을 확인하면 접속을 하면 공용DB로 접속이 가능하다

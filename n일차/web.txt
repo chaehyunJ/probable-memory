@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>day22</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<servlet>
+		<servlet-name>abcd</servlet-name>
+		<servlet-class>myServlet.Servlet01</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>abcd</servlet-name>
+		<url-pattern>/ex01</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!--  Servlet02 에 대한 등록 및 맵핑   -->
+	
+	<servlet>
+		<servlet-name>df</servlet-name>
+		<servlet-class>myServlet.Servlet02</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>df</servlet-name>
+		<url-pattern>/ex02</url-pattern>
+	</servlet-mapping>
+</web-app>

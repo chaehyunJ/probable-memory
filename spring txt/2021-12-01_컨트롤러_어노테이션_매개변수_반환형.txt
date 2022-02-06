@@ -1,0 +1,22 @@
+@Controller		☆
+@RequestMapping	
+@GetMapping		☆
+@PostMapping		☆
+@RequestParam	
+@ModelAttribute
+@PathVariable		
+
+매개변수 가능한 자료형
+primitive
+String
+HttpServletRequest
+HttpSession
+DTO 			☆
+Model			☆
+ModelAndView
+
+반환형 가능한 자료형
+void
+String			☆
+ModelAndView
+

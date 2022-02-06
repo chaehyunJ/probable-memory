@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .item2{
+            display: flex;
+            border : 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        const getElementFromData = function(data){
+            const element = document.createElement('div')
+            console.log(element)
+            element.classList.add('item2')
+
+            const div1 = document.createElement('div')
+            const img = document.createElement('img')
+            img.width = '100'
+            img.height = '100'
+            img.src = 'img/' + data.img
+
+            div1.appendChild(img)
+
+            const div2 = document.createElement('div')
+            const name = document.createElement('div')
+            const price = document.createElement('div')
+
+            name.innerText = '메뉴 이름 : ' + data.name
+            price.innerText = '가격 : ' + data.price
+
+            div2.appendChild(name)
+            div2.appendChild(price)
+
+            element.appendChild(div1)
+            element.appendChild(div2)
+
+            return element
+        }
+
+            function sortFoodArr(event){
+            const order = event.target.dataset.order
+            const asc = event.target.dataset.asc
+
+            // let innerText = event.target.innerText
+            // event.target.innerText = innerText + asc > 1 ? '▲' : '▼'
+            
+            console.log(order)
+            console.log(asc)
+            arr.sort((a,b) => (a[order] > b[order] ? 1 : -1) * asc)
+            event.target.dataset.asc = -asc     // 부호 반전시켜서 줄지 그냥 줄지
+            content.innerHTML = ''
+            showFoodList()
+        }
+
+      
+
+        function showFoodList(){
+            arr.forEach(dto => {
+                const content2 = getElementFromData(dto)
+                content.appendChild(content2)
+            })
+        }
+    </script>
+    
+    <div id="root">
+        <div class="sortMenu">
+            <button class="sortBtn" data-order="name" data-asc="1">메뉴이름 순</button>
+            <button class="sortBtn" data-order="price" data-asc="1">가격 순</button>
+        </div>
+        <div class="content"></div>
+    </div>
+    <!-- 함수를 선언할 script는 위쪽에 작성해줘야 한다-->
+    <!-- content 내부에 데이터를 ex02와 같은 방법으로 넣어서 출력하세요 -->
+    <!-- 음식의 이미지, 메뉴 이름, 가상의 가격으로 데이터를 구성하고-->
+    <!-- 길이 5이상의 배열을 먼저 만들어서 화면에 구현하세요-->
+    <!-- 이후, 버튼을 누르면 정렬이 수행되도록 처리하세여-->
+    <!-- content의 내부 요소를 모두 삭제하려면, content.innerHTML = '' 로 처리-->
+
+    <script>
+        const arr = [
+            {
+                name : '돈까스',
+                price : '6900',
+                img : "돈까스.png"
+            },
+            {
+                name : '떡볶이',
+                price : '12000',
+                img : "떡볶이.jpg"
+            },
+            {
+                name : '로제떡볶이',
+                price : '15000',
+                img : "로제떡볶이.jpg"
+            },
+            {
+                name : '어묵탕',
+                price : '6000',
+                img : "어묵탕.jpg"
+            },
+            {
+                name : '쫄면',
+                price : '5000',
+                img : "쫄면.jpg"
+            }
+        ]
+        // const name = document.getElementById('name')
+        // const price = document.getElementById('price')
+
+        const content = document.querySelector('.content')
+
+        // console.log(name)
+        // console.log(price)
+
+        // name.onclick = function(){
+        //     alert('맛잇다')
+
+        //     if(content.innerHTML != ''){
+        //         content.innerHTML == ''
+                
+        //         arr.sort((a,b) => a.name - b.name ? 1: -1)
+        //         console.log('arr :' + arr)
+        //         content.innerHTML = arr
+        //         arr.forEach(dto => {
+        //         const content2 = getElementFromData(dto)
+        //          content.appendChild(content2)
+        //          })
+
+        //     }
+          
+            
+           
+        // }
+
+        // price.onclick = function(){
+        //     alert('맛잇다2')
+        //     content.innerHTML = ''
+        //     const arr2 = arr.sort((a,b) => a.price - b.price)
+        //     content.innerHTML = arr2
+        // }
+
+        console.log(arr)
+
+        
+
+        const btnList = document.querySelectorAll('.sortBtn')
+
+        btnList.forEach(btn =>{
+            btn.addEventListener('click', sortFoodArr)
+        })
+
+
+
+
+    </script>
+
+    <script>
+        function JSONtoHTML(ob){
+            const item = document.createElement('div')
+            item.classList.add('item')
+
+            for(key in ob){
+                const value = ob[key]
+                console.log(key + ':' + value)
+                div.classList.add(key)
+                if(key == 'img'){
+                    const img = document.createElement('img')
+                    img.src = value
+                    img.height = 200
+                    div.appendChild(img)
+                }
+                else{
+                    div.innerText = key + ':' + value
+                }
+                item.appendChild(div)
+            }
+            return item
+        }
+
+        // 자바스크립트 <=> 문자열 변환
+        const jsonString = JSON.stringify(arr)      // 객체를 문자여로
+        console.log(jsonString)
+        const jsonObejct = JSON.parse(jsonString)   // 문자열을 다시 객체로
+        console.log(jsonObejct)
+        // arr.forEach(food =>{
+        // const div = JSONtoHTML(food)
+        // content.appendChild(div)  
+        // })
+
+
+    </script>
+</body>
+</html>

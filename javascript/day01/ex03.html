@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        // name 변수를 선언했다 그리고 itbank라는 문자열로 초기화
+        var name = 'itbank'
+        console.log(name)
+
+        // name 변수를 선언했다. 그리고 test라는 문자열로 초기화
+        // 이왜됨?
+        // name을 덮어쓰기 때문에 값이 모두 바뀌게 된다 (대참사)
+        // nonono
+        var name = 'test'
+        console.log(name)
+
+        // 중복 선언은 안되지만 값의 재할당은 가능하단
+        let name2 = 'itbank'
+        console.log(name2)
+
+        // name2 가 이미 선언되어 있기 때문에 error 발생
+        // 동일한 이름으로 다시 선언할 수 없다
+        // let name2 = 'test'
+        // console.log(name2)
+
+        // 중복선언 불가 / 값의 재할당 불가
+        const name3 = 'itbank'
+        console.log(name3)
+
+    
+        // const name3 = 'test'
+        // console.log(name3)
+
+        // html은 정적인 문서? 이기 때문에 자동저장을 해줘서 실시간으로 확인하는 것이 좋다
+        // eclipse에서는 저장하면 컴파일을 해야 해서 안한다
+        
+    </script>
+</body>
+</html>

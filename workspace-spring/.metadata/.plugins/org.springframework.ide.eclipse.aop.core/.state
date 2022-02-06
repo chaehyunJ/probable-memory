@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="day06"/>
+<aop-project name="day13"/>
+<aop-project name="day17"/>
+<aop-project name="day06_1"/>
+<aop-project name="test11"/>
+<aop-project name="day17_1"/>
+<aop-project name="day16_2"/>
+<aop-project name="ws02"/>
+<aop-project name="ws02_3"/>
+<aop-project name="day12"/>
+<aop-project name="day09"/>
+<aop-project name="day05"/>
+<aop-project name="day16"/>
+<aop-project name="test"/>
+<aop-project name="day09_file"/>
+<aop-project name="day12_1"/>
+<aop-project name="burger2-3"/>
+<aop-project name="burger0127-hyerin"/>
+<aop-project name="ws01"/>
+<aop-project name="ws02_2"/>
+<aop-project name="day09_file2"/>
+<aop-project name="day15"/>
+<aop-project name="day08"/>
+<aop-project name="day11"/>
+<aop-project name="day08_1"/>
+<aop-project name="day15_1"/>
+<aop-project name="ws02_1"/>
+<aop-project name="day14"/>
+<aop-project name="day07"/>
+<aop-project name="day10"/>
+<aop-project name="test12"/>
+<aop-project name="wasTest"/>
+</aop-reference-model>

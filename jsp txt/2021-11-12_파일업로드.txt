@@ -1,0 +1,29 @@
+파일 업로드를 DB에 기록하기
+
+1) 파일의 경로만 DB에 기록
+- 문자열 (varchar2) 형태로 기록
+- 경로만 저장하여 DB의 공간 낭비가 적다
+- 구현하기 쉽다
+- 파일이름이 중복될 수 있으니, 
+  업로드 당시 이름과 저장하는 이름을 별도로 저장한다
+- 파일 이름 정책을 활용하여 (1), (2) 식으로 저장하거나
+  업로드 날짜 및 시간을 기록하는 방법도 있다
+
+public class SampleDTO {
+    private int idx;
+    private String writer, content, title;
+    private Date writeDate;
+    private String uploadFileName;
+    private String storedFileName;
+}
+
+
+2) 파일을 통째로 DB에 저장
+- BLOB (Binary Large Object) 형태로 저장
+- 별도로 저장하는 위치가 없고 모두 DB에 저장
+- DB에 저장된 파일을 다시 일반 파일형태로 변환해야 한다
+  byte[], buffer...
+- 파일이름이 중복되더라도 해당 row의 PK로 구분 가능
+- 과도하게 사용하면 DB의 공간 및 속도가 저하된다
+- vmware 하나 더 만들어서 httpd 돌리고
+  sftp로 업로드해서 불러오는게 더 편하다

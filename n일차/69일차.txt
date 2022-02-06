@@ -1,0 +1,165 @@
+- 인터셉터 기본 기능을 다 구현하고 나중에 구현
+
+- 데이터 모델링, DTO생성, 테이블 생성은 컨트롤러의 작업을 시작하기전에 미리 만들기
+
+- 테이블 작성 시 drop 넣어서 기존에 있는 것을 날리기 위함
+
+- 예약어는 피해서 컬럼이름 작성하기( 최소 두개 이상의 단어를 합성하면 예약어를 피할 수 있다 )
+
+---------------------------------------------------------
+
+===========================
+
+1~5까지를 하나의 section(덩어리로)으로 만들어서 처리하기
+
+section은 ( param.page -1 ) / 5로 처리
+why? 1~5 까지 0으로 만들기 위해서 5로 나눠서 몫을 0으로 맞춤
+(1~5까지 동일한 숫자를 뽑아내기 위해서)
+
+page	section		begin	end
+1	0		1	5
+2	0		1	5
+3	0		1	5
+4	0		1	5
+5	0		1	5
+
+begin => section*5 + 1
+if
+ end가 딱 떨어질 경우
+ end => begin + 4
+ ()
+else 
+ end가 딱 안 떨어지는 경우
+ end => pageCount
+-> 여기서 pageCount가 begin+4 보다 작으면 pageCount를 출력하고 아니면 begin+4를 출력하도록 한다
+6	1		6	10
+7	1		6	10
+8	1		6	10
+9	1		6	10
+10	1		6	10
+
+11	2		11	12
+12	2		11	12
+
+이전은 section이 0이 아니라면 띄워주기
+다음은 pageCount 를 5로 나눈 값이 end를 5로 나눈 값이 다르면 띄워주기
+
+
+=============
+
+---------------------------------------------------------
+
+const uploadForm = document.getElementById('uploadForm')
+
+form.onsubmit = function(event) {
+	event.preventDefault()		// submit을 시도하려면 일단 막는다
+	if(login == ''){
+		alert('로그인 하셔야 파일 업로드가 가능합니다')
+		return
+	}
+	event.target.submit()		// 상단의 if에서 종료되지 않으면 의도했던 대로 제출해라
+
+	uploadForm.querySelector('input[name="uploadFile"]).onclick = function(event){
+		if(login == ''){
+		location.href='${cpath}/login'
+		}
+	}
+
+---------------------------------------------------------
+
+<a href="${ cpath}/upload/${list.fileName}" target="_blank"><img src="${cpath}/upload/${list.fileName}" style="width : 300px;"></a>
+
+---------------------------------------------------------	
+
+외부에서 파일을 참조하는 것은 web서버에서는 처리만 담당하도록 하는 이유가 크다( 성능적인 부분에서 차이가 나기때문이다 )
+
+그래서 나중에는 새로운 서버를 만들어서 사용한다
+
+--------------------------------------------------------
+
+AJAX -> 주소를 변경하지 않고 요청을 날릴 수 있다
+
+<fieldset>
+	<button id="btn">요청</button>
+	<span id="result"></span>
+</fieldset>
+
+<script>
+	function request(){
+		const xhr = new XMLHttpRequest()
+		xhr.onreadystatechange = function(event){
+			if(xhr.status == 200 && xhr.readyState == xhr.DONE){
+				document.getElementById('result').innerText = xhr.responseText
+			}
+		}
+		// xhr.open(method, url)
+		xhr.open('GET', '${ cpath }/ex01-ajax')	
+		xhr.send()
+	}
+
+	const btn = document.getElementById('btn')
+	btn.onclick = request
+</script>
+
+--------------------------------------------------------
+
+	@GetMapping("/ex01-ajax")
+	@ResponseBody				// 이 메서드는 응답의 내용을 직접 반환한다
+	public String ex01Ajax() {
+		return "ex01";
+		
+		// ex01.jsp를 찾아가서 실행하고 그 결과를 response로 반환된다
+		// 반환하는 문자열 자체가 응답이 되지 않는다
+		// viewName을 찾아가는 과정이 생략되고 요청받은 곳에 내용을 반환해준다
+	}
+
+----------------------
+
+화면과 동기화되지 않고 입력받으면 바로 요청에 대한 응답을 해주는 것이 비동기화이다.
+(AJAX를 만드는 기술들이 xhr 하고 뭐였지,, > jQuery  
+
+
+ <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+<groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+
+
+---------------------
+
+	@GetMapping("/ex02")
+	public void ex02() {}
+	
+	@GetMapping("/ex02Ajax")
+	@ResponseBody			// 이 함수는 jsp로 포워딩하지 않습니다. 반환값 자체가 응답입니다.
+	public int ex02Ajax(@RequestParam HashMap<String, String> param) {
+		int n1 = Integer.parseInt(param.get("n1"));
+		int n2 = Integer.parseInt(param.get("n2"));
+		System.out.println(param);
+		int answer = n1 + n2;
+		return answer;
+	}
+
+--------------------
+
+	const btn = document.querySelector('input[type="button"]')
+	
+	btn.onclick = function() {		// 사용자가 버튼을 클릭하면  값을 불러온다
+		const n1 = document.querySelector('input[name="n1"]').value 	// Integer.parseInt -> +document
+		const n2 = document.querySelector('input[name="n2"]').value
+		
+		
+		const url = '${ cpath }/ex02Ajax?n1=' + n1 + '&n2=' + n2
+		const opt = {
+				method : 'GET'
+		}
+		// 추가 라이브러리를 가져올 필요가 없다 (IE를 제외하고 다 된다)
+		fetch(url, opt)					// 1. 주소와 옵션으로 요청을 보낸다
+		.then(resp => resp.text())		// 2. 응답을 텍스트 형태로 변환한다
+		.then(text => {					// 3. 텍스트 형태의 응답을 result 태그 내부에 글자로 적는다
+			document.getElementById('result').innerText = text
+		})
+	}
+
+----------------------

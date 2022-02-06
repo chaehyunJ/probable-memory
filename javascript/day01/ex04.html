@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<script>
+    // 변수 선언 키워드 : var(x), let(O), const(O)
+
+    // 자료형을 알아서 맞춰준다
+    // 명시적으로 나타나지 않을뿐 typeof로 확인할 수 있다
+
+    const a = 'test'
+    const b = 12
+    const c = true
+    const d = {
+        name : '이지은',        // 멤버 요소를 중괄호 내에 작성
+        age : 29,               // 왼쪽은 속성 이름, 오른쪽은 속성 값, :으로 구분
+        show : function(){      // 속성 이름이 show 이고 , 값은 함수이다
+            console.log(this.name + '님은 ' + this.age + '살 입니다')
+        }
+        // 자바스크립트에서는 함수도 객체로 취급하고, 변수에 저장도 가능하다
+        // 객체 자신을 가리키는 키워드 this가 존재한다
+    }
+    // 소괄호가 안붙은것은 무조건 객체이다 함수가 아니고
+
+    console.log(typeof a)
+    console.log(typeof b)
+    console.log(typeof c)
+    console.log(typeof d)
+
+
+    console.log(d.name)
+    console.log(d.age)
+    d.show()
+
+    // 함수도 자료형으로 취급해서 
+    // 변수에 함수를 선언하는 것이 가능하다
+    // 자바에서 함수를 변수에 저장하기 위해서 사용하는 방식 : 람다식
+
+    console.log(typeof d.show)
+
+    // 에로우 function ()는 함수를 말하고 함수안에 매개변수를 안넣겠다는 뜻
+    const func = () => {
+        alert('함수 실행 !!')
+    }
+    // 아래는 자바의 람다식 객체 생성 코드
+    // Runnable run  => () -> {System.out.println("hello, world");}
+
+    d.show = func
+    d.show
+
+    // 배열은 대괄호
+    // 객체는 중괄호
+    const e = ['짱구', '이슬이', '철수', '맹구']
+    console.log(typeof e)   // 배열, Array
+
+    for(let i = 0; i < e.length; i++){
+        const kid = e[i]
+        console.log(i + ')' + kid )
+        console.log(e[i])
+    }
+    
+    // kid라는 참조변수라고 했기 때문에 kid로 출력가능
+    e.forEach(kid => console.log(kid))
+
+    // array.forEach((element, index) => {실행 내용})
+
+
+</script>
+
+</body>
+</html>

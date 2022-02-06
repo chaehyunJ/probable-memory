@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const arr1 = [1,2,3,4,5]
+        console.log(arr1)
+
+        const evenNum = arr1.filter(num => num % 2 == 0)
+        console.log(evenNum)
+
+        const arr2 = [
+            {
+                name : '이지은',
+                age : 25,
+                gender : '여성'
+            },
+            {
+                name : '홍진호',
+                age : 40,
+                gender : '남성'
+            },
+            {
+                name : '나단비',
+                age : 7,
+                gender : '여성'
+            }
+        ]
+        const adult = arr2.filter(ob => ob.age >= 20)
+        const women = arr2.filter(ob => ob.gender == '여성')
+
+        console.log(adult)
+        console.log(women)
+    </script>
+</body>
+</html>

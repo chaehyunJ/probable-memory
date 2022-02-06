@@ -1,0 +1,16 @@
+@charset "utf-8";
+table{
+    border-collapse: collapse;
+}
+th, td{
+    border : 2px solid black;
+    padding: 10px;
+    font-size: 20px;
+}
+th{
+    background-color: #dadada;
+}
+.root{
+    display: flex;
+    border-radius: 10px;
+}

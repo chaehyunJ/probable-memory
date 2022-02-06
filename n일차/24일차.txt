@@ -1,0 +1,96 @@
+파일 시스템		데이터베이스 모델링		관계형 데이터베이스
+
+파일(file)	엔터티(Entity)		테이블(table)
+
+레코드(record)	튜플(Tuple)		행(row)
+
+키(key)		유일값(identifier)	기본키(Primary key), unique
+
+필드(field)	어트리뷰트(attribute)	컬럼(column)
+
+
+
+항목		컬럼이름		자료형		제약조건
+---------------------------------------------------
+상품번호		idx		number		default good_seq.nextval primary key
+상품이름		name		varchar2(100)	not null
+판매가		price		number		not null check(price > 0)
+할인율		discount	number		default 0
+할인가		dcprice		number		not null check(dcprice > 0)
+등록 날짜		registDate	date		not null
+상품설명		comment		varchar2(500)	not null
+카테고리		category	varchar2(100)	not null
+조회수		viewCount	number		not null
+판매건수		sellCount	number		not null
+평점		score		number		not null check(score between 1 and 10)
+----------------------------------------------------
+
+create sequence good_seq
+	start with 1
+	maxvalue 99999999999
+	increment 1
+	nocycle
+	no cache;
+
+create table mall (
+		idx		number		default good_seq.nextval primary key,
+		name		varchar2(100)	not null,
+		price		number		not null check(price > 0),
+		discount	number		not null,
+		dc_price	number		not null check(dc_price > 0),
+		regist_date	date		not null,
+		comment_		varchar2(500)	not null,
+		category	varchar2(100)	not null,
+		viewCount	number		not null,
+		sellCount	number		not null,
+		score		number		not null check(score between 1 and 10)
+
+);
+-- comment가 sql 예약어라서 식별자 오류가 발생했다 정리하기
+
+1. 위에서 작성한 테이블 구상을 기준으로 테이블 생성
+- 필요하다면 시퀀스도 같이 생성
+
+create table mall(
+);
+
+2. 테스트를 위한 더미데이터를 삽입 (5개정도)
+insert into mall values ();
+
+INSERT into mall values(good_seq.nextval,'뽀글 브이넥 벌룬 니트',78000,13,67860,'21/09/11','옷이 이쁘네여','outer',12,23,2);
+INSERT into mall values(good_seq.nextval,'프린 새틴 셔츠 미니 원피스 프릴 소매 실크 남방',77000, 14,66220,'21/09/10','옷이 아주 나이스',dress',10,56,1);
+INSERT into mall values(good_seq.nextval,'하이웨스트 롱 부츠컷 데님 팬츠 온업 부츠컷 청바지 흑청 진청 바지',62000,12,54560,'21/09/09','옷이 nice','pants',11,20,3);
+INSERT into mall values(good_seq.nextval,'밴딩 포켓 반바지 아노락 재질 간절기 팬츠',36000,17,29880,'21/09/01','옷이 굿굿','pants',15,28,2);
+INSERT into mall values(good_seq.nextval,'나르시즘 크롭 맨투맨 루즈핏 라운드넥 숏 티셔츠',58000,15,49300,'21/09/02','옷이 ..','top',16,30,3);
+
+3. 더미데이터 목록을 프로그램에서 출력해보기(select)
+
+4. 이후 insert, delete, update 등의 기능을 구현하기
+
+5. 필요에 따라서 부가적인 기능 구현하기 (정렬, 검색)
+오후 3:14 2021-09-29
+6. 전체 테스트( 예외 상황 찾아서 예외 처리 추가하기 )
+
+
+==========================================================
+
+// oracle 예약어(ora-00904 부적합한 식별자)
+https://yoon0120.tistory.com/7
+
+System.out.printf("%%%s%%","dd");
+	
+int price = 52000;
+int discount = 11;
+		
+double c = price * ((100-discount)*0.01);
+
+double pre_dc_price =  (100-discount)  * 0.01;
+double dc_price_01 = price * pre_dc_price;
+		
+int dc_price = (int)dc_price_01;
+System.out.println((int)dc_price);
+
+==========================================================
+
+sql 더미 데이터 
+https://www.mockaroo.com/

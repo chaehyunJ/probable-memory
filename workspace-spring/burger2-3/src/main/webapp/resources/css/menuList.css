@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+div{
+	box-sizing: border-box;
+}
+
+.menu-list-inner{
+	width : 1300px;
+	border : 1px solid black;
+	display: flex;
+	flex-flow: wrap;
+	margin : auto;
+}
+
+.burger-list{
+	border : 1px solid black;
+	width : 300px;
+	height : 300px;
+	margin : auto;
+}
+
+.burger-list > img{
+	width : 200px;
+	height : 200px;
+	margin : auto;
+}
+.burger-desc{
+	border : 1px solid black;
+	width : 300px;
+	height : 50px;
+	overflow: hidden;
+	font-size : 12px;
+}

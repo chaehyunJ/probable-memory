@@ -1,0 +1,86 @@
+drop table image2;
+
+create table image2 (
+	originalFileName	varchar2(255)	not null,
+	storedFileName		varchar2(255) 	not null,
+	uploadDate		date		default sysdate,
+	uploadUser		varchar2(100)	not null,	
+
+	constraint image2_member_fk 	--생성할 외래키 규칙 이름
+	foreign key(uploadUser)		--외래키로 지정할 컬럼
+	references member(userid)	--외래키가 참조할 대상
+	on delete cascade		--삭제 시 처리방침
+);
+
+insert into image2 (
+        originalFileName,
+        storedFileName,
+        uploadUser
+    )
+    values (
+        'a.jpg',
+        '1q2w3e4r.jpg',
+        'danbi'
+);
+
+select * from image2 order by uploadDate;
+select * from image2 where storedFileName = '1q2w3e4r.jpg';
+
+commit;
+
+-----------------------------------------------------------------
+/				(인터셉터 X)
+- 업로드 form 			(method="POST" action="/upload")
+- 목록보기
+
+/login				(인터셉터 X)
+로그인
+
+/view/{storedFileName}/		(인터셉터 X)
+- 파일보기
+
+/upload				(인터셉터 O, POST)
+
+[정적 모델링] : 	데이터의 형태를 정의(DTO, TABLE)
+		프로젝트의 구조를 계획(Spring MVC)
+
+[동적 모델링] : 	메뉴의 연결에 따라서 사용자의 요청이 어떻게 처리되어야 하는가
+
+
+-----------------------------------------------------------------
+
+- 인터셉터는 기본 기능이 다 구현된 이후에 처리하자
+
+- 데이터 모델링, DTO생성, 테이블 생성은 컨트롤러의 작업을 시작하기전에 미리 해두자
+
+- user, comment 이런 예약어는 피해서 작성하자
+  (최소 두개 이상의 단어를 합성하면 예약어는 피할 수 있다)
+
+- 기본적인 select 와 insert 는 테스트해보고 진행하자
+
+- substring (문자열 빼기)
+
+	ABCDE - AB = CDE
+	1q2w3e4r.jpg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

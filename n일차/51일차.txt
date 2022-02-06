@@ -1,0 +1,295 @@
+51일차
+
+
+[댓글]		컬럼		자료형			제약조건
+
+댓글 번호		idx		number 			default replay_seq.nextval primary key
+원래 글 번호	board_idx	number			constraint replay_board2_fk refernces board2(idx)
+댓글 작성자		writer		varchar2(500)		not null / references member(writer)
+댓글 내용		content		varchar2(2000)		not null
+댓글 시간		writerDate	date			default sysdate
+
+
+"게시글"은 작성자를 "회원" 테이블에서 참조한다	board(writer) references member(userid)
+	
+"댓글"은 원글을 "게시글" 테이블에서 참조한다	replay(writer) references member(userid)
+
+"댓글"은 작성자를 "회원" 테이블에서 참조한다	replay(board_idx) references board(idx)
+
+
+drop sequence reply_seq;
+drop table reply;
+
+create sequence reply_seq
+    start with 1
+    maxvalue 999999999
+    increment by 1
+    nocache
+    nocycle;
+    
+create table reply (
+        idx                    number                    default reply_seq.nextval primary key,
+        board_idx              number                    not null, --~ references board(idx) ~
+        writer                 varchar2(500)             not null, --~ references member(writer) ~
+        content                varchar2(2000)            not null,
+        writeDate              date                      default sysdate,
+        
+        constraint reply_board_fk foreign key (board_idx)
+        references board(idx),
+        
+        constraint reply_member_fk foreign key (writer)
+        references member(userid)
+);
+
+http://localhost:8080/day18_reply/login/loginForm.jsp?url=http://localhost:8080/day18_reply/board/view.jsp
+
+
+삭제할 댓글 번호 : param.idx
+
+삭제 이후 돌아갈 게시글 번호 : ${ header.referer }
+
+referer(참조자) : 현재 페이지에 도달하게 된 바로 이전 경로를 나타내는 경로
+
+
+<%
+	String referer = request.getHeader("referer");			// 이전 경로를 가져와서
+	int startIndex = referer.indexOf("idx");				// idx가 위치한 문자열 index
+	int endIndex = referer.indexOf("&");					// &가 위치한 문자열 
+	String idx = referer.substring(startIndex, endIndex);	// idx=? 까지의 문자열을 잘라내고
+	idx = idx.split("=")[1];								// = 을 중심으로 나누어서 [1]번째 요소를 저장	
+%>
+<c:set var="referer" value="${ header.referer }"/>
+<c:set var="startIndex" value="${ fn:indexOf(referer, 'idx') }"/>
+<c:set var="endIndex" value="${ fn:indexOf(referer, '&') }"/>
+<c:set var="idx" value="${ fn:substring(referer, startIndex, endIndex) }"/>
+<c:set var="idx" value="${ fn:split(idx,'=')[1] }"/>
+
+
+
+
+<c:choose>
+	<c:when test="${ reply.deleteReply(param.idx) == 1 }">
+		<script>
+			alert('삭제 완료')
+			location.href='${ cpath }/board/view.jsp?idx=${param.board_idx}'
+		</script>	
+	</c:when>
+	<c:otherwise>
+		<script>
+			alert('삭제 실패')
+			history.go(-1)
+		</script>
+	</c:otherwise>
+</c:choose>
+
+
+==================================
+
+
+<%
+	String referer = request.getHeader("referer");			// 이전 경로를 가져와서
+	int startIndex = referer.indexOf("idx");				// idx가 위치한 문자열 index
+	int endIndex = referer.indexOf("&");					// &가 위치한 문자열 
+	String idx = referer.substring(startIndex, endIndex);	// idx=? 까지의 문자열을 잘라내고
+	idx = idx.split("=")[1];								// = 을 중심으로 나누어서 [1]번째 요소를 저장	
+%>
+<c:set var="referer" value="${ header.referer }"/>
+<c:set var="startIndex" value="${ fn:indexOf(referer, 'idx') }"/>
+<c:set var="endIndex" value="${ fn:indexOf(referer, '&') }"/>
+<c:set var="idx" value="${ fn:substring(referer, startIndex, endIndex) }"/>
+<c:set var="idx" value="${ fn:split(idx,'=')[1] }"/>
+
+
+<c:choose>
+	<c:when test="${ replayWriter == login.userid }">
+		<c:if test="${ reply.deleteReply(param.idx) == 1 }">
+			<script>
+				alert('삭제 완료')
+				location.href='${ cpath }/board/view.jsp?idx=${param.board_idx}'
+			</script>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<script>
+			alert('삭제 실패')
+			history.go(-1)
+		</script>
+	</c:otherwise>
+</c:choose>
+
+
+location.href='${ cpath }/board/view.jsp?idx${ idx } #replyList'
+=> 해당 id가 있는 곳을 가라!!
+
+
+
+댓글
+
+외래키가 작동하느 방식
+외래키를 사용하는 이유
+- 서로 다른 테이블간의 관계를 형성
+- 다른 테이블에 등록된 값만 사용할 수 있도록
+- [상품]과 [주문]의 관계
+
+화면에 나타나지 않더라도, 내부적으로 관리상 필요한 컬럼이 있을 수 있다( 댓글의 idx)
+
+만약, 게시글을 삭제했을 때 원래 내용을 복구하려면 많은 노력이 필요하지만
+게시글 삭제 처리시, DB에서는 삭제하지 않고, [삭제됨] 형태로 컬럼을 추가로 만들어서
+화면에는 보여주지 않고, DB에 기록이 남아있는 형태로 변경할 수도 있는데
+이때에도 [삭제됨] 컬럼은 화면에 출력할 필요는 없다
+
+그래서 왠만하면 delete를 거의 사용하지 않는다
+
+[삭제됨]
+y
+y
+y
+n
+n
+n
+이런식으로 해서 y이면 해당 idx는 빼준다 이런식으로 하면 될듯
+
+
+댓글 번호		idx		number 			default replay_seq.nextval primary key
+원래 글 번호	board_idx	number			constraint replay_board2_fk refernces board2(idx)
+댓글 작성자		writer		varchar2(500)		not null / references member(writer)
+댓글 내용		content		varchar2(2000)		not null
+댓글 시간		writerDate	date			default sysdate
+삭제 유무		delcheck	char(10)		check( delcheck in ('y','n')
+
+
+delete를 하면 실제 delete가 되는 것이 아니라 삭제 유무에서 n을 y로 변경하고 하면에 출력되는 것은
+삭제됨이라고 띄운다
+
+키오스크 
+
+
+
+
+하나의 테이블에 두개 이상의 외래키가 존재할 수도 있다
+댓글의 작성자느 member 에서 참조하고 
+댓글의 원 게시글 번호는 board2 에서 참조한다
+
+JS 에서 스크립트 태그가 서로 분리되어있더라도
+이전에 선언한 변수를 아래쪽으로 참조할 수 있다
+
+JS에서 특정 속성을 참조하기 위해서 data-set을 활용할 수 있다
+
+<tag data-idx="3"></tag>
+
+const idx = tag.dataset.idx
+
+
+
+
+
+<script>
+	const flag = '${ delete == 1 }'
+	if(flag){
+	<%
+		session.invalidate();
+	%>
+	alert('회원탈퇴 완료')
+	location.href='${ cpath }'
+	}
+	else{
+	alert('탈퇴실패')
+	location.href='${ cpath }/login/drop.jsp'
+}
+</script>
+
+
+
+
+
+=============================
+
+
+오늘 쿼리문
+
+
+select * from board2;
+
+drop table board2;
+
+drop sequence board_seq;
+
+create sequence board_seq
+    start with 1
+    maxvalue 999999999
+    INCREMENT by 1
+    nocache
+    nocycle;
+    
+create table board2 (
+        idx                  number                        default board_seq.nextval primary key,
+        writer               varchar2(500)   	           constraint board2_member_fk references member(userid) on delete CASCADE,
+        title            	 varchar2(500)   	           not null,
+        content              varchar2(2000)        	       not null,
+        writeDate   		 date                          default sysdate,
+        ipAddress        	 varchar2(50)                  not null
+);
+
+select * from member;
+    
+    
+select * from board2;
+
+create table board2 (
+        idx                  number                        default board_seq.nextval primary key,
+        writer               varchar2(500)   	           constraint board2_member_fk references member(userid) on delete set null,
+        title            	 varchar2(500)   	           not null,
+        content              varchar2(2000)          	   not null,
+        writeDate   		 date                          default sysdate,
+        ipAddress        	 varchar2(50)                  not null
+);
+
+commit;
+
+create sequence reply_seq
+    start with 1
+    maxvalue 9999999999999
+    increment by 1
+    nocache
+    nocycle;
+
+drop sequence replay_seq;
+
+create table reply (
+        idx                    number                    default reply_seq.nextval primary key,
+        board_idx              number                    not null, --~ references board2(idx) ~
+        writer                 varchar2(500)             not null, --~ references member(writer) ~
+        content                varchar2(2000)            not null,
+        writeDate              date                      default sysdate,
+        
+        constraint reply_board_fk foreign key (board_idx)
+        references board2(idx),
+        
+        constraint reply_member_fk foreign key (writer)
+        references member(userid)
+);
+
+
+
+select * from reply where board_idx = 7 order by idx;
+
+select * from reply where board_idx = 7 order by idx;
+
+insert into reply values (REPLY_SEQ.nextval, 7, 'terran', 'ㅎㅇㅎㅇ', sysdate);
+insert into reply values (REPLY_SEQ.nextval, 7, 'terran', '테스트 테스트', sysdate);
+insert into reply values (REPLY_SEQ.nextval, 6, 'terran', '6번 댓글', sysdate);
+
+commit;
+
+rollback;
+
+select * from reply;
+
+delete from reply where  idx = 1;
+
+select * from reply where board_idx = 8  order by writeDate desc;
+
+delete from member where userid = 'ddd' and userpw = 'ddd';
+
+
+=======================

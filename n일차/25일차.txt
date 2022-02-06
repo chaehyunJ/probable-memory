@@ -1,0 +1,73 @@
+다음 조건을 만족하는 프로그램을 작성하세요
+
+- 학생 성적 관리 프로그램을 작성합니다
+- 점수는 국어, 영어, 수학 3과목의 성적을 관리하며 합계 및 평균이 계산됩니다
+- 학생의 이름 외에 고유 번호를 부여하여 관리목적으로 사용합니다
+- 목록, 추가, 검색, 수정, 삭제, 정렬 6가지 기능을 구현합니다
+- 목록에서는 번호 이름과 합계와 평균만 출력합니다 (번호순으로 오름차순 정렬 출력)
+- 추가는 이름과 국영수 점수를 입력받아서 합계 평균을 계산하여 등록합니다
+- 검색은 이름으로 검색할 수 있으며, 번호, 이름, 국영수, 합계, 평균을 출력합니다
+- 검색에서 중복된 이름이 있다면 같이 출력해야 합니다
+- 수정은 이름, 국영수 점수를 입력받으며, 변경을 원치 않으면 그냥 엔터로 넘어갑니다
+- 삭제는 번호로 삭제하며, 삭제 전 상세 항목을 한번 출력하여 확인받습니다
+- 정렬은 평균을 기준으로 내림차순하여 정렬합니다
+
+- 테이블의 이름은 student 입니다
+- 각 컬럼의 이름은 idx, name, kor, eng, mat, total, avg 입니다
+- 시퀀스를 사용해야 합니다
+- 제약 조건(PK, UK, DEFAULT, NOT NULL, CHECK)을 활용하세요
+- DB접속 주소는 221.164.9.200:1522:xe 입니다
+- DB접속 계정은 별도로 안내합니다 (본인의 계정을 잘 확인하여 DB를 구성하세요)
+- DB접속 암호는 본인의 휴대폰 번호 뒷자리 4자리입니다
+
+- 클래스, 메서드, 지역 변수 및 멤버 필드의 이름 명명 규칙을 지키세요
+- 제출시에는 자바 프로젝트와 DB구성에 사용한 SQL문을 텍스트로 첨부하여 압축합니다
+- 압축파일의 이름은 홍길동4A.zip 의 형태로 지정합니다
+- 맥북 사용자는 파일이름에 한글 대신 영어로 지정해야 합니다
+
+
+-> 자바 메서드 네이밍
+https://tecoble.techcourse.co.kr/post/2020-04-26-Method-Naming/
+
+
+create sequence student_seq 
+	start with 1
+	maxvalue 9999999999
+	increment by 1
+	nocycle
+	nocache;
+
+create table student(
+	idx 	    number 		    default student_seq.nextval primary key,
+	name	    varchar(100)	not null,
+	kor	        number		    not null check (kor between 0 and 100),
+	eng     	number		    not null check (eng between 0 and 100),
+	mat	        number		    not null check (mat between 0 and 100),
+	total   	number		    not null,
+	avg	        number		    not null
+);
+
+desc student;
+
+insert into student values (student_seq.nextval, '홍진호', 45, 55, 66, 166, 55.33);
+insert into student values (student_seq.nextval, '임요한', 50, 50, 50, 150, 50.00);
+insert into student values (student_seq.nextval, '나단비', 70, 80, 85, 235, 78.33);
+insert into student values (student_seq.nextval, '짱구', 60, 77, 88, 225, 75);
+insert into student values (student_seq.nextval, '나단비', 90, 90, 50, 230, 76.67);
+
+
+select * from student order by idx;
+
+select * from student where idx = 4;
+
+rollback;
+
+delete student where idx = 4;
+
+select * from student where name like '%나단비%';
+
+select * from student order by avg desc;
+
+update student set name ='하하', kor =45, eng = 60, mat = 76, total = 181, avg =60.33 where idx = 2;
+
+select * from student;

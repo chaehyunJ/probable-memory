@@ -1,0 +1,20 @@
+게시판에 페이징 적용하기
+
+- 페이징은 어떤 목록을 보기 편하게 나누어서 출력하는 기능이다
+
+- 페이징을 구현하기 위해 필요한 요소				출처
+1) 총 게시글 개수		boardCount			DB 	(selectPageCount())
+2) 화면당 출력할 개수	perPage				Server 	(final int perPage)
+3) 몇 페이지를 요청받았는가	param.page			Client	(<a> 태그의 파라미터)
+4) 검색 기능 + 페이징	param.column, param.search	Client 	(<form> 태그의 파라미터)
+5) 총 페이지 개수		pageCount			Server
+6) 시작 글 번호		offset				Server
+
+↓ 이건 나중에 ↓
+7) 페이지 섹션		section				(page - 1) / 10 = [0, 1, 2, 3...]
+8) 섹션이 0이면 prev가 없음
+9) 섹션이 마지막 번호에면 next가 없음
+
+day15 프로젝트를 복사해서 생성한 후에 contextRoot 수정하고
+페이징 기능을 추가하여 현재 상태까지 구현이 가능한지 확인해보기 !!
+

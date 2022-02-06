@@ -1,0 +1,107 @@
+@charset "utf-8";
+
+.login-form {
+	border: 1px solid white;
+	width: 350px;
+	margin: auto;
+	margin-top : 80px;
+	margin-bottom: 90px;
+}
+
+.client-login {
+	width: 145px;
+	height: 40px;
+	border: 0;
+	border-radius: 48px;
+	background-color: rgb(189,0,23);
+	color : white;
+	cursor: pointer;
+	font-size : 18px;
+	font-family: 'Malgun Gothic';
+	font-weight: bold;
+}
+
+.client-login:hover {
+	color : black;
+	background-color: white;
+}
+
+.non-client-login {
+	width: 145px;
+	height: 40px;
+	border: 0;
+	border-radius: 48px;
+	background-color: rgb(38,79,54);
+	color : white;
+	cursor: pointer;
+	font-size : 18px;
+	font-family: 'Malgun Gothic';
+	font-weight: bold;
+}
+
+.non-client-login:hover {
+	background-color: white;
+	color : black;
+}
+
+.login-submit {
+	width: 298px;
+	height: 40px;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: rgb(255,200,54);
+	font-family: 'Malgun Gothic';
+	font-weight: bold;
+}
+
+.join-button {
+	width: 298px;
+	height: 40px;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+	background-color: rgb(255, 200, 54);
+	font-family : 'Malgun Gothic';
+	font-weight : bold;
+}
+
+.login-input{
+	height : 40px;
+	color : #292929;
+	padding : 0px 28px;
+	line-height : 1px;
+	border : 1px solid #d1d1d1;
+	border-radius: 70px;
+	background: #fff;
+}
+
+.login-p{
+	display: flex;
+	align-items: center;
+}
+
+/* find-pw-form */
+.find-pw-form{
+	width : 500px;
+	border : 1px solid black;
+	margin : auto;
+}
+.find-pw-form > input[name="email"]{
+	width : 350px;
+	height: 50px;
+	border : 0;
+	border-bottom: 1px solid #dadada;
+}
+
+.find-pw-form > input[type="button"]{
+	border : 0;
+	width : 100px;
+	height: 50px;
+	background-color :  #ffbc0d;
+	border-radius : 30px;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	color : white;
+}

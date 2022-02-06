@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="table">
+        <thead>
+            <tr>
+                <th>이름</th>
+                <th>국어</th>
+                <th>영어</th>
+                <th>수학</th>
+                <th>평균</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    
+    <script>
+        const tbody = document.querySelector('#table > tbody')
+
+        // const show = function(){
+           
+        //     for(let i = 0; i < arr.length; i++){
+        //         let sum = arr[i].kor + arr[i].eng + arr[i].mat 
+        //         console.log(sum)
+        //         let avg = sum / 3
+        //         console.log(avg.toPrecision(4))
+        //     }
+           
+           
+        // }
+
+        const st1 = {
+            name : '이지은',
+            kor : 90,
+            eng : 80,
+            mat : 70,
+            // show : show
+        }
+        const st2 = {
+            name : '홍진호',
+            kor : 80,
+            eng : 60,
+            mat : 30,
+            // show : show
+        }
+        const st3 = {
+            name : '나단비',
+            kor : 80,
+            eng : 30,
+            mat : 50,
+            // show : show
+        }
+
+        const arr = [st1, st2, st3]
+
+        arr.forEach(st =>{
+            st.sum = st.kor + st.mat + st.eng
+            st.avg = (st.sum/3).toPrecision(4)
+            const tag = '<tr><td>' + st.name + 
+                '</td><td>' + st.kor + 
+                '</td><td>' + st.eng + 
+                '</td><td>' + st.mat + 
+                '</td><td>' + st.avg + 
+                '</td></tr>'
+            tbody.innerHTML += tag 
+        })
+        // 객체에 선언되지 않은 멤버 요소도 추가 가능
+        // st1.sum = st1.kor + st1.eng + st1.mat
+        // st1.avg = st1.sum / 3
+        
+        // st1.show()
+        
+
+        // 3명의 학생 정보를 추가로 작성하고
+        // 문서 내에 table 태그를 활용한 형식으로 각 학생의 데이터를 정리하여 출력하세요
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+29일차
+
+화면 해상도
+
+화소 : 가로 세로 픽셀 곱해서 나온 값을 말한다
+(2백만 화소 : full HD)
+
+1080p	720p	480p	360p	240p
+
+-> 픽셀을 할당할 때 사용자가 편한게 어떤건지 생각하고 할당해야한다
+
+box-sizing: border-box; -> 박스크기 자동 설정
+
+&nbsp; -> 빈 공백
+
+
+1) 박스 배치부터 해야한다 
+(가구배치하고 방배치부터 해야한다)★★★★★★★★★
+- 눈에 보이게 하려고 테두리나 배경색을 적용
+
+2) 내부 요소 HTML만 작성
+- 상세한 디테일은 배치가 끝난 이후에 작성해도 늦지 않다
+
+3) 요소의 정렬을 어떻게 수행할지?
+- block으로 세로 쌓기
+- flex로 가로 배치
+- flex(column)으로 세로 배치(정렬)
+- inline, inline-block으로 가로 배치
+- 다수의 아이템들을 박스안에서 정렬하려면 wrap을 사용하면 된다 
+
+4) 박스의 배치와 독립적으로 배치할 요소가 있으면 position 속성으로 자리 잡아주기
+position : absolute, relative, fixed, sticky
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        header, nav, aside, main, section, article, footer, div {
+            border: 2px dashed skyblue;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .top_ad {
+            height: 100px;
+            line-height: 100px;
+        }
+        header > nav {
+            height: 60px;
+            line-height: 60px;
+        }
+        .content {
+            display: flex;
+            height: 800px;
+        }
+        .content > aside {
+            width: 150px;
+        }
+        main {
+            width: 750px;
+        }
+        section {
+            margin-bottom: 30px;
+            border: 2px solid lightcoral;
+        }
+        article {
+            border: 2px solid orange;
+            height: 100px;
+            line-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!--기능상으로 div와 동일하지만, 태그 이름으로 의미를 전달할 수 있는 레이아웃에 사용되는 태그-->
+    <header>
+        <div class="top_ad">상단 광고</div>
+        <nav>상단 메뉴 바</nav>
+    </header>
+
+    <div class="content">
+        <aside>
+            <nav>
+                왼쪽 메뉴
+            </nav>
+        </aside>
+    
+        <main>
+            <h3>메인</h3>
+            <section>
+                섹션 1
+                <article>단락1</article>
+                <article>단락2</article>
+                <article>단락3</article>
+            </section>
+    
+            <section>
+                섹션 2
+                <article>단락1</article>
+                <article>단락2</article>
+                <article>단락3</article>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        하단 정보 (링크 및 카피라이트)
+    </footer>
+    
+</body>
+</html>
+
+--> 마우스 올릴 때 효과 : hover
+
+ul>li:hover{
+   border-bottom: 3px solid #061c25;
+
+}
+ul>li:hover>a{
+   color: #00b2cf;
+}
+
+
+position: absolute;
+/*주변 요소와 상관없이 독자적인 위치를 가지게 된다*/
+/*상위 요소가 너비의 제한을 가져도 독자적인 크기를 가진다*/
+display: none;  /*자리 차지를 하지 않는다 */
+/*visibility : hidden;  visibility 는 자리를 차지한다 */ 
+/*submenu는 요소는 만들어져 있으나 평소에 나타나지 않고, 자리차지도 없다*/
+/*그러다가 li:hover하면 display가 block으로 변경된다*/
+
+
+a{
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  /*display : block 링크가 박스 전체에 걸리도록*/
+}
+
+--> 다나와 사이트 사이드메뉴

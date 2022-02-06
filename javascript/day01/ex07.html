@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="test1"></div>
+
+    <script>
+        const test1 = document.querySelector('.test1')
+        console.log('test.innerHTML : [' + test1.innerHTML + ']')
+        console.log(test1.innerHTML == '')
+
+        test1.innerHTML = '<h1>Hello</h1>'
+        console.log('test.innerHTML : [' + test1.innerHTML + ']')
+        console.log(test1.innerHTML == '')
+
+        test1.innerHTML = '<hr>'
+        console.log('test.innerHTML : [' + test1.innerHTML + ']')
+        console.log(test1.innerHTML == '')
+    </script>
+</body>
+</html>

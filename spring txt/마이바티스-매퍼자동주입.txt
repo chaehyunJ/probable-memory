@@ -1,0 +1,42 @@
+MyBatis Mapper 자동주입
+
+DAO의 SqlSessionTemplate을 직접 참조하는 객체 대신
+DAO객체가 Mapper와 자동으로 의존성이 주입되는 형태를 만들 수 있다
+
+
+
+1) DAO는 인터페이스 형식으로 생성한다
+
+public interface ImgDAO {
+	List<ImgVO> getImgList();			// xml 매퍼파일의 id와 일치해야 한다
+	int registImg(HashMap<String, String> map);
+}
+
+2) root-context.xml에서 인터페이스 DAO를 마이바티스가 검색하도록 설정한다
+   root-context.xml의 네임스페이스에서 선언(체크됨)이 필요하다
+
+<mybatis-spring:scan base-package="dao"/>
+
+
+3) 매퍼.xml 파일
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 	
+		"-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 패키지.인터페이스DAO -->		
+<mapper namespace="dao.ImgDAO">
+	
+<!-- 	<select id="selectAll" resultType="vo.ImgVO"> -->
+	<select id="getImgList" resultType="vo.ImgVO">		<!-- DAO의 메서드 이름과 일치해야 한다 -->
+		select * from img
+	</select>
+	
+	
+<!-- 	<insert id="insert" parameterType="hashmap"> -->
+	<insert id="registImg" parameterType="hashmap">
+		insert into img (originalFileName, storedFileName) 
+			values (#{originalFileName}, #{storedFileName})
+	</insert>
+</mapper>
+

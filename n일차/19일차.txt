@@ -1,0 +1,313 @@
+221.164.9.222
+itbank / it
+vmware 15.5 
+
+윈도우 + R -> appwiz.cpl
+
+FF31K-AHZD1-H8ETZ-8WWEZ-WUUVA
+CV7T2-6WY5Q-48EWP-ZXY7X-QGUWD
+FU512-2DG1H-M85QZ-U7Z5T-PY8ZD
+CU3MA-2LG1N-48EGQ-9GNGZ-QG0UD
+GV7N2-DQZ00-4897Y-27ZNX-NV0TD
+YZ718-4REEQ-08DHQ-JNYQC-ZQRD0
+GZ3N0-6CX0L-H80UP-FPM59-NKAD4
+YY31H-6EYEJ-480VZ-VXXZC-QF2E0
+ZG51K-25FE1-H81ZP-95XGT-WV2C0
+VG30H-2AX11-H88FQ-CQXGZ-M6AY4
+CU7J2-4KG8J-489TY-X6XGX-MAUX2
+FY780-64E90-0845Z-1DWQ9-XPRC0
+UF312-07W82-H89XZ-7FPGE-XUH80
+AA3DH-0PYD1-0803P-X4Z7V-PGHR4
+
+네트워크 어뎁터 확인 -> ncpa.cpl
+
+=============================
+
+iso파일 필요함
+오라클 리눅스 사용한다
+https://yum.oracle.com/ISOS/OracleLinux/OL7/u9/x86_64/OracleLinux-R7-U9-Server-x86_64-dvd.iso
+오라클 리눅스 7.9
+
+vm : 실제 컴퓨터의 리소스를 일부 할당하여 가상의 컴퓨터를 만들고 제어하는 기술
+
+내 컴퓨터의 CPU , RAM확인
+CPU : processor 1
+RAM : 노트북(8G), 학원(16G)
+
+===========================
+
+작업 관리자에서 가상화 확인
+서버 GUI로 변경
+-> 비번 qwe@123 -> root 비번
+-> 사용자 itbank / it -> 이 사용자가 관리자권한을 가짐
+
+=============================
+스냅샷 추가
+시계아이콘 -> 그림 있는 버튼 클릭 (시계 아이콘 중 첫번째)
+
+
+============================
+
+ens33 날라갔을 때
+
+[root@localhost network-scripts]# history
+    1  ifconfig
+    2  init 0
+    3  ifconfig
+    4  ifup eth0
+    5  ifup virbr0
+    6  ifup ens33
+    7  ifconfig
+    8  ping naver.com
+    9  whoami
+   10  pwd
+   11  netstat | gerp 22
+   12  netstat | gerp port22
+   13  netstat | grep 22
+   14  netstat | grep port 22
+   15  netstat -tnlp | grep tns
+   16  netstat -tns
+   17  prtree
+   18  pstree
+   19  netstat -tnlp
+   20  mkdir a
+   21  cd a
+   22  ll
+   23  rmdir a
+   24  rmdir /a
+   25  rmdir -d a
+   26  cd
+   27  netstat -tnlp
+   28  cd /etc/sysconfig/network-scripts/ifcfg-ens33
+   29  cd /etc/sysconfig/network-scripts
+   30  cd
+   31  gedit /etc/sysconfig/network-scripts/ifcfg-ens33
+   32  vi /etc/sysconfig/network-scripts/ifcfg-ens33
+   33  cat /etc/sysconfig/network-scripts/ifcfg-ens33 
+   34  cat -n /etc/sysconfig/network-scripts/ifcfg-ens33 
+   35  cd /etc/sysconfig/network-scripts/ifcfg-ens33
+   36  cd /etc/sysconfig/network-scripts/
+   37  ll
+   38  ls -al
+   39  ls -l
+   40  ll
+   41  cd
+   42  service network restart 
+   43  ifconfig |head -2
+   44  ifconfig
+   45  ifdown ens33
+   46  ifup ens33
+   47  ifconfig
+   48  yum install java-1.8.0-openjdk-devel.x86_64 -y && javac -version
+   49  curl -o oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm https://yum.oracle.com/repo/OracleLinux/OL7/latest/x86_64/getPackage/oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+   50  yum -y localinstall oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm
+   51  wget https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
+   52  yum -y localinstall oracle-database-xe-18c-1.0-1.x86_64.rpm
+   53  service oracle-xe-18c configure 
+   54  ll
+   55  firewall-cmd --
+   56  firewall-cmd --zone=public --add-port=1521/tcp
+   57  firewall-cmd --reload 
+   58  firewall-cmd --list-all
+   59  echo "create user c##itbank identified by it;" 
+   60  netstat -tnlp
+   61  netstat -tnlp | grep 22
+   62  cat /home/oracle/prepareAccount.sql
+   63  echo "create user c##itbank identified by it;">> /home/oracle/prepareAccount.sql
+   64  echo "grant connect, resource, dba to c##itbank;">> /home/oracle/prepareAccount.sql 
+   65  cat -n /home/oracle/prepareAccount.sql 
+   66  echo "alter session set container=XEPDB1;">> /home/oracle/prepareAccount.sql 
+   67  echo "alter user hr account unlook;">> /home/oracle/prepareAccount.sql 
+   68  cat -n /home/oracle/prepareAccount.sql 
+   69  echo "grant create session to hr;">> /home/oracle/prepareAccount.sql 
+   70  echo "grant connect, resource to hr;">> /home/oracle/prepareAccount.sql 
+   71  echo "commit;" >> /home/oracle/prepareAccount.sql 
+   72  echo "" >> /home/oracle/.bash_profile 
+   73  cat -n /home/oracle/prepareAccount.sql 
+   74  echo "### 오라클 실행 환경 변수 설정 ###" >> /home/oracle/.bash_profile
+   75  echo "export ORACLE_HOME=/opt/oracle/product/18c/dbhomeXE" >> /home/oracle/.bash_profile
+   76  echo "export ORACLE_SID=XE" >> /home/oracle/.bash_profile
+   77  echo "export ORAENV_ASK=NO" >> /home/oracle/.bash_profile
+   78  echo "export NLS_LANG=AMERICAN_AMERICA.AL32UTF8" >> /home/oracle/.bash_profile
+   79  echo "export PATH=.:$ORACLE_HOME/bin:$PATH" >> /home/oracle/.bash_profile
+   80  echo oracle | passwd --stdin oracle
+   81  su - oracle 
+   82  sed -i '7s/enforcing/disabled/' /etc/selinux/config
+   83  systemctl enable oracle-xe-18c.service && init 6
+   84  cd ~oracle
+   85  ls
+   86  ls -a
+   87  cat .bash_profile 
+   88  rm -rf .bash_profile
+   89  cp /etc/skel/.bash_profile .
+   90  ll
+   91  ls -a
+   92  cat .bash_profile 
+   93  echo "" >> /home/oracle/.bash_profile
+   94  echo "### 오라클 실행 환경 변수 설정 ###" >> /home/oracle/.bash_profile
+   95  echo "export ORACLE_HOME=/opt/oracle/product/18c/dbhomeXE" >> /home/oracle/.bash_profile
+   96  echo "export ORACLE_SID=XE" >> /home/oracle/.bash_profile
+   97  echo "export ORAENV_ASK=NO" >> /home/oracle/.bash_profile
+   98  echo "export NLS_LANG=AMERICAN_AMERICA.AL32UTF8" >> /home/oracle/.bash_profile
+   99  echo "export PATH=.:$ORACLE_HOME/bin:$PATH" >> /home/oracle/.bash_profile
+  100  echo oracle | passwd --stdin oracle
+  101  su - oracle
+  102  sed -i '7s/enforcing/disabled/' /etc/selinux/config
+  103  systemctl enable oracle-xe-18c.service && init 6
+  104  sqlplus c##itbank/it
+  105  su - oracle
+  106  ifconfig
+  107  ifup ens33
+  108  ifconfig
+  109  ifup ens33
+  110  su - oracle
+  111  ping 192.168.1.100
+  112  su - oracle
+  113  ifconfig
+  114  ifconfig ens33
+  115  vi /etc/sysconfig/network-scripts/ifcfg-ens33 
+  116  service network restart
+  117  journalctl -xe
+  118  init 6
+  119  ifconfig
+  120  ifup ens33
+  121  systemctl restart networkmanager
+  122  ifup ens33
+  123  vi /etc/sysconfig/network-scripts/ifcfg-ens33 
+  124  ifconfig
+  125  ifconfig ens33 192.168.1.100 netmask 255.255.255.0
+  126  route add default gw 192.168.1.2
+  127  ping 8.8.8.8
+  128  ifconfig
+  129  service network restart
+  130  systemctl status network.service
+  131  ifdown ens33
+  132  ifup ens33
+  133  ifdown ens33
+  134  cd /etc/sysconfig/network-scripts/
+  135  mv ifcfg-ens33 ifcfg-ens33.bak
+  136  service network restart
+  137  ifconfig
+  138  ll
+  139  ifconfig
+  140  service network restart
+  141  ifconfig
+  142  history
+
+
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+// Java에서 DataBase에 Connection 하기 위한 라이브러리(클래스 파일묶음)
+// JDBC (Java DataBase Connectivity)
+// jar : java Archive file , 내부에 패키지 및 클래스 파일이 저장되어 있다
+
+public class Ex02 {
+        public static void main(String[] args) throws Exception {
+                
+                String url = "jdbc:oracle:thin:@192.168.1.100:1521:xe";                // 접속할 DB의 주소
+                String user = "c##itbank";                                                                        // 접속할 DB의 계정
+                String password = "it";                                                                                // 접속할 DB의 암호
+                String sql = "select banner from v$version";                                // 접속후 수행할 SQL 쿼리문
+                String data = null;                                                                                        // 결과를 저장할 문자열 변수
+                
+                // 1) 접속에 사용할 드라이버를 불러온다
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                
+                // 2) 드라이버와 주소,계정,암호를 이용하여 연결 객체를 만들어낸다(접속한다)
+                Connection conn = DriverManager.getConnection(url, user, password);
+                
+                // 3) 접속 상태 객체를 불러온다 (상태 정보를 가지는 객체에게 SQL문을 전달하여 결과를 받을 수 있다)
+                Statement stmt = conn.createStatement();
+                
+                // 4) 상태 객체에서 쿼리문을 전달하여 결과를 ResultSet 형태로 받는다
+                ResultSet rs = stmt.executeQuery(sql);
+                
+                while(rs.next()) {        // 5) 결과 셋에 다음 내용(아직 조회하지 않은)이 있으면 반복문을 수행한다
+                        data = rs.getString(1);        // 6) 결과셋의 현재 줄에서 첫번째 결과를 문자열의 형태로 반환하여 변수에 저장한다
+                }
+                
+                System.out.println(data);        // 7) 변수에 저장된 값을 출력한다
+                
+                // 연결을 안끊어주면 다음 사용자가 데이터를 유출시킬 수도 있다 
+                
+                rs.close();                // 8) 사용이 끝났으면 연결의 역순으로 객체를 close() 한다
+                stmt.close();
+                conn.close();
+        }
+}
+
+
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+// java에서 DB에 connection하기 위한 라이브러리(클래스 파일 묶음)
+public class Ex01 {
+
+	public static void main(String[] args) {
+		
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		String url = "jdbc:oracle:thin:@192.168.1.100:1521:xe";		// 접속할 DB의 주소
+		String id = "c##itbank";									// 접속할 DB의 계정
+		String pw = "it";											// 접속할 DB의 암호
+		String sql = "select * from member";				// 접속후 수행할 SQL쿼리문
+		String data = null;											// 결과를 저장할 문자열 변수
+		try {
+			// 접속에 사용할 드라이버를 불러온다
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+
+			System.out.println("연결 성공");
+			
+			try {
+				// 드라이버와 주소, 계정, 암호를 이용하여 연결 객체를 만들어낸다(접속한다)
+				conn = DriverManager.getConnection(url,id,pw);
+				// 접속 상태 객체를 불러온다 (상태 정보를 가지는 객체에게 SQL문을 전달하여 결과를 받을 수 있다)
+				stmt = conn.createStatement();
+				// 상태 객체에서 쿼리문을 전달하여 결과를 ResultSet 형태로 받는다
+				rs = stmt.executeQuery(sql);
+				
+				// 결과 
+				// 5) 결과 셋에 다음 내용(아직 조회하지 않은)이 있으면 반복문을 수행한다
+				while(rs.next()) {
+					 // 6) 결과셋의 현재 줄에서 첫번째 결과를 문자열의 형태로 반환하여 변수에 저장한다
+					data = rs.getString(1);
+				}
+				// 7) 변수에 저장된 값을 출력한다
+				System.out.println(data);
+		
+				System.out.println("계정 일치");
+			} catch (SQLException e) {
+				e.printStackTrace();
+				System.out.println("계정 불일치");
+			}
+		} catch (ClassNotFoundException e) {		
+			e.printStackTrace();
+			System.out.println("연결 실패");
+		}
+		finally {
+			try {
+				// 8) 사용이 끝났으면 연결의 역순으로 객체를 close() 한다
+				if(rs != null) rs.close();
+				if(stmt != null) stmt.close();
+				if(conn != null) conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+}

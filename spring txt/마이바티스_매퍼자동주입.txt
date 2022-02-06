@@ -1,0 +1,32 @@
+마이바티스 매퍼 인터페이스 자동 주입
+!! 마이바티스 3.0 이상 버전에서만 사용 가능하다
+
+0) 스프링 빈 준비
+
+- root-context.xml
+
+dataSource : 커넥션풀
+	어떤 DB에 접속할지? url, user, password
+
+sqlSessionFactory
+	메인 설정 파일 : mybatis-config.xml
+	sql mapper 파일 : sqlmap-member.xml
+	mapper 파일은 보통 table이나 메뉴구성에 의해 분할하여 관리
+
+sqlSessionTemplate
+	생성자 매개변수로 sqlSessionFactory를 참조
+
+<mybatis-spring:scan base-package="com.itbank.model"/>
+	지정한 패키지의 인터페이스가 DAO역할을 수행하도록
+
+mapper.xml
+	namespace : 패키지.인터페이스
+	id : 인터페이스의 메서드 이름과 동일하게
+
+1) 요청
+2) 컨트롤러 메서드 (@RequestMapping)
+3) 서비스 메서드
+4) DAO 의 메서드 (추상 클래스, 몸체가 없고 반환형, 함수이름, 매개변수)
+5) DAO의 메서드 이름과 일치하는 mapper.xml의 태그
+6) 만약 예외가 발생하면 throws처리하여 컨트롤러에 예외 전가후
+   @ExceptionHandler에서 처리

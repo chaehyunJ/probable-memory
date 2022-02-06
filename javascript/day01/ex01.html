@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <script>
+        console.log('실행')
+
+        // title이라는 이름으로 h1태그를 생성
+        const title = document.createElement('h1')
+        
+        // title에 javascript test라고 문자열을 넣는다
+        title.innerText = 'javascript test'
+
+        // 이걸 body안에 appendChild해준다
+        document.body.appendChild(title)
+
+        // tag는 <h2>태그 안에 문자열을 넣어준다
+        const tag = '<hr><h2>hello, world</h2><input>'
+
+        // 그리고 tag를 body에 HTML태그를 반영하여 추가한다
+        document.body.innerHTML += tag
+    </script>
+</body>
+</html>

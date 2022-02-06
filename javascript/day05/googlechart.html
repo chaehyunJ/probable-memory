@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <div class="root"></div>
+
+    <script>
+        const root = document.querySelector('.root')
+        google.charts.load('current', {packages : ['corechart']})
+        google.charts.setOnLoadCallback(myFunction)
+
+        function myFunction(){
+            const arr = [
+                // ['짱구', 100, 90, 90],
+                // ['철수', 79, 30, 50],
+                // ['맹구', 50, 40, 70]
+            ]
+
+            arr.push(['짱구', 100, 90, 90])
+            arr.push(['철수', 79, 30, 50])
+            arr.push(['맹구', 50, 40, 70])
+            arr.push(['짱구', 100, 90, 90])
+
+            // arr.push([
+            //     json[i]['name']
+            // ])
+
+            // for(key in json){
+            //     const value = json[key]
+            // }
+            
+            const table = new google.visualization.DataTable()
+
+            table.addColumn('string', '이름')
+            table.addColumn('number', '국어')
+            table.addColumn('number', '영어')
+            table.addColumn('number', '수학')
+
+            table.addRows(arr)
+
+            const opt = {
+                title : '구글 차트 연습, 국영수 점수',
+                width : 900,
+                height : 450
+            }
+
+            const chart = new google.visualization.ColumnChart(root)
+            chart.draw(table,opt)
+        }
+
+    </script>
+</body>
+</html>

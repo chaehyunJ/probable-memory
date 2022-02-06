@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itbank.file.FileDAO">
+	<insert id="upload2" parameterType="com.itbank.file.FileDTO">
+		insert into gallery3(name, writer, description, filename) values (#{name}, #{writer}, #{description}, #{fileName})
+	</insert>
+	
+	<select id="searchList" resultType="com.itbank.file.FileDTO" parameterType="hashmap">
+		select * from gallery3
+			<if test="type != null">
+				<choose>
+					<when test="type == 'idx'">
+						where ${ type } = #{search}
+					</when>
+					<when test="type == 'name' or type == 'writer'">
+						where ${ type } like '%'||#{search}||'%'
+					</when>
+				</choose>
+			</if>
+			order by idx
+	</select>
+</mapper>

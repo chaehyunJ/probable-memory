@@ -1,0 +1,218 @@
+38일차
+	<%
+	//request.getRequestDispatcher("ex02-main.jsp").forward(request, response);
+	// 자바에서 구현하는 forward 문법을 간소화해서 액션태그로 사용할 수 있다
+	String name = URLEncoder.encode("아이유","UTF-8");
+	%>
+	<jsp:forward page="ex01-main.jsp">
+		<jsp:param value="<%= name %>" name="name"/>
+	</jsp:forward>
+
+================================================================
+
+<input type="number" name="price" step="100" required>
+-> step : 숫자가 100단위로 증가한다
+
+<%
+	String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+%>
+
+<p>출판일자<input type="date" name="date" value="<%=today%>"></p>
+
+등록할 때 현재날짜를 바로 띄울때
+
+===================================================================
+
+public String getPrice(){
+	return String.format("%,d원",price)
+}
+
+public void setPrice(String price){
+	this.price = Integer.parseInt(price);
+}
+
+getter의 반환형과 setter의 매개변수 자료형이 일치하지 않으면 setProperty가 작동하지 않는다
+
+=====================================================================
+	
+	<h1>EL Tag</h1>
+
+	내장 객체의 attribute에 접근할 수 있다
+			
+	attribute에 접근하여, 내부 멤버 요소를 참조할 때, getter형식은 생략한다
+	별도의 형 변환이 필요 없다
+	pageContext(1순위) -> request(2순위) -> session(3순위) -> application(4순위) 순서로 탐색한다
+	특정 scope의 attribute에 지정하여 접근할 수 있다
+	만약, attribute의 자료형이 Collection이면,
+	내부요소에도 접근이 가능하다(컬랙션안에 들어있는 내부요소에 접근이 가능하다)
+				
+			
+
+		
+	파라미터에서 접근하여 출력할 수 있다 - \${ param.name } (역슬러쉬가 $를 없애줘서 param.name문자가 출력)
+	
+	연산자를 사용할 수 있다
+		
+	산술 연산자 : +, -, /, %</li>
+	비교 연산자 : >, <, <=, >=, ==, !=</li>
+	null 여부 : empty(== null), not empty(!= null)</li>
+	EL Tag 내부에서는 +연산이 무조건 숫자에 대한 연산으로 취급된다</li>
+	문자열 상수는 '' 홑 따옴표로 묶어준다</li>
+	삼항 연산자 사용 가능</li>
+			
+		
+	EL Tag에서 pageContext를 출발점으로, 다른 내장객체에 접근이 가능하다
+		
+	
+	${'안녕하세요' }<br>
+	${'123' + 1 }<br>
+	${ pageContext }<br>
+	${ pageContext.request }<br>
+	${ pageContext.session }<br>
+	${ pageContext.servletContext }<br>
+	
+	
+	<%
+		pageContext.setAttribute("num", 1);
+		request.setAttribute("num", 2);
+		session.setAttribute("num", 3);
+		application.setAttribute("num", 4);
+	%>
+	<!-- pageContext가 사라지면 우선순위가 reqeuest가 높아지므로 num에는 2가 출력된다 -->
+	<p>${num }</p>
+	<p>${pageScope.num }</p>
+	<p>${requestScope.num }</p>
+	<p>${sessionScope.num }</p>
+	<p>${applicationScope.num }</p>
+	<p>${param.name }</p>
+	<p>input태그에서 입력받은 파라미터를 param.name으로 출력할 수 있다</p>
+	<p>${empty param.name ? 'Guest' : param.name }님, 안녕하세요</p>
+	<p>EL Tag는 출력을 위해서 사용하는 것이다</p>
+	
+	<%
+		// 배열
+		String [] arr = {"BTS", "aespa", "ITZY"};
+		pageContext.setAttribute("arr", arr);
+		
+		// 리스트
+		List<String> list = Arrays.asList(arr);
+		request.setAttribute("list", list);
+		
+		//맵 
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("박진영", "JYP");
+		map.put("이수만", "SM");
+		map.put("방시혁", "Hive");
+		session.setAttribute("map", map);
+	%>
+	${ arr[0] }<br>
+	${ list.get(1) }<br>
+	${ map['방시혁'] }<br>
+	
+	<%= ((HashMap<String, String>)session.getAttribute("map")).get("이수만") %>
+
+====================================================================
+
+등록할 때
+${ list.add(insert)}
+<%-- list.add(Object o) --%>
+
+${ pageContext.response.sendRedirect(pageContext.request.contextPath)}
+<%-- response.sendRedirect(redirectURL); --%>
+
+--> EL태그에서도 직접 함수를 지정하여 호출할 수 있으나, 그리 자주 사용되지 않는다
+
+=====================================================================
+
+
+lista.add는 반환형이 boolean이다
+
+<script>
+	const flag = ${ list.add(insert) }
+	alert(falg ? '등록 성공' : '등록 실패')
+	if(flag) {
+		location.href=('list.jsp')
+	}
+	else
+	{
+		histoty.back()
+	}
+	// history.go(-1)  이렇게 이동하면 form에서 입력했던 값이 남아있다 (pw제외)	
+</script>
+
+=======================================================================
+
+list.get(i).getName().contains(searchName)
+항상 이 .equals 나 contains의 순서를 생각해야 한다
+-> 논리적으로 생각해보면 앞의 것이 searchName을 포함한다면 true이렇게 반환
+
+searchName은 입력될지 안될지 모르기 때문에 값이 존재할지 안할지 모른다는 것이다
+그래서 뒤에서 받는 것이 좋다
+========================================================================
+
+<input type="text" name="name" value="${ param.name }">
+--> 검색을 할때 검색창에 검색한 이름을 남기고 싶으면 입력받은 파라미터를 value로 가지고 있으면 된다
+
+=========================================================================
+
+textarea {resize : none;} => textarea size 고정
+
+===========================================================================
+
+<input type="hidden" name="index" value="${index}">
+--> EL Tag로 받아서 숫자처럼 바로 사용할 수 있다
+--> type="hidden" 으로 넘겨주고 싶은 값을 숨겨서 전달할 수 있다
+
+=============================================================================
+
+// list에서 전달받은 index값을 꺼내보고, 지정한 인덱스에 새로받은 값을 넣어서 반환되는 이전 값이 일치하면 성공
+const flag = ${ list.get(param.index) == list.set(param.index, modify)}
+
+=============================================================================
+
+삭제하는 방법
+1. 목록을 띄워놓고 삭제할거 삭제버튼으로 삭제하기
+
+2. 검색을 해서 삭제할 것인지
+
+==========================================================================
+
+KT DDos...
+
+===========================================================================
+
+배열이나 리스트에서 index는 고유하다(다른값과 중복되지 않는다. unique, primary key)
+--> 중복이 없는 검색이나 고유값을 날릴경우
+
+삭제할 때 input에 속성값에서 범위 지정해주기
+
+<input min="1" max = "${list.size()}">
+
+=============================================================
+
+<a href="deleteProcess.jsp?idx=${param.idx}><button>삭제</button></a>
+
+<button id="deleteBtn">삭제</button>
+
+alert() : 팝업창으로 메시지를 출력하고, 확인버튼만 받는다면
+comfirm() : 팝업창으로 메시지를 출력하고, 확인/취소를 받아서 그 결과를 따라 true/false를 반환한다
+
+deleteBtn을 onclick하면 함수가 실행되서 comfirm을 호출해서 idx번째를 삭제하겠는지 확인
+
+==================================================================
+
+
+const flag = ${ list.remove(list[param.idx-1]}
+// list.remove(int index) :  이 방식으로 시도했는데 String으로 식별해서 아래 함수 호출
+// list.remove(Object o) : 리스트에서 배열처럼 접근 가능 idx를 정수로 확인 가능
+
+=============================================================
+
+header.jsp 에 선언된 리스트를 참조할 수 있으나, index와 regist가 서로 다른 객체이므로,
+서로 다른 객체의 이름만 같은 멤버필드는 같은 대상이라고 할 수 없다
+따라서, 서로 다른 페이지간에 공유할 객체를 session이나, application 내장 객체에 저장해야 한다
+
+==================
+
+required 는 보안요소 X

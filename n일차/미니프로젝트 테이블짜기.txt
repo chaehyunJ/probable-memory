@@ -1,0 +1,150 @@
+테이블 구성하기
+
+부산 맛집 컨셉
+
+구별로 지정하고
+핫플 맛집 몇군데를 넣는다
+
+
+
+
+부산진구 /7 
+연제군 / 8
+동래구 / 9
+
+해운대구 / 10
+
+수영구 / 11
+
+
+
+일단 해운대구 테이블 / 댓글 테이블 / 
+
+맛집 테이블 
+테이블 : 해운대구  테이블에서 해운대구를 검색하면 안에 내용이 다 나오게
+idx -> 8
+가게이름(storeName) 복국
+주소(address)	부산광역시 해운대구 중동1로43번길 23
+전화번호(폰넘버)	051-742-3600
+음식 종류(카테고리)	해산물 요리
+가격대(price)	3만원-4만원
+주차(parking)	무료주차 가능
+영업시간(time)	00:00 - 24:00
+등록일자(date)	2019.05.01
+
+
+댓글 테이블
+댓글 idx 
+맛집에 대한 idx -> 8	외래키
+작성자(writer) 		외래키	aaa
+프로필(profile)   	외래키	aaa(profile)
+날짜(date)	default sysdate
+내용(content)	varchar2(2000) not null
+사진(uploadFileName) varchar2(1000) 
+점수(score) 	varchar2(50) not null
+
+
+회원
+idx
+아이디(userid)
+비번(userpw)
+nickName(nickName)
+프로필사진(profile)
+
+===========================
+
+member 테이블
+
+drop sequence member_seq;
+drop table member;
+
+create sequence member_seq
+	start with 1
+	maxvalue 9999999
+	increment by 1
+	nocache	
+	nocycle;
+
+create table member(
+	idx 		number		default member_seq.nextval,
+	userid		varchar2(500)	primary key,
+	userpw		varchar2(500)	not null,
+	nickName	varchar2(500)	not null,
+	profile		varchar2(500)	unique
+	);
+
+==========================
+
+
+테이블 : 해운대구  테이블에서 해운대구를 검색하면 안에 내용이 다 나오게
+idx -> 8
+가게이름(storeName) 복국
+주소(address)	부산광역시 해운대구 중동1로43번길 23
+전화번호(폰넘버)	051-742-3600
+음식 종류(카테고리)	해산물 요리
+가격대(price)	3만원-4만원
+주차(parking)	무료주차 가능
+영업시간(time)	00:00 - 24:00
+등록일자(date)	2019.05.01
+
+
+drop sequence store_seq;
+drop table store;
+
+create sequence store_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+create table store(
+	idx		number		 	default store_seq.nextval primary key,
+	local		varchar2(600)		not null,
+	storeName	varchar2(500)		not null,
+	address		varchar2(1000)		not null,
+	phoneNumber	varchar2(600)		not null,
+	category	varchar2(600)		not null,	
+	price 		varchar2(600)		not null,
+	parking		char(10)		check (parking in ('y', 'n'),
+	openingHour	varchar2(500)		not null,
+	regDate		date			default sysdate
+	);
+
+
+===========================
+
+
+댓글 테이블
+댓글 idx 
+맛집에 대한 idx -> 8	외래키
+작성자(writer) 		외래키	aaa
+프로필(profile)   	외래키	aaa(profile)
+날짜(date)	default sysdate
+내용(content)	varchar2(2000) not null
+사진(uploadFileName) varchar2(1000) 
+점수(score) 	varchar2(50) not null
+
+
+drop sequence reply_seq;
+drop table reply;
+
+create sequence reply_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+create table reply(
+	idx			number			default reply_seq.nextval primary key,
+	store_idx		number			constraint reply_store_fk references store(idx),
+	writer_id		varchar2(500)		constraint reply_member_fk references member(userid),
+	profile_id		varchar2(500)		constraint reply_member_fk references member(profile),
+	writeDate		date			default	sysdate,
+	content			varchar2(2000)		not null,
+	uploadFileName		varchar2(500)		default null,
+	score			varchar2(50)		not null
+	);

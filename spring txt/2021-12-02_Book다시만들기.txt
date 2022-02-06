@@ -1,0 +1,24 @@
+실습) JSP때 만들었던 Book 프로젝트를 스프링 기반으로 리빌드하세요
+
+step 1)
+Book 테이블에 도서 정보가 들어가 있고 목록/추가/삭제/수정/검색 기능이 구현되어야 합니다
+
+step 2)
+로그인 기능을 추가하고, admin/1234 계정으로 로그인하면 추가 수정 삭제가 가능하도록 변경하세요
+
+Spring Legacy Project + JdbcTemplate 으로 구현하세요
+
+@Controller
+@Service
+@Repository
+@ExceptionHandler
+@RequestMapping
+@GetMapping
+@PostMapping
+
+파라미터를 HashMap<String, String> 형태로 받는다면, @RequestParam 어노테이션을 생략할 수 없습니다
+request.getParameterMap()
+
+public String method(@RequestParam HashMap<String, String> param) {
+    System.out.println(param.get("name")); 	// 이지은
+}

@@ -1,0 +1,152 @@
+@charset "utf-8";
+
+#textarea {
+	box-sizing: border-box;
+	width: 400px;
+	height: 75vh; /* 브라우저 높이 기준 상대적인 비율 */
+	padding: 10px;
+	border: 2px solid black;
+	overflow-y: auto; /* 내용이 길면 스크롤바가 생기고 평소에는 없다 */
+	background-color: #dadada;
+	margin-bottom: 10px;
+}
+
+.name{
+	font-weight: bold;
+}
+
+.message{
+	border-radius: 5px;
+	padding : 10px;
+	margin-top : 5px;
+	box-shadow: 1px 1px 1px darkgrey;
+	cursor : pointer;
+}
+
+.self, .other, .alarm{
+	padding : 5px;
+	font-size : 15px;
+	display: flex;
+	flex-flow: column;
+}
+
+.self{
+	justify-content: flex-end;
+	align-items: flex-end;
+	margin : auto;
+	margin-right : 0;
+}
+.other{
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+.alarm {
+	flex-flow: row;
+	justify-content: center;
+}
+.alarm > .name{
+	display: none;
+}
+
+.alarm > .message{
+	border: 0;
+	box-shadow: 0;
+	justify-content: center;
+	font-weight: bold;
+	text-align: center;
+	background-color: rgba(0,0,0, 0.1);
+}
+
+.memberList{
+	border : 1px solid black;
+	width : 100px;
+}
+
+#hamburger{
+	margin-top : 20px;
+	cursor: pointer;
+	width : 25px;
+	height : 25px;
+	margin-left: -35px;
+	font-size: 25px;
+	margin-right : 10px;
+}
+
+#userList{
+	box-sizing  : border-box;
+	padding-left: 10px;
+	padding-right : 10px;
+	padding-top: 20px;
+	background-color: white;
+	width : 120px;
+	border : 1px solid black;
+	height: 75vh;
+}
+#userList > .username{
+	box-sizing: border-box;
+	border : 1px solid black;
+	margin : 5px;
+	padding : 2px;
+	cursor : pointer;
+	font-weight: bold;
+	text-align: center;
+}
+
+#userList > .username:hover{
+	background-color: antiquewhite;
+}
+
+.chatToTarget{
+	position: absolute;
+	top : 100px;
+	left : 100px;
+	width : 420px;
+	height: 600px;
+	border: 1px solid black;
+	background-color: white;
+}
+
+#wrap{
+	display : flex;
+	width : 400px;
+	overflow: hidden;
+}
+.hidden{
+	display : none;
+}
+
+.right {
+	display : flex;
+	padding : 0;
+	position: relative;
+	transition-duration : 0.5s;
+}
+.right.hidden{
+	right : 0;
+}
+
+.overlay {
+	background-color: rgba(0, 0, 0, 0.6);
+	position :absolute;
+	width: 400px;
+    height: 75vh;
+    z-index: 1;
+}
+.title{
+	width : 100%;
+	border : 1px solid black;
+	margin : auto;
+	font-weight: bold;
+	font-size: 20px;
+	text-align: center;
+	
+}
+.textarea{
+	width : 400px;
+	height : 500px;
+	border : 1px solid black;
+	background-color: #dadada;
+	margin : auto;
+	
+}

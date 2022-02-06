@@ -1,0 +1,23 @@
+drop table test09;
+
+create table test09 (
+    name        varchar2(100)       not null,
+    price       number              not null,
+    img         varchar2(1000)      not null,
+    kcal        number              not null
+);
+
+insert into test09 values ('베이컨 토마토 에그 머핀', 5500, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/2076.png?', 495);
+insert into test09 values ('치킨 치즈 머핀', 5200, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/1360.png?', 621);
+insert into test09 values ('베이컨 에그 맥머핀', 5000, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/1926.png?', 458);
+insert into test09 values ('소시지 에그 맥머핀', 5000, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/1916.png?', 620);
+insert into test09 values ('맥딜리버리 맥카페 ＆ 디저트/스낵팩', 12000, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/4910.png?', 880);
+insert into test09 values ('츄러스', 2200, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/6350.png?', 145);
+insert into test09 values ('바닐라 라떼', 3900, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/3213.png?', 227);
+insert into test09 values ('딸기 칠러', 3400, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/1852.png?', 209);
+insert into test09 values ('자두 칠러', 3400, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/1630.png?', 198);
+insert into test09 values ('골든 모짜렐라 치즈스틱 4조각', 4700, 'https://www.mcdelivery.co.kr/kr//static/1640162684418/assets/82/products/6992.png?', 324);
+
+commit;
+
+select * from test09;

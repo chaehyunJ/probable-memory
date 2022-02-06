@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+.login-form {
+	border: 1px solid black;
+	width: 250px;
+	margin: auto;
+	margin-top : 80px;
+	margin-bottom: 90px;
+}
+
+.client-login {
+	width: 120px;
+	height: 40px;
+	border: 0;
+	border-radius: 5px;
+	background-color: darkgrey;
+	cursor: pointer;
+	font-size : 18px;
+}
+
+.client-login:hover {
+	background-color: white;
+}
+
+.non-client-login {
+	width: 120px;
+	height: 40px;
+	border: 0;
+	border-radius: 5px;
+	background-color: darkgrey;
+	cursor: pointer;
+	font-size : 18px;
+}
+
+.non-client-login:hover {
+	background-color: white;
+}
+
+.login-submit {
+	width: 240px;
+	height: 40px;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.join-button {
+	width: 240px;
+	height: 40px;
+	border: 0;
+	border-radius: 5px;
+	cursor: pointer;
+}

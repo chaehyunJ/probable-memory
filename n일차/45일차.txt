@@ -1,0 +1,116 @@
+45일차
+// 쿠키를 저장해서 넘겨줄 준비
+// 서버로 넘어가는 것
+// 짐칸에 살짝 놓아두는 느낌
+		
+// 도메인이 일치하면 쿠키를 지참해서 가는것이다
+// 쿠키는 인코딩을 따로 처리하기 때문에 띄어쓰기 같은 문제가 생김
+
+클라이언트에게 미리 찍어주는 쿠폰같은 느낌
+response.addCookie(c);
+
+쿠키의 구성은 parameter와 유사하지만 띄어쓰기를 포함하지 않아야하므로,
+사용자의 입력보다는, 서버에서 만들어주는 고정 문자열을 쿠키에 저장하는 경우가 많다
+사용자의 입력은 어떤 입력이 들어올지 예측하기 힘들고
+DB에 저장된 데이터를 조회하기 위한 PK는 대부분 문자열로 표현 가능한 형태이기 때문에
+만약, 띄어쓰기를 포함하려면 String 클래스의 replaceAll("old", "new") 메서드로 치환이 가능하다
+(라디오박스는 몇번인지를 쿠키에 넣어서 처리하고, option은 selected를 쿠키에 담고, 체크박스는 checked를 담아서 처리)
+
+
+session.invalidate()하거나, 브라우저를 끄면 세션은 날라간다
+
+웹 브라우저 남의 컴퓨터의 문서를 찾아서 보는 것
+
+브라우저가 처음보는 시점에 세션을 남겨준다
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+여기서 session = false로 주면 새로운 세션을 생성하지 않는다
+====================================================
+<%
+		// 여기서 쿠키 남기기
+		
+		// login이라는 이름으로 세션을 남겼으니까
+		// getattribute로 가지고 와서 확인하면 된다 
+		Object login = session.getAttribute("login");
+		
+		String idsave = request.getParameter("idsave");
+		String userid = request.getParameter("userid");
+		
+		// 쿠키 생성
+		// 로그인 성공여부에 따라서 체크박스 값이 바뀌니까
+		// idsave의 값을 userid로 넣어서 쿠키를 만듬
+		Cookie c = new Cookie("idsave", userid);
+		
+		// 로그인 실패하면 쿠키 삭제하기 위해서
+		boolean flag = login != null && idsave != null;
+		
+		// 쿠키 수명
+		c.setMaxAge(flag ? 60*60*24 : 0);
+		
+		// 쿠키를 저장해서 넘겨줄 준비
+		// 서버로 넘어가는 것
+		// 짐칸에 살짝 놓아두는 느낌
+		
+		// 도메인이 일치하면 쿠키를 지참해서 가는것이다
+		// 쿠키는 인코딩을 따로 처리하기 때문에 띄어쓰기 같은 문제가 생김
+		response.addCookie(c);
+		
+	%>
+
+
+<script>
+	const flag = ${ dao.delete(param.pwChk) == 1}
+	
+	if(flag){
+		alert('회원탈퇴 완료~')
+		location.href='index.jsp'
+	}
+	else{
+		alert('탈퇴실패 비번확인해보세영')
+		history.back()
+	}
+</script>
+
+=================
+
+수정하고 세션을 다시 덮어쓰거나 세션을 날리고 새로 로그인하도록 해야 한다
+
+================
+
+location.href='${ cpath}/login.jsp' 이렇게 사용할 수 있다
+
+================
+
+<ul>
+	<li>쿠키는 클라이언트에 문자열 정보를 저장한다</li>
+	<li>세션은  서버에 정보를 저장한다(JSP)</li>
+	<li>서버가 하나의 거대한 건물이라면, 건물에 찾아오는 여러 손님(client)을 1:1로 상대하는 직원이 세션에 해당한다</li>
+	<li>서버에서 application 내장 개체는 하나이지만, 세션은 여러개가 존재할 수 있다</li>
+	<li>쿠키로 처리 가능한 일이라면, 세션으로도 처리가 가능하다</li>
+	<li>keep alive 보완하기 위해서 사용</li>
+</ul>
+
+<h4> 세션 생성 시간 : <%=session.getCreationTime() %></h4>
+<h4> 세션 생성 시간 : <%=new Date(session.getCreationTime()) %></h4>
+<h4> 세션이 유효한 시간 (초) : <%= session.getMaxInactiveInterval() %></h4>
+<p> 인터넷뱅킹 로그인 연장뜨는 것 / 요청이 한번이라도 있으면 유효기간 연장 / 아무런 작동이 없으면 세션은 날라감</p>
+<h4> 마지막으로 세션에 접근한 시간 : <%= new Date(session.getLastAccessedTime()) %></h4>
+<h4> 다수의 세션을 구분하기 위한 ID : <%= session.getId() %></h4>
+<p> 서버에서 세션을 구분하기 위한 id이기 때문에 중요하다</p>
+<p> 새 탭을 열어도 동일한 ID를 불러줌 / 그래서 컴터를 종료하지 않으면 남아있음</p>
+<h4> 마지막 사용 세션의 ID를 저장한 쿠키 : ${ cookie.JSESSIONID.value }</h4>
+<p> 쿠키는 클라이엔트에게 한번 갔다 와야하기 때문에 늦다/ 그래서 첫 방문이면 쿠키가 없는 것이다</p>
+<h4> 세션이 새로 생성된 세션인가 ㅣ <%= session.isNew() %></h4>
+<p> 세션이 방금 생성되었기 때문에 attribute가 없다</p>
+<% 
+
+// 	session.invalidate(); 
+//	세션의 유효시간을 사용자가 변경하는 것
+	session.setMaxInactiveInterval(10);
+%>
+<p> 세션을 바꿔주세요!!</p>
+
+===============================
+
+useBean 은 객체도 생성하고 attribute추가도 한다

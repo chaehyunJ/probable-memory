@@ -1,0 +1,35 @@
+네이버의 회원가입과 로그인 기능을 모방하여 페이지를 구현하세요
+
+1. 메인페이지(로그인 및 가입 링크)
+2. 회원가입 페이지 (약관 동의 생략) -> (가입 성공 ? 로그인 : 회원가입 페이지)
+3. 로그인 페이지
+
+- 회원 정보를 저장할 수 있는 ArrayList 를 application에 attribute로 만들어야 한다
+
+- 각 회원 정보는 DTO 클래스를 통해서 구성하며, userid, userpw, username, year, month, date, gender
+(O)
+- 로그인에 성공하면 회원 정보가 담긴 DTO객체를 session에 attribute로 저장한다
+(O)
+- 로그인 상태에서는 로그인 폼 대신 , 로그 아웃 메뉴 링크가 있어야 한다
+(O)
+- 로그아웃 클릭하면 <% session.invalidate(); %> 코드로 로그아웃 처리한다
+(O)
+- css 가능한 만큼만 진행
+
+
+작업 순서
+
+1. 데이터 모델링 - 내가 프로그램에서 어떤 형태의 데이터를 다룰 것인가
+(MemberDTO userid, userpw, uswrname, year, month, date, gender)
+(O)
+2. 화면 구현 - 프로그램에서 사용될 주요 기능을 메뉴형태로 배치(회원 가입과 로그인)
+(O)
+3. 기능 구현 - 가입은 (insert) , 로그인(select) 
+
+4. 페이지 간 연결 확인 및 예외 처리
+
+- jsp:useBean, jsp:setProperty, EL Tag를 적극 활용하세요
+- 처리는 자바코드(스크립틀릿)으로 진행하고, 출력은 EL Tag나 표현식을 활용하세요
+- 회원가입 form의 모든 데이터는 반드시 입력해야 하는 요소입니다(not null, required)
+
+String userid, userpw, username, 

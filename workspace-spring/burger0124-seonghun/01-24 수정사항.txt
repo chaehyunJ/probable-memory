@@ -1,0 +1,36 @@
+step2.jsp		비밀번호 8자리 이상 입력 15자리 최대 수정
+
+step2.jsp 	이메일 인증에 required 추가
+
+memberDAO	insert에 withdrawl n입력 추가
+
+logincontroller 	login에 login == null이면 로그인 실패하였습니다 추가
+(비밀번호를 잘 못 입력하거나 withdrawal이 'y'이면 로그인 실패)
+
+update에 스트링(0, 8) 수정 	회원정보창 들어갔다가 나와서 다시 들어가면 비밀번호가 일치하지 않습니다.
+
+step1.jsp 	주소 입력창 readonly 삭제 required 추가 에서 지역명 입력하지 않고 상세주소만 입력해도 페이지 넘어감
+
+
+프로모션 css 수정
+
+
+join css 수정
+
+
+step 0, 1, 2 
+<li style="background-color: #BD0017">배달 주소 입력</li>
+            <li style="background-color: #ffc836">추가 정보 입력</li>
+            <li style="background-color: #264f36">가입 완료</li>
+color 수정
+
+
+
+
+회원정보랑 회원탈퇴 nullpointerexception 처리
+
+비밀번호 8자리 밑으로도 회원가입 가능		function passchk1 $('#userpass').focus() 추가
+
+id중복 체크 확인 안해도 회원가입 가능			수정 완료
+
+이메일 중복체크 안 누르면 부적합한 열 유형		

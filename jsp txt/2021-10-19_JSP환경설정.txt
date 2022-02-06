@@ -1,0 +1,39 @@
+
+Eclipse for Enterprise Developer (JEE - 2019-06R)
+- General - Workspace - Encoding
+- General - Web Browser - Use external web browser - Chrome
+- Web - HTML/CSS/JSP - Encoding
+- Server - Runtime Environments - Add
+  톰캣 설치 폴더를 지정 (bin이 보이는 위치)
+  톰캣을 구동할 자바의 버전 선택 (1.8.0_xxx)
+
+--------------------------------------------------------
+
+Apache Tomcat 8.5.xx (.zip)
+(Web Application Server, WAS)
+(JAVA)
+
+- JAVA_HOME 환경변수가 정상적으로 등록되지 않으면 실행불가
+- %JAVA_HOME%\bin 이 PATH에 등록되지 않으면 실행불가
+
+- CATALINA_HOME: 톰캣의 설치 경로 (apache-tomcat-8.5.xx)
+- PATH에 추가: %CATALINA_HOME%\bin
+
+? 백그라운드에서 톰캣이 실행중일 수도 있으니 다음을 실행 후 재시도
+
+C:\> taskkill /f /im java.exe
+-> 실행중인 프로세스를 종료하는 명령어
+
+--------------------------------------------------------
+
+문서를 보관하고 있는 서버에 요청을 전달하여
+문서의 내용을 응답으로 받는 형식
+
+누가 어디서나 언제 접근하더라도, 항상 같은 형식의 응답을 반환하는 서버
+고정적인 형태의 문서를 제공하는 웹 서버 - Static Web Server
+
+조건에 따라, 프로그래밍 언어의 개입(JAVA)으로, 
+상황에 따라 다른 문서의 내용을 제공하는 웹서버 - Dynamic Web Server
+-> Apache Tomcat
+
+

@@ -1,0 +1,154 @@
+54일차
+<script>
+	// 댓글을 삭제하는 기능
+		
+	const deleteReplyBtnList = document.querySelectorAll('.deleteReplyBtn')
+			
+	// function(btn) 과 btn => 에로우function은 동일함
+	deleteReplyBtnList.forEach(function(btn) {
+		btn.onclick = function(){
+			const idx = btn.dataset.idx
+			const writer = btn.dataset.writer
+			const board_idx = ${ more.idx }
+			// 여기서 한번 막을 수 있다
+// 			const login = ${ login.userid }
+
+				
+			if(confirm('선택한 댓글을 삭제하시겠습니까')){
+				location.href='${cpath}/board/deleteReply.jsp?idx=' + idx + '&board_idx=' + board_idx + '&writer=' + writer
+			}
+		}
+	})
+</script>
+
+-> <button class="deleteReplyBtn" data-idx="${ re.idx }" data-writer="${ re.writer }">삭제하기</button>
+-> 이런식으로 button가 반복문안에서 여러개가 생기는 경우나 한가지의 값을 받는 table안에 있어서 해당 객체의 값을 받을 수 있는 경우
+-> 이런식으로 사용한다 
+-> data-idx="${ 여기에 객체의 idx값 넣어줌 }"
+-> 그리고 가지고 올때는 deleteReplyBtnList.forEach(function(btn) { btn.onclick = function() { const idx = btn.dataset.idx // 이렇게 값을 가지고 올 수 있다
+===
+
+<div class="item" data-set="${ dto.idx }">
+	<div class="secondFloor"></div>
+	<div class="firstFloor">
+		<button class="deleteBtn">삭제</button>
+	</div>
+	
+</div>
+
+
+<scriprt>
+	const wrap = document.querySelector('#wrap')
+	
+	console.log(wrap)		// 태그 형태로 출력한다
+	console.log({wrap:wrap})	// 자바스크립트 객체 형태로 출력한다(내부 속성이 어떤지 확인하고 싶을 때 사용)
+	console.log(wrap.children)	// 배열의 형태로 index 접근 가능 (children[0])
+	
+	// item div를 클릭하면 바로 해당 링크로 들어가게 하기
+	document.querySelectorAll('.item').forEach(function(item)	{
+		item.onclick = function(event){	
+		
+		if(event.target.nodeName == 'BUTTON') {	// 클릭한 노드가 버튼이면 진행하지 않기로
+			return
+		}
+		// 내가 실제로 클릭한게 이미지일 수 있다 그럼 나는 item을 클릭하고 싶은데 아니니까 위로 가라
+		// item을 기준으로 코드를 진행해야 하니, 자식노드를 선택했다면 부모노드로 초점을 옮긴다
+		let target = event.target	
+		while(target.className != 'item') {
+			target = target.parentNode // className이 item이 아니면 타겟은 그 부모노드로 간다
+		}
+		const idx = target.dataset.idx
+		location.href='${ cpath }/view.jsp?idx=' + idx
+		}
+	})
+
+	document.querySeletorAll('button deleteBtn').forEach(function(btn) {
+		btn.onclick = function(event) {
+		const idx = btn.dataset.idx
+		location.href='${ cpath }/delete.jsp?idx=' + idx
+</script>
+===
+
+File f = mpRequest.getFile("uploadFile")
+dto.setUploadFileName(f.getName());
+
+===
+
+File dir = new File(saveDirectory);
+if(dir.exist() == false) dir.mkdir();
+
+// 해당 dir의 창을 띄워줘
+// 업로드한 경로를 윈도우 창으로 띄워줘
+Runtime.getRuntime().exec("explore "+ dir); 
+
+
+-> 리눅스에서는 nautilus 명령어를 사용한다
+
+===
+
+post를 요청하고 나서 그대로 두면, 새로고침 시 재전송이 될 수 있다
+-> 그래서 redirect를 걸어서 보내줘야 한다
+
+===
+
+클론코딩 
+
+미니프로젝트 기획하기
+
+1. 쇼핑몰  (여성 의류 쇼핑몰 : 66걸즈, 공구걸즈? 브랜디, 또 뭐있지..)
+2. 게시판이 있는 갤러리 ( 정상적인 갤러리 )
+3. 서브웨이 같은 홈피( 도미노피자, 서브웨이, 맥도날드 .. 이런게 화면이 깔끔해서 보기 좋음 )
+4. 명품몰? 애플샵
+?
+=========================
+
+데이터 베이스 설계하기
+
+
+UI/UX 설계하기
+
+
+화면과 관련된 백엔드 기능 구현하기
+
+=========================
+
+
+미니프로젝트를 진행하면서 해야할 것
+
+1. 한 컴터를 공용 DB로 사용하기 위해서 공용 IP를 사용해서 다른분들도 DB에 접근할 수 있도록 설정(선생님이 도와주심)
+
+2. 변수명을 정할 때 서로가 정한 규칙대로 사용하기 예를 들어 camelcase로 변수명을 다 정한다든지 
+
+3. 막하는 부분이 있으면 바로바로 카톡으로 연락해서 해결하기
+
+4. 프로젝트를 5명이서 공유해야 하기 때문에 환경설정이 모두 동일해야 한다
+
+5. 포기하지말고 열심히 해보기
+
+
+====
+
+<c:choose>
+	<c:when test="${ dao.delete(param.pw) == 1 }">
+		<script>
+			alert('삭제 성공')
+			location.href='list.jsp'
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			alert('삭제 실패')
+			history.go(-1)
+		</script>
+	</c:otherwise>
+</c:choose>
+
+
+====
+
+
+alert : 문자열 메시지를 출력하고 확인 버틍만 받음
+prompt : 문자열 메시지를 출력하고, 사용자에게 문자영을 입력받음(결과는 String)
+confirm : 문자열 메시지를 출력하고, 확인/ 취소를 true/false값으로 받을 수 있다
+
+

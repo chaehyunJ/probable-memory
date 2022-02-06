@@ -1,0 +1,246 @@
+32일차
+live server 안되면 환경설정에 가서 use local ip as host를 체크
+
+Level12 에서는 특정 element 뒤에 바로 따라오는 siblings들을 선택할 수 있는 selector이다. 
+여기서 siblings란 A element 뒤에 바로 따라오는 B element를 A element의 sibling 이라고 한다. 단, 두 element는 같은 level 과 depth를 가지고 있어야 한다. 
+sibling을 선택하기 위해서 "+"를 사용한다.
+
+color tool
+
+내 컴퓨터에 글꼴 확인
+windows + R => fonts
+메모장 -> 서식 -> 글꼴 확인
+
+
+===========================
+
+element.innerText;
+
+이 속성은 element 안의 text 값들만을 가져옵니다.
+
+
+element.innerHTML;
+
+innerText와는 달리 innerHTML은 element 안의 HTML이나 XML을 가져옵니다
+
+
+element.innerText = "<div style='color:red'>A</div>";
+
+element.innerText에 html을 포함한 문자열을 입력하면, 
+
+html코드가 문자열 그대로 element안에 포함됩니다.
+
+ 
+
+element.innerHTML = "<div style='color:red'>A</div>";
+
+위와 같이 element.innerHTML 속성에 html코드를 입력하면,
+
+html element가 element안에 포함되게 됩니다.
+
+위 예제에서 'innerHTML()'을 클릭하면,
+
+입력된 html태그가 해석되어 빨간색A 가 나타나는 것을 확인 할 수 있습니다.
+
+abbr: ""
+accessKey: ""
+align: ""
+ariaAtomic: null
+ariaAutoComplete: null
+ariaBusy: null
+ariaChecked: null
+ariaColCount: null
+ariaColIndex: null
+ariaColSpan: null
+ariaCurrent: null
+ariaDescription: null
+ariaDisabled: null
+ariaExpanded: null
+ariaHasPopup: null
+ariaHidden: null
+ariaKeyShortcuts: null
+ariaLabel: null
+ariaLevel: null
+ariaLive: null
+ariaModal: null
+ariaMultiLine: null
+ariaMultiSelectable: null
+ariaOrientation: null
+ariaPlaceholder: null
+ariaPosInSet: null
+ariaPressed: null
+ariaReadOnly: null
+ariaRelevant: null
+ariaRequired: null
+ariaRoleDescription: null
+ariaRowCount: null
+ariaRowIndex: null
+ariaRowSpan: null
+ariaSelected: null
+ariaSetSize: null
+ariaSort: null
+ariaValueMax: null
+ariaValueMin: null
+ariaValueNow: null
+ariaValueText: null
+assignedSlot: null
+attributeStyleMap: StylePropertyMap {size: 2}
+attributes: NamedNodeMap {0: style, style: style, length: 1}
+autocapitalize: ""
+autofocus: false
+axis: ""
+baseURI: "http://127.0.0.1:5500/javascript_exam/4.html"
+bgColor: ""
+cellIndex: 1
+ch: ""
+chOff: ""
+childElementCount: 0
+childNodes: NodeList(2) [text, text]
+children: HTMLCollection []
+classList: DOMTokenList [value: '']
+className: ""
+clientHeight: 21
+clientLeft: 1
+clientTop: 1
+clientWidth: 34
+colSpan: 1
+contentEditable: "inherit"
+dataset: DOMStringMap {}
+dir: ""
+draggable: false
+elementTiming: ""
+enterKeyHint: ""
+firstChild: text
+firstElementChild: null
+headers: ""
+height: ""
+hidden: false
+id: ""
+innerHTML: "29살"
+innerText: "29살"
+inputMode: ""
+isConnected: true
+isContentEditable: false
+lang: ""
+lastChild: text
+lastElementChild: null
+localName: "td"
+namespaceURI: "http://www.w3.org/1999/xhtml"
+nextElementSibling: td
+nextSibling: text
+noWrap: false
+nodeName: "TD"
+nodeType: 1
+nodeValue: null
+nonce: ""
+offsetHeight: 23
+offsetLeft: 54
+offsetParent: table#table
+offsetTop: 27
+offsetWidth: 36
+onabort: null
+onanimationend: null
+onanimationiteration: null
+onanimationstart: null
+onauxclick: null
+onbeforecopy: null
+onbeforecut: null
+onbeforepaste: null
+onbeforexrselect: null
+onblur: null
+oncancel: null
+oncanplay: null
+oncanplaythrough: null
+onchange: null
+onclick: null
+onclose: null
+oncontextmenu: null
+oncopy: null
+oncuechange: null
+oncut: null
+ondblclick: null
+ondrag: null
+ondragend: null
+ondragenter: null
+ondragleave: null
+ondragover: null
+ondragstart: null
+ondrop: null
+ondurationchange: null
+onemptied: null
+onended: null
+onerror: null
+onfocus: null
+onformdata: null
+onfullscreenchange: null
+onfullscreenerror: null
+ongotpointercapture: null
+oninput: null
+oninvalid: null
+onkeydown: null
+onkeypress: null
+onkeyup: null
+onload: null
+onloadeddata: null
+onloadedmetadata: null
+onloadstart: null
+onlostpointercapture: null
+onmousedown: null
+onmouseenter: null
+onmouseleave: null
+onmousemove: null
+onmouseout: null
+onmouseover: null
+onmouseup: null
+onmousewheel: null
+onpaste: null
+onpause: null
+onplay: null
+onplaying: null
+onpointercancel: null
+onpointerdown: null
+onpointerenter: null
+onpointerleave: null
+onpointermove: null
+onpointerout: null
+onpointerover: null
+onpointerrawupdate: null
+onpointerup: null
+onprogress: null
+onratechange: null
+onreset: null
+onresize: null
+onscroll: null
+onsearch: null
+onseeked: null
+onseeking: null
+onselect: null
+onselectionchange: null
+onselectstart: null
+onstalled: null
+onsubmit: null
+onsuspend: null
+ontimeupdate: null
+ontoggle: null
+ontransitioncancel: null
+ontransitionend: null
+ontransitionrun: null
+ontransitionstart: null
+onvolumechange: null
+onwaiting: null
+onwebkitanimationend: null
+onwebkitanimationiteration: null
+onwebkitanimationstart: null
+onwebkitfullscreenchange: null
+onwebkitfullscreenerror: null
+onwebkittransitionend: null
+onwheel: null
+outerHTML: "<td style=\"color: blue; text-align: center;\">29살</td>"
+outerText: "29살"
+ownerDocument: document
+parentElement: tr
+parentNode: tr
+part: DOMTokenList [value: '']
+prefix: null
+
+-> 적용가능한 기능

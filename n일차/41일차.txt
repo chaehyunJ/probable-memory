@@ -1,0 +1,149 @@
+41일차
+
+${ dao.list} -> dao.getList()를 호출하는 것이랑 동일하다
+
+
+함수의 반환값이 호출 위치로 가는 것이라서 dao.list에서 list는 getList()의 반환값인 list가 되는 것이다
+
+내장객체(pageContext, request, session, application)를 공유폴더라고 생각하면 된다 (다만 범위가 다를 뿐이다)
+
+=============================================================================
+
+
+개발단계에서는 이클립스에서는 해당 폴더를 찾아가지만 배포하면 링크를 걸어도 못찾아가서 링크 깨진다
+
+폴더가 많아질수록 contextPath를 못 맞추면 링크가 다 깨진다 // 배포할 때 많이 깨지는 부분 // 주의!!
+
+<c:set var="cpath" value="${ pageContext.request.contextPath }"/>
+--> 최상위로 가는 것 
+
+<li><a href="${ cpath }/insert.jsp">추가</a></li>
+--> 최상위로 가서 insert.jsp를 찾아라
+
+그래서 insert.jsp를 찾아갈 때도 앞에 contextPath를 붙여서 찾아가는게 나중에 링크가 안깨지는 방법이다
+
+============================================================================
+
+자바코드
+1) 데이터 처리 : 객체 생성 및 파라미터, attribute제어
+2) 데이터 출력 : out.println() -> 표현식 -> EL,JSTL
+
+-> 자바에서 객체 간의 상호작용을 통해서 프로그램을 서술해나가므로
+-> 객체 간의 참조가 가능하며
+-> JSP 페이지도 .java .class 를 거쳐서 하나의 객체로 작동하고
+-> src 폴더에 직접 만든 클래스 파일도 하나의 객체로 작동하므로
+-> 객체간의 참조가 가능하
+
+--> 이런 방향대로 코드를 작성하는 것이 바람직하다~ ******
+
+
+JSP 페이지도 결국 객체이기 때문에 객체간의 참조가 가능하다
+
+<%@ %> 
+1. page : 인코딩
+2. include : 파일 불러오기
+3. taglib : 라이브러리 가지고 와서 태그 형시긍로 사용가능
+
+라이브러리와 프레임워크의 차이
+- 라이브러리는 서브로 도움을 주는 것
+- 프레임워크는 그 자체로 이미 틀이 갖춰있다 그 형식을 따라 줘야 한다
+
+action tag : JSP내장문법
+EL tag	: JSP 내장 문법
+JSTL	: 라이브러리
+
+http://localhost:8080/day07/insertProcess.jsp?name=%EC%9D%B4%EC%A7%80%EC%9D%80&author=qweqwe&publisher=bbbbbbbbbbbbbbb&publishDate=2021-10-06&price=25&description=464646
+
+
+=====================
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="header.jsp" %>
+
+<div class="searchDiv">
+	<c:if test="${ pageContext.request.method =='GET' }">
+	<form method="POST">
+		<h4>검색하기~~</h4>
+		<hr>
+		<input type="text" name="name" placeholder="검색어 입력" required autofocus>
+		<input type="submit" value="입력">
+	</form>
+	</c:if>
+	
+	<c:if test="${ pageContext.request.method == 'POST' }">
+		<jsp:useBean id="dao2" class="day07_book.BookDAO"/>
+		<c:set var="searchBook" value="${ dao2.search(param.name) }"/>
+		<c:forEach var="search" items="${ searchBook }">
+		<div class="searchContent">
+			<div>${ search.idx }</div>
+			<div>${ search.name }</div>
+			<div>${ search.author}</div>
+			<div>${ search.publisher}</div>
+			<div>${ search.publishDate}</div>
+			<div>${ search.price}</div>
+			<div>${ search.description}</div>
+		</div>
+		</c:forEach>
+	</c:if>
+</div>
+</body>
+</html>
+
+===================
+DTO 
+여러 객체를 반환하는 경우에는, 반복문 내에서 변수를 선언
+===================
+
+	// 함수에서 함수를 호출할 수 있다
+	public ArrayList<BookDTO> search(String column, String name){
+		// 0. 반환할 ArrayList를 먼저 만든다
+		ArrayList<BookDTO>ls = new ArrayList<BookDTO>();
+		// 1. column의 값에 따라서 searchByName() or searchByIdx()를 호출한다
+		if(column.equals("idx")) {	
+			
+		// 2. 만약 반환형이 일치하지 않으면 맞춰준다
+
+			int idx = Integer.parseInt(name);
+			BookDTO dto = searchByIdx(idx);
+			ls.add(dto);
+		}
+		// 3. 각 결과를 jsp에 반환하고 기존과 같이 반복문으로 출력하도록 한다
+
+		else if(column.equals("bookName")) {
+			ls = searchByName(name);
+		}
+		
+		return ls;
+	}
+		// jsp 에서는 각각의 함수를 직접 호출하지 않고, search를 호출하도록 한다
+
+
+==================================
+
+	// 함수에서 함수를 호출할 수 있다
+	public ArrayList<BookDTO> search(String column, String name){
+		// 1. 자료형이 ArrayList이니까 반환형도 ArrayList로 만들어 줘야 한다 
+		ArrayList<BookDTO>ls = new ArrayList<BookDTO>();
+
+		try {
+			if(column.equals("idx")) {
+				int idx = Integer.parseInt(name);
+				BookDTO dto = searchByIdx(idx);
+				ls.add(dto);
+			}
+			else if(column.equals("bookName")) {
+				ls = searchByName(name);
+			}
+		} catch( NumberFormatException e) {
+			
+		}
+	
+		
+		return ls;
+	}
+
+함수에서 함수를 호출해서 서로 다른 두개의 함수를 한 함수에 묶어서 매개변수에 따라서 함수를 다르게 호출하는 방식
+
+함수를 만들었으면 자료형이 있을 거고 자료형이 있으면 반환형도 자료형을 따라간다 기본적인 것을 체크안함

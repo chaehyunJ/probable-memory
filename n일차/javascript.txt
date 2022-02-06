@@ -1,0 +1,649 @@
+JAVASCRIPT
+
+자바스크립트 -> Document Object -> Window Object
+자바스크립트 탄생 -> 전송하는 데이터에 대한 유효성 검사의 필요성
+
+inline 방식은 태그에 직접 자바스크립트를 기술하는 방식이다. 
+장점은 태그에 연관된 스크립트가 분명하게 드러난다는 점이다. 
+하지만 정보와 제어가 섞여 있기 때문에 정보로서의 가치가 떨어진다
+(유지보수가 어렵기 때문이다)
+
+<input type="button" onclick="alert('hello')" value="hello world">
+
+onclick은 HTML문법이고 alert은 javascript문법인데 어떻게 작동할까??
+-> onclick안에는 javascript가 들어간다고 약속을 했기 때문이다
+
+script태그가 나오면 자바스크립트가 나온다는 것을 약속  / script는 일단 HTML태그이다
+
+    <script src="./script.js">
+
+    </script>
+
+-> HTML의 정보로써의 가치가 더욱 높아진다
+
+-> 유지보수 편리성 / 결합도 낮춤 / 브라우저 캐시를 줄여줄 수 있다 
+-> 이미 다운로드받은 파일을 가지고 있는데 js를 미리 다운받으면 서버쪽에 부담을 줄여줄 수 있다 
+-> 서버와 클라이언트가 주고 받는 데이터의 양을 줄여준다
+
+-> script를 head 태그에 위치시킬 수도 있다. 하지만 이 경우는 오류가 발생한다.
+-> 상단에 걸어두면 해당 태그를 찾을 수 없다 그래서 null을 발생시킴
+
+해결방법
+    <script>
+        window.onload = function(){
+            var hw = document.getElementById('hw');
+            hw.addEventListener('click', function(){
+                alert('hello world');
+            })
+        }
+    </script>
+
+-> window.onload를 해주면 모든 문서를 다 다운로드한 후에 해당 function을 로드하겠다는 의미라서 작동이 된다
+(이 경우는 head에 스크립트를 작성할 때만 하면 된다/ 스크립트를 바닥에 작성하면 따로 window.onload를 안해도 된다)
+
+===============================
+
+Object Model
+웹브라우저의 구성요소들은 하나하나가 객체화되어 있다. 자바스크립트로 이 객체를 제어해서 웹브라우저를 제어할 수 있게 된다. 
+이 객체들은 서로 계층적인 관계로 구조화되어 있다. BOM과 DOM은 이 구조를 구성하고 있는 가장 큰 틀의 분류라고 할 수 있다.
+
+window -> (DOM, BOM, JavaScript)
+
+각각의 태그들을 객체로 만들어두고 준비하고 있는 것이다
+그래서 그 객체를 찾아서 제어할 수 있다 / 객체가 가리키는 태그를 제어할 수 있고 프로퍼티를 사용할 수 있고 메서드를 사용할 수 있다
+
+객체를 통해서 브라우저를 제어할 수 있다
+
+var imgs = document.getElementByTagName('img');
+-> 이것을 객체화라고 한다
+
+윈도우 : 전역객체, window frame을 제어하기 위한 객체
+프로퍼티 - DOM(document) BOM(navigator, screen, location, frames,..) JavaScript(Object, Array..)
+
+document 객체가 하는 역할은 웹 페이지의 문서를 제어하는 역할 
+Document Object Model   Browser Object Model  JavaScript Core (BW, GAS, Node.js..)
+
+-> 자바스크립트를 통해 브라우저를 제어
+
+// 자바스크립트 10대 에러
+https://blog.meeta.io/10
+
+
+BOM(Browser Object Model)이란 웹브라우저의 창이나 프래임을 추상화해서 프로그래밍적으로 제어할 수 있도록 제공하는 수단이다. 
+BOM은 전역객체인 Window의 프로퍼티와 메소드들을 통해서 제어할 수 있다. 
+
+전역객체 window
+-> window 객체는 식별자 window를 통해서 얻을 수 있다. 또한 생략 가능하다
+-> 변수가 함수에 소속되어 있지 않으면 전역변수가 된다 -> window객체의 프로퍼티를 만드는 것이다
+
+사용자와 커뮤니케이션 하기
+-> HTML은 form을 통해서 사용자와 커뮤니케이션할 수 있는 기능을 제공한다. 
+자바스크립트에는 사용자와 정보를 주고 받을 수 있는 간편한 수단을 제공한다
+
+alert -> 경고찬이라고 부른다. 사용자에게 정보를 제공하거나 디버깅등의 용도로 많이 사용한다
+-> 확인을 누르기 전까지 다음행동이 작동하지 않는다
+
+confirm -> 확인을 누르면 true, 취소를 누르면 false를 리턴한다
+    <input type="button" value="localconfrim" onclick="func_confirm();">
+
+    <script>
+        function func_confirm(){
+            if(confirm('ok?')){
+                alert('ok');
+            }
+            else{
+                alert('cancel');
+            }
+        }
+    </script>
+-> 조건문 처럼 사용할 수 있다
+
+prompt -> 사용자가 입력한 값을 받아서 자바스크립트가 얻어낼 수 있는 것
+        function func_prompt(){
+            if(prompt('id') === 'hi'){
+                alert('welcome');
+            }
+            else{
+                alert('fail');
+            }
+        }
+
+Location 객체
+Location 객체는 문서의 주소와 관련된 객체로 Window 객체의 프로퍼티다. 
+이 객체를 이용해서 윈도우의 문서 URL을 변경할 수 있고, 문서의 위치와 관련해서 다양한 정보를 얻을 수 있다.
+-> 보이지 않는 정보에 대해서도 객체화할 수 있다
+
+현재 윈도우의 URL 알아내기
+아래는 현재 윈도우의 문서가 위치하는 URL을 알아내는 방법이다. 
+console.log(location.toString(), location.href);
+
+URL Pasring
+location 객체는 URL을 의미에 따라서 별도의 프로퍼티로 제공하고 있다. 
+console.log(location.protocol, location.host, location.port, location.pathname, location.search -> ?뒤에 내용, location.hash -> #뒤에 내용)
+
+http(protocol)://open.org(host):80(port)/module(pathname)/1?id=1(search)/#hash(hash)
+
+
+URL 변경하기
+location.href = 'http://egoing.net';
+-> 현재 문서를 해당 url로 이동한다
+location = 'http://egiong.net'; -> 동일함
+--> 다른 url로 이동시켜야 하는 경우에 사용한다
+
+location.reload(); -> 현재 문서를 리로드하는 간편한 방법을 제공한다
+
+Navigator 객체
+브라우저의 정보를 제공하는 객체이다. 주로 호환성 문저등을 위해서 사용한다
+console.dir(navigator);
+
+크로스브라우징 -> 브라우저마다 다르게 작동하는 것을 말한다
+자바스크립트 ->넷스케이프에서 만든 것이다
+
+넷스케이프에서는 addEventListener를 사용하고 IE에서는 attachEvent를 사용해야 했다
+-> 그래서 웹 표준이 나왔다 -> 같은 기능이면 같은 이름을 사용하도록 함
+-> 그래서 크로스브라우징이 나옴 -> navigator객체를 사용해서 확인한다
+-> 해당 브라우저의 특성을 확인하려면 console.dir(navigator);를 통해서 확인한다
+
+console.dir(navigator.appName); -> netscape라고 뜬다
+
+console.dir(navigator.appVersion)
+-> 브라우저의 버전을 의미한다. 
+
+console.dir(navigator.userAgent)
+-> 브라우저가 서버측으로 전송하는 user-agent-http 해더의 내용이다.
+
+console.dir(navigator.platform)
+-> 운영체제 정보
+
+
+기능 테스트
+navigator 객체는 브라우저 호환성을 위해서 주로 사용하지만 모든 브라우저에 대응하는 것은 
+쉬운 일이 아니므로 기능 테스트를 사용하는 것이 더 선호되는 방법이다
+Ex) Object.keys라는 메소드를 객체의 key값을 배열로 리턴하는 Object의 메소드이다.
+이 메소드는 ECMAScript5에 추가되었기 때문에 오래된 자바스크립트외는 호환되지 않는다.
+
+
+창 제어
+window.open 메소드는 새 창을 생성한다. 대부분의 브라우저는 탭을 지원하기 때문은 window.open은 새 창을 만든다
+
+
+=======================================================================
+
+================================================================
+
+// slider.style.marginLeft = '-400px'  // margin-left , css에서 -가 들어가는 속성은 camelCase로 변환
+
+================================================================
+
+let value = 0       // 값이 변해야 하는 값이면 let
+const unit = 1920    // 변하지 않는 값은 const
+
+===============================================================
+
+<script>
+        // 한줄 주석
+        /* 
+            범위 주석
+        */
+
+        // 변수 선언
+        
+        n1 = 10;
+        var n2 = 20;		    // n2는 객체에 대한 이름이다 데이터를 박스로 감싸서 참조하는 이름이 n2이다
+				    // 자바스크립트는 wrapper클래스만 가지고 있다
+				    // wrapper클래스와 wrapping 방식
+				    // var x = 3 -> var x = new Number(3)으로 되는 것이다
+        let n3 = 30;                // 값이 변하는 변수면 let      레퍼런스타입
+        const n4 = 40;              // 값이 변하지 않는 변수 const 프리미티브타입
+        const word = 'hello';       // 대입되는 값의 자료형에 따라서 자동으로 설정된다
+        
+        // 함수선언
+        function func1(){
+            console.log('함수1')
+        }
+
+        const func2 = function(){   // 자바스크립트의 함수는 그 자체로 객체 취급 된다
+            console.log('함수2')    // 자바처럼 함수형 인터페이스 객체가 아니라
+        }                          //  함수 자체로 매개변수로 전달할 수 있다
+
+        console.log(n1,n2,n3,n4);
+        
+        // 함수 호출
+        func1();
+        func2();
+
+        const arr = [10,20,30,40,50];   // {}가 아니고 []로 배열을 표현한다
+                                        // 배열이 리스트처럼, 컬랙션처럼 함수를 가진다
+        arr.forEach(function(num){
+            console.log(num)    
+            // arr안에 있는 각각의 요소를 num이라고 할때, 
+            //그 num의 값을 콘솔 창에 출력 (num에 var는 사용불가)
+        });
+
+        setInterval(func2, 1000);   
+        // 만들어진 함수를 전달해서 사용한다 
+        // 시간 간격을 주고 출력한다 
+        // 함수를 객체취급해서 전달할 수 있다
+
+        console.log(typeof n1)
+        console.log(typeof word)
+        console.log(typeof func2)
+        console.log(typeof arr)
+    </script>
+
+===========================================================
+
+<script>
+        // 배열 
+        const arr = [40,20,30,'40',11];
+        console.log(arr);
+        // 자바스크립트 객체를 하나하나 다 볼 수 있다 -> console.log을 장점
+
+        arr.sort();
+
+        // () -> 매개변수를 나타냄
+        // 자바스크립트의 arrow function
+
+        // func1은 요소와 인덱스를 콘솔로그에 출력해주라는 함수이다
+        const func1 = (element,index) => {
+            console.log(element,index)
+        };
+
+        // 이제 func1이 arr배열을 돌면서 요소와 인덱스를 콘솔로그에 출력하게 된다
+        arr.forEach(func1)
+        
+        // document에서 selctorAll 하겠다 .image라는 selector를 
+        // .image를 가져온다
+        const imageList = document.querySelectorAll('.image')
+        // 콘솔로그로 출력한다
+        console.log(imageList)
+
+        // foreach를 통해서 .image로 가져온 요소에 스타일 한번에 적용할 수 있다
+        imageList.forEach(img => {      // 화살표 함수의 매개변수가 1개라면 () 생략 가능
+            img.style.border = '3px soild black'
+        });
+        // 문서의 특정요소를 불러와서 한꺼번에 작업을 진행할 수 있다
+
+        // 화살표 함수의 실행 코드가 한줄이라면 ()생략 가능
+
+        //imageList.forEach(img => img.style.borderRadius = '50%')
+
+        imageList.forEach(img => img.style.borderRadius = '70px')
+        // 이렇게 하면 이미지에는 인라인스타일로 적용이 된다
+    </script>
+
+==================================================================
+    <script>
+        // css 선택자를 이용해서 요소를 불러올 수 있다
+
+        document.getElementById('id')           // 지정한 id를 가지느 요소 하나를 반환
+        document.querySelector('css선택자')     // 지정한 선택자에 해당하는 요소 중 첫번째 요소 하나만
+        document.querySelectorAll('css선택자')  // 지정한 선택자에 해당하는 모든 요소를 nodeList로 반환
+        
+        // 1) 이름 나이 전화번호가 적혀있는 첫번째 줄의 칸 배경색을 #dadada로 변경하기
+        const headList = document.querySelector('thead')
+        
+
+        // for(let i = 0; i < headList.length; i++){
+        //  const th = headList[i]
+        //  th.style.backgroundColor = '#dadada'
+        //} -> 기본 for문으로 돌려도 된다
+        console.log(headList)
+
+        // css에서 하이픈을 사용하려면 여기서는 camelCase를 적용해서 해야한다
+        // don`t forget camelCase
+        headList.style.backgroundColor = '#dadada'
+
+        // 2) 각 나이가 적혀있는 칸을 불러와서 내부 텍스트에 '살' 이라는 문자를 추가한다
+
+        const ageList = document.querySelectorAll('tbody>tr>td:nth-child(2)')
+
+        console.log(ageList)
+
+        ageList.forEach(td => {
+            td.style.color = 'blue'
+            td.style.textAlign = 'center'
+            // td.innerText += '살'  -> 기존의 것에 살을 더해주는 것이다
+            td.append('살')
+        })
+        // 3) 전화번호가 적혀있는 칸에 마우스를 올리면 링크처럼 손가락모야응로 나타나도록 설정하세요
+    
+        const cursor = document.querySelectorAll('tbody>tr>td:nth-child(3)')
+
+        console.log(cursor)
+
+        cursor.forEach(td =>{
+            td.style.cursor = 'pointer'
+            td.style.textDecoration = 'underline'
+        })
+
+        // 4) 이름 bold 처리
+
+        const nameList = document.querySelectorAll('tbody>tr>td:nth-child(1)')
+
+        console.log(nameList)
+
+        nameList.forEach(td =>{
+            td.style.fontWeight = 'bolder'
+        })
+    </script>
+================================================================================
+
+<!--
+        display : flex로 지정한 요소는
+        자신이 아닌, 내부 요소를 기준에 따라서 정렬하는 요소이다
+
+        main axis(기본 축) 와 cross axis(교차 축)에 따라 정렬을 수행한다
+
+        justify-content 속성으로 main축 기준 정렬 위치를 지정할 수 있다
+        flex-start : 축의 시작지점쪽으로 요소를 배치한다
+        flex-end : 축의 끝점 쪽으로 요소를 배치한다
+        center : 축의 가운데를 기준으로 배치한다
+        space-between : 축의 시작점과 끝점에 양긑 요소를 배치하고 간격을 두며 배치한다
+
+        flex-flow 속성으로 축을 교차시키거나, 범위를 벗어날 경우 처리를 변경할 수 있다
+        flex-flow 기본값을 row이다 
+
+        flex-flow : row     default값
+        flex-flow : column  main축이 위에서 아래로 내려오는 방향으로 바뀐다
+        flex-flow : wrap    범위를 벗어나면 자동으로 다음 위치로 변경된다
+        flex-flow : column wrap-reverse    오른쪽 위에서부터 채운다
+    -->
+===================================================================
+
+    <input name="n1" type="number" min="0" max="9" value="1"> + 
+    <input name="n2" type="number" min="0" max="9"> 
+    <button id="btn">=</button>
+    <span id="answer"></span>
+    
+    <script>
+        // const n1은 document에서 input태그의 이름이 n1인 것을 찾아서 가져온다
+        const n1 = document.querySelector('input[name="n1"]')
+        // const n2는 document에서 input태그 중에서 이름이 n2인 것을 찾아서 가져온다
+        const n2 = document.querySelector('input[name="n2"]')
+        // const btn은 document에서 id가 btn인 것을 찾아서 가져온다
+        const btn = document.getElementById('btn')
+        // const answer는 document에서 id가 answer인 것을 찾아서 가져온다 
+        const answer = document.getElementById('answer')
+
+        // 자바에서 getter를 사용해서 값을 가져오는거랑 유사..?
+
+        const name = "이지은";
+        const age = 29;
+        const data = name + '님은 ' + age + '살입니다'
+        // document.writeln()은 println과 동일하다
+        document.writeln(data)
+        // 콘솔로그로 data를 출력한다
+        console.log(data)
+        // 경고창으로 data를 출력한다
+        alert(data)
+
+        console.log(document)
+
+
+        // btn을 클릭했을 때 function이 동작한다
+        // const answerValue는 n1의 정수값과 n2의 정수값을 더한 값을 가진다
+        // 그리고 answer.innerText로 값을 삽입한다
+        // 기존의 값에 추가하려면 answer.innerText += answerValue라고 하면 된다
+        btn.onclick = function() {
+            const answerValue = +n1.value + +n2.value
+            answer.innerText = answerValue
+        }
+    </script>
+
+=====================================================================
+
+    var x = 4;
+        var y = new Number(4);
+        var z;
+        z = 3;
+        alert(typeof z);
+        // 어떤 메서드를 사용할 수 있는지는 할당되는 객체에 따라서 달라진다
+
+=====================================================================
+element.innerText;
+
+이 속성은 element 안의 text 값들만을 가져옵니다.
+
+
+element.innerHTML;
+
+innerText와는 달리 innerHTML은 element 안의 HTML이나 XML을 가져옵니다
+
+
+element.innerText = "<div style='color:red'>A</div>";
+
+element.innerText에 html을 포함한 문자열을 입력하면, 
+
+html코드가 문자열 그대로 element안에 포함됩니다.
+
+ 
+
+element.innerHTML = "<div style='color:red'>A</div>";
+
+위와 같이 element.innerHTML 속성에 html코드를 입력하면,
+
+html element가 element안에 포함되게 됩니다.
+
+위 예제에서 'innerHTML()'을 클릭하면,
+
+입력된 html태그가 해석되어 빨간색A 가 나타나는 것을 확인 할 수 있습니다.
+
+===================================================================
+
+// 호출할 함수 선언
+const registHandler = () => {
+    // 사용자가 입력한 값을 가져와서 테이블에 넣기
+    const tdArr = []
+
+    for(let i = 0; i < 3; i++) {
+        // 자바의 list처럼 늘어날 수 있다
+        tdArr.push(document.createElement('td'))    // 배열에 특정 요소를 추가하는 함수
+    }
+
+    tdArr[0].innerText = product.value
+    tdArr[1].innerText = price.value
+    tdArr[2].innerText = category.value
+
+    const tr = document.createElement('tr')
+    tdArr.forEach(td => tr.appendChild(td))
+    document.querySelector('tbody').appendChild(tr)
+
+    product.value = ''
+    price.value = ''
+    // category.firstChild.selected = 'selected'    // 글자를 포함한 모든 요소
+    category.firstElementChild.selected = 'selected'// Element로 취급되는 요소로 한정(태그)
+
+    product.focus()
+}
+
+// 이벤트 함수 연결
+button.onclick = registHandler
+
+==============================================================
+
+
+// 필요한 요소 불러오기
+const children = document.querySelector('.form').children
+console.log(children)
+
+const button = document.querySelector('input[type="button"]')
+const tbody = document.querySelector('tbody')
+
+
+// 호출 함수 선언
+const buttonClickhandler = () =>{
+    const product = document.querySelector('input[name="product"]')
+    const price = document.querySelector('input[name="price"]')
+    // category 자체가 value를 포함하기 때문에 문자열
+    const category = document.querySelector('select').value
+
+    const arr = price.value.split('')
+    console.log(arr)
+    let tr = document.createElement('tr')
+
+    let td1 = document.createElement('td')
+    td1.innerText = product.value
+
+    let td2 = document.createElement('td')
+    for(let i = 0; i < arr.length; i++){
+        if(i == 0) {
+            arr[i] += ','
+        }
+        td2.innerText += (arr[i])  
+        
+    }
+    td2.innerText += '원'
+    //td2.innerText = price.value.slice(0,1) + ',' + price.value.slice(1,4)+ '원'
+
+    // 앞에서 이미 value를 불어왔기 때문에 따라 value를 두번 붙일 필요는 없다
+    let td3 = document.createElement('td')
+    td3.innerText = category
+
+    // tr에 td넣기
+    tr.appendChild(td1)
+    tr.appendChild(td2)
+    tr.appendChild(td3)
+
+    // tbody에 tr 넣기
+    tbody.appendChild(tr)
+
+    // 값 콘솔로그로 확인하기
+    console.log(product.value)
+    console.log(price.value)
+    console.log(category)
+
+    // 값 지우기
+    product.value = ''
+    price.value = ''
+    document.querySelector('option').selected = 'selected'
+
+    // 입력이 끝나면 product로 돌아가라
+    product.focus()
+}
+// document.querySelector('input[type="button"]').onclick = () => {
+//     console.log(document.querySelector('select').value)
+//     document.querySelector('option').selected = 'selected'
+// }
+
+// 이벤트 함수 호출
+button.onclick = buttonClickhandler
+
+=============================================================
+
+        // id를 이요해서 요소 불러오기
+        const name = document.getElementById('name')
+        // css선택자를 이용해서 요소 불러오기
+        const age = document.querySelector('#age')
+
+        const year = document.getElementById('year')
+
+        const btn = document.getElementById('btn')
+        const result = document.querySelector('.result')
+
+        console.log(btn)            // HTML 태그만 출력
+        console.log({'btn' : btn})  // HTML 요소의 내부 상세 정보를 출력
+
+        const btnHandler = (event) => {  // [버튼을 클릭하면] 작동하게 만들 함수를 작성
+            console.log(event)
+            console.log(event.target)
+
+            console.log(name.value)     // element.property 요소.속성의 형식으로 값에 접근할 수 있다
+            console.log(age.value)
+            console.log(year.value)
+            console.log(name.type)
+
+            if(name.value == '' || age.value == '' || year.value==''){
+                alert('모든 값을 입력해주세요')
+                return
+            }
+
+            // 이 방식은 이클립스에서 사용이 불가능하다
+            const str = `${name.value}님은 ${year.value}생이고 ${age.value}살이고, ${age.value >= 20 ? '성인' : '미성년자'}입니다`
+
+            result.innerText = str
+            // == : 타입이 달라도, 값의 형태가 일치하면 일치로 판단
+            // === : 타입도 같고, 값도 같아야 일치로 판단
+
+            const str2 = name.value + '님은' +
+                        age.value + '살이고, '+
+                        (age.value >= 20 ? '성인' : '미성년자') + '입니다'
+            
+            alert(str2)
+        }
+
+        btn.onclick = btnHandler    // 버튼을 클릭하면 지정한 함수가 실행되도록
+                                    // 함수를 지금 호출하는 것이 아니므로, btnHandler()형식이 아니다
+        // 콘솔로그창에 PointerEvent가 발생한다
+
+===================================================================
+
+        // 정수를 입력받아서 자릿수를 거구로 배치하고 result태그 내 출력하기
+        const num = document.getElementById('num')
+        const btnStr = document.getElementById('btnStr')
+        const btnNum = document.getElementById('btnNum')
+        const result = document.querySelector('.result')
+
+        const btnHandler = (event) =>{
+            // num.value의 값도 let으로 만들어서 사용해야 한다
+            let value = +num.value    // Integer.parseInt(value)랑 동일함
+            let ans = 0                 // 값을 변경해야 하므로 let
+
+            console.log(value)
+        
+            while(true){
+                ans += (value % 10)
+                ans *= 10
+                value /= 10                 // /= 을 안해줌
+                value = Math.floor(value)   // 소수점을 버리는 함수
+                if(value < 10){
+                    ans += value
+                    break
+                }
+            }
+            
+            // ans += (num.value % 10)
+            // console.log(ans)
+
+            // ans *= 10
+            // console.log(ans)
+
+            // ans += (num.value / 10)
+
+            // console.log(num.value)
+
+            // if(num.value < 10){
+            //     ans += num.value
+            // }
+
+            console.log(value)
+            console.log(ans)
+
+
+            const str = ans + '입니다'
+            
+            result.innerText = str
+        }
+
+        btnNum.onclick = btnHandler
+        
+
+        btnStr.onclick = () => {
+            const value = num.value
+            var name = num.value
+            var reverseName = name.split('').reverse().join('')
+            // 입력받은 문자열을 글자하나씩 구분해서 뒤집고
+            // 다시 연결해서 하나의 문자열로 만듦
+
+            result.innerText = ''   // innerText안에 한번 비워주기
+            
+            for(let i = value.length-1; i > 0; i--){
+                console.log(value[i])
+                result.innerText += value[i]
+            }
+            // 뒤에서부터 한글자씩 result.innerText로 넣는다
+            console.log(reverseName)
+        }
+
+=======================================================================
+

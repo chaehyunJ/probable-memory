@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <table id="num" border="" cellpadding="7" cellspacing="0">
+        <tr>
+            <td rowspan="3">1</td>
+            <td>2</td>
+            <td rowspan="2">3</td>
+            <td rowspan="2">4</td>
+            <td rowspan="4">5</td>
+        </tr>
+        <tr>
+            <td>6</td>
+        </tr>
+        <tr>
+          
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>10</td>
+            <td colspan="2">11(삼겹)</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>12</td>
+            <td></td>
+            <td></td>
+            <td>13</td>
+        </tr>
+    </table>
+
+
+    <script>
+        const num = document.getElementById('num')
+        const tdList = document.querySelectorAll('#num td')
+        const sam = document.querySelector('#num  tr:nth-child(4) td:last-child')
+       
+        const sam2 = document.childNodes
+        const sam3 = num.children[0].children[3].children[2]
+    
+        console.log(sam2)
+        console.log(sam3)
+
+        console.log(sam)
+        sam.style.fontWeight = 'bolder'
+
+
+        // 특정요소에 함수를 넣을 수 있다
+        sam.onmouseover = function(event) {
+            alert('맛있나?' + event.target.innerText)
+        }
+
+        // 이벤트 대상      :   element, 어떤 요소에 이벤트를 걸 것인가
+        // 이벤트 리스너    :   어떤 조건에 의해 이벤트가 발생할 것인가 (트리거)
+        // 이벤트 핸들러    :   이벤트가 발생하면 어떤 내용을 진행할 것인가
+
+        num.style.border = '0'
+
+        tdList.forEach(td => {
+            if(td.innerText != ''){
+                td.style.border = '1px solid black'
+                td.style.backgroundColor = 'pink'
+                td.style.textAlign = 'center'
+            }
+            else{
+                td.style.border = '0'
+            }
+
+        })
+        console.log(tdList)
+        console.log(num)
+
+        // 1. 삼겹살 칸을 찾아서 변수로 불러오세요
+        // 2. 삼겹살 칸의 글자를 굵게 처리하세요
+        
+    </script>
+</body>
+</html>

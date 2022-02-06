@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+</head>
+<body>
+    <!-- 자바의 import랑 비슷한 의미로 가지고 가면 된다 -->
+    <!-- 밑에 script는 main함수 느낌 html요소가 다 불러온 다음에 실행되어야 해서 밑에 작성하는 것 -->
+
+    <!-- ex02.js에 필요한 모든 함수를 정의할 예정 -->
+    <script src="ex03.js"></script>
+
+    <h1>필터링과 정렬</h1>
+    <hr>
+
+    <div class="root">
+        <div class="left">
+            <fieldset>
+                <p><label><input type="checkbox" name="ageFilter" value="10">10대</label></p>
+                <p><label><input type="checkbox" name="ageFilter" value="20">20대</label></p>
+                <p><label><input type="checkbox" name="ageFilter" value="30">30대</label></p>
+                <p><label><input type="checkbox" name="ageFilter" value="40">40대</label></p>
+            </fieldset>
+        </div>
+        
+        <div class="right">
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>나이</th>
+                        <th>성별</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        // 매개변수가 없으면 null로 인식한다 -> 자바에서는 오류를 발생시키는데 여기는 없으면 null로 인식한다
+
+        // 여기에는 문서에서 요소를 불러오거나 
+        // 함수로 객체를 불러와서 
+        // 여러함수를 호출하여 데이터를 처리하고 화면에 반영하는 작업
+        // 이벤트 함수 연결
+    
+        // 데이터를 불러오고
+        const data = getData()
+        // HTML 요소를 불러와서
+        const tbody = document.querySelector('.right tbody')
+
+        // data를 DOM으로 변환하고
+        const dom = getDom(data)
+
+        // DOM을 HTML요소에 그린다
+        render(tbody, dom)
+        
+        const boxList = Array.from(document.querySelectorAll('.left input[type="checkbox"]'))
+        
+        console.log(boxList)
+        // 이벤트 함수 연결
+        boxList.forEach(box => box.onclick = filterHandler)
+    </script>
+</body>
+</html>

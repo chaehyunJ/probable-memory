@@ -1,0 +1,20 @@
+// student_seq 시퀀스 생성 쿼리문
+create sequence student_seq 
+	start with 1
+	maxvalue 9999999999
+	increment by 1
+	nocycle
+	nocache;
+
+// student 테이블 생성 쿼리문
+create table student(
+	idx 	number 		default student_seq primary key,
+	name	varchar(100)	not null,
+	kor	number		not null check (kor between 0 and 100),
+	eng 	number		not null check (eng between 0 and 100),
+	mat	number		not null check (mat between 0 and 100),
+	total	number		not null,
+	avg	number		not null
+);
+
+

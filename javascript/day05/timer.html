@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="timer"></div>
+
+    <script>
+        let second = 180
+        function timer(){
+            let min = Math.floor(second / 60) + ''
+            let sec = second % 60 + ''
+            if(min.length < 2) min = '0' + min
+            if(sec.length < 2) sec = '0' + sec
+            const format = min + ':' + sec
+            const div = document.querySelector('.timer')
+            div.innerText = format
+
+            second -= 1
+            
+        }
+        setInterval(timer, 1000)
+    </script>
+</body>
+</html>

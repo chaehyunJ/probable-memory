@@ -1,0 +1,214 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.show {
+	overflow: hidden; /*옆으로 튀어나오는거 */
+	width: 1000px;
+	margin: 0 auto;
+	flex-wrap: row;
+	position: relative;
+}
+
+.show-contain {
+	box-sizing: border-box;
+	width: 1000px;
+	flex-flow: wrap;
+	display: flex;
+	justify-content: center;
+}
+
+.show-frame {
+	display: flex;
+	transition: transform 1s;
+}
+
+.menu-border {
+	padding: 5px;
+	text-align: center;
+	border: 1px solid black;
+}
+
+img {
+	height: 200px;
+	width: 225px;
+	cursor: pointer;
+}
+
+.slide-next {
+	position: absolute;
+	top: 45%;
+	right: 0;
+}
+
+.slide-before {
+	position: absolute;
+	top: 45%;
+	left: 0;
+}
+
+button {
+	border: 0;
+	outline: 0;
+	background-color: rgba(250, 150, 0, 0.897);
+	font-size: 20;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+}
+
+button:hover {
+	background-color: rgba(158, 48, 161, 0.5);
+	color: chartreuse;
+}
+/*상단 ul부터*/
+ul li {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.menuparent {
+	width: 1050px;
+	padding: 5px;
+	display: flex;
+	margin: 0 auto;
+}
+
+.menuparent li {
+	margin: 0 auto;
+	text-align: center;
+	padding: 10px;
+	border: 1px solid black;
+	width: 130px;
+	cursor: pointer;
+}
+
+.deleteBtn, span, .addminusBtn, .orderCount, .addminusBtn {
+	margin-left: 10px;
+}
+
+.deleteBtn {
+	border: none;
+	cursor: pointer;
+	background-color: black;
+	color: white;
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	font-size: 1rem;
+}
+
+.addminusBtn {
+	color: white;
+	background-color: #FFA425;
+	border: none;
+	cursor: pointer;
+	width: 30px;
+	height: 30px;
+	border-radius: 5px;
+	font-size: 1.2rem;
+}
+
+.order-board {
+	border: 1px solid black;
+	margin: 0 auto;
+	width: 1000px;
+	display: flex;
+	justify-content: space-between;
+}
+
+#check_module {
+	width: 200px;
+	height: 200px;
+	border-radius: 0;
+}
+
+.back-btn {
+	border: 0;
+	outline: 0;
+	background-color: rgba(250, 150, 0, 0.897);
+	font-size: 20;
+	width: 100px;
+	height: 50px;
+	border-radius: 10px;
+	text-align: center;
+	line-height: 20px;
+}
+
+.parent_order {
+	/* 	margin-left : 400px; */
+	overflow-y: auto;
+	overflow-x: hidden;
+	background-color: #ced3ce;
+	height: 200px;
+	width: 700px;
+}
+
+.child_order {
+	margin-top: 10px;
+	display: flex;
+}
+
+/*메뉴바 색깔*/
+.showColor {
+	background-color: #FFA425;
+	color: white;
+}
+
+.menuname {
+	width: 200px;
+	padding-left: 10px;
+}
+
+/*결제하기, 주문목록*/
+.parent_order {
+	border-radius: 20px;
+	position: absolute;
+	left: 30px;
+	width: 63%;
+}
+
+.totalprice {
+	flex-direction: column;
+	justify-content: space-between;
+	position: absolute;
+	right: 30px;
+	height: 210px;
+}
+
+.grand_order {
+	position: relative;
+	width: 1000px;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.total0, .totalnotnull {
+	background-color: #783933;
+	color: white;
+	width: 200px;
+	height: 51px;
+}
+
+.deleteall {
+	border-radius: 5px;
+	width: 100%;
+	height: 38px;
+	background-color: #493e3a;
+	color: white;
+	text-align: center;
+	margin: 0 auto;
+	line-height: 38px;
+}
+
+.productcount {
+	border-radius: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	background-color: #C5C8CF;
+	width: 200px;
+	height: 50px;
+}

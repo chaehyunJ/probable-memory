@@ -1,0 +1,129 @@
+43일차
+
+	<Resource 
+		name = "jdbc/oracle"
+		auth = "Container"
+		type = "javax.sql.DataSource"
+		
+		driverClassName = "oracle.jdbc.OracleDriver"
+		url = "jdbc:oracle:thin:@192.168.1.100:1521:xe"
+		username = "c##itbank"
+		password = "it"
+		maxActive = "20"
+		maxIdle = "10"
+		maxWait = "-1"
+	/>
+====================================================
+
+	<jsp:useBean id="ob1" class="singletonTest.Ex01Class"/>
+	<jsp:useBean id="ob2" class="singletonTest.Ex01Class"/>
+	<%--
+		Ex01Class ob3 = new Ex01Class();
+		
+		Ex01Class* ob4 = (Ex01Class)malloc(sizeof(Ex01Class));
+		Memory Allocation : 메모리에서 일정 크기의 공간을 할당받아서 저장할 수 있는 공간을 확보한다
+		-> c++ 이나 자바등에서  new 연산자로 대체가 됨
+		
+	 --%>
+
+====================================================
+
+자바형태의 객체로 만들어두고 이름으로 자원을 참조한다
+프로젝트만들자마자 이 객체가 생기고 준비상태가 된다
+
+기존방식 : DAO마다 1개의 커넥션을 보유하고 메서드 호출이 끝나면 연결이 끊어짐
+-> 메서드 호출을 여러번 하려면 같은 클래스로 여러번 객체를 생성하는 불편함
+
+ConnectionPool 도입 후 : DAO가 여러번 메서드를 호출해도 커넥션을 새로 받아서 사용할 수 있게 된다.
+-> 서로 다른 페이지가 아니라면, DAO는 하나만 있어도 충분하다
+
+
+<%@ include %> 를 활용하면 여러 페이지가 하나의 DAO를 참조할 수도 있다
+- 소스코드를 합친 이후에 컴파일이 되는 형식
+- 실제 서버에서는 여러개의 DAO객체가 만들어지는 형태
+
+DTO : 속성을 중심으로 처리하는 방식 -> 서로 다른 객체가 다른 값을 가지게 된다
+DAO : 기능을 중심으로 처리하는 객체 -> 서버상의 메모리에 오직 하나의 객체만 있어도 된다(참조할 수 있게 만들어줘야지 - 주소값을 저장해둠)
+(밥을 먹는데 한숟갈마다 숟가락을 바꿔서 쓰는것 -> 지금은 한숟가락으로 밥을 먹는 것)
+
+
+싱글톤(Singleton) : 객체를 요청하면 어디서나 동일한 객체를 참조할 수 있도록 하는 디자인패턴
+
+
+객체를 서로 다른 페이지에서 생성해도, 여러번 새로고침해도, 서로 다른 클라이언트에서 접근해도 
+오로지 하나의 객체만 참조하게 된다( 불필요한 메모리 낭비가 사라진다)
+
+싱글톤은 오로지 하나의 객체만 참조하는 것을 확인하기
+getInstance()메서드를 통해서 브라우저가 변경되어도 해시코드 값이 같은 것을 확인할 수 있다
+
+
+자바스크립트 만들기
+
+1. 이벤트를 등록할 요소를 문서에서 불러온다
+- document.querySeletor
+
+2. 특정 조건에 의해 호출될 함수를 미리 정의한다
+- const handler = function(event)
+
+3. 요소에게 함수를 연결한다
+- element.onclick
+
+
+================================
+
+1. ANIMAL_INS 테이블은 동물 보호소에 들어온 동물의 정보를 담은 테이블입니다
+
+2. ANIMAL_INS 테이블 구조는 다음과 같으며, ANIMAL_ID, ANIMAL_TYPE, DATETIME, INTAKE_CONDITION, NAME, SEX_UPON_INTAKE는 
+
+각각 동물의 아이디, 생물 종, 보호 시작일, 보호 시작 시 상태, 이름, 성별 및 중성화 여부를 나타냅니다.
+
+3. ANIMAL_OUTS 테이블은 동물 보호소에서 입양 보낸 동물의 정보를 담은 테이블입니다.
+
+4. ANIMAL_OUTS 테이블 구조는 다음과 같으며, ANIMAL_ID, ANIMAL_TYPE, DATETIME, NAME, SEX_UPON_OUTCOME는 
+
+각각 동물의 아이디, 생물 종, 입양일, 이름, 성별 및 중성화 여부를 나타냅니다. 
+
+5. ANIMAL_OUTS 테이블의 ANIMAL_ID는 ANIMAL_INS의 ANIMAL_ID의 외래 키입니다.
+
+--> on animal_outs.animal_id = animal_ins.animal_id
+
+6. 아직 입양을 못 간 동물 중, 가장 오래 보호소에 있었던 동물 3마리의 이름과 보호 시작일을 조회하는 SQL문을 작성해주세요. 
+이때 결과는 보호 시작일 순으로 조회해야 합니다.
+
+-> 입양을 못간 거니까 outs 테이블에서 id가 is null인 동물을 가져오면 된다
+
+그리고 메인을 입양을 못간 동물을 선택하는거니까 ins를 메인 으로 잡는다
+
+select *
+from (select a.name, a.datatime 
+	from animal_ins a 
+	left join animal_outs b
+	on a.animal_id = b.animal_id
+	where b.animal_id is null
+	order by a.datetime )
+where rownum < 4;
+
+--> datetime순서로 order by한 결과를 서브쿼리로 사용해서 rownum 으로 자른다 (OK)
+
+* LEFT JOIN
+
+왼쪽 테이블을 기준으로 오른쪽 테이블을 조인
+
+ 
+
+* ROWNUM
+
+ROWNUM과 인라인뷰를 사용해
+
+DATETIME을 내림차순 정렬하여 가장 상위 1개 값만 조회
+
+rownum <= 10 : rownum이 10 이하인 정보 추출
+rownum = 10 : rownum이 10인 정보 추출
+
+다른 풀이
+
+select name, datetime
+	from animal_ins
+	where animal_id not in (select animal_id from animal_outs) 
+	order by datetime 
+	where rownum <= 3;

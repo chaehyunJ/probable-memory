@@ -1,0 +1,18 @@
+64일차
+
+IP
+- network Bit		앞자리
+- Host Bit		뒷자리
+- Network address	대표주소
+- Broadcast address	전체 발송 주소
+
+- Unicast 		1:1	통신
+- Broadcast		1:전체	통신
+- Multicast		1:특정그룹 통신
+			
+Subnetmask		ip의 앞자리와 뒷자리를 구분하는 기준
+Gateway 		다른 네트워크로 접근하기 위한 첫번째 관문	( 중간다리 )
+DNS			ip 대신 글자로 바꿔주는 시스템 (도메인 네임 서비스)
+
+
+Lombok : getter/setter / contructor / toString 을 만들어주는 것

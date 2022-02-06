@@ -1,0 +1,318 @@
+프로젝트에 ctrl + f + f11으로 실행할 수 있다 실행하면 index로 첫 화면이 출력된다
+
+jsp파일을 출력해서 보는 것이 아니라 프로젝트 단위로 넘어가면 이렇게 하는 것이 맞다 
+
+그래서 미리 습관을 들여놓을 것
+
+프로젝트를 실행하는 것으로 실행하는 것이 나중에 도움이 된다
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="header.jsp" %>
+
+<h2>수정</h2>
+
+<%--         1) 수정할 도서를 검색하여 찾기 --%>
+<form>
+        <select name="column" required>
+                <option value="">===검색 유형 선택===</option>
+                <option ${param.column == 'idx' ? 'selected' : '' } value="idx">도서번호로 검색</option>
+                <option ${param.column == 'name' ? 'selected' : '' } value="name">도서이름으로 검색</option>
+        </select>
+        <input type="search" name="word" placeholder="검색어를 입력하세요" value="${param.word }" required autofocus>
+        <input type="submit" value="검색">
+</form>
+<br>
+
+
+<%--        2-1) 검색한 도서 정보를 목록으로 화면에 띄우기 --%>
+<%--        2-2) 목록에서 사용자가 원하는 데이터를 선택하면 하나를 불러와서 form으로 띄우기 --%>
+
+<c:if test="${not empty param.word }">
+        <jsp:useBean id="dao" class="day07_book.BookDAO" />
+        <c:set var="list" value="${dao.search(param.column, param.word) }" />
+        <c:if test="${not empty list }">
+                <table>
+                        <tr>
+                                <th>도서 번호</th>
+                                <th>도서 이름</th>
+                                <th>저자</th>
+                                <th>출판사</th>
+                        </tr>
+                        <c:forEach var="dto" items="${list }">
+                        <tr class="modify_list">
+                                <td>${dto.idx }</td>
+                                <td>${dto.name }</td>
+                                <td>${dto.author }</td>
+                                <td>${dto.publisher }</td>
+                        </tr>
+                        <tr class="detail">
+                                <td colspan="4">
+                                <form>
+                                        <table>
+                                                <tr>
+                                                        <th>도서 번호</th>
+                                                        <td>${dto.idx }<input type="hidden" name="idx" value="${dto.idx }"></td>
+                                                </tr>
+                                                <tr>
+                                                        <th>도서 이름</th>
+                                                        <td><input name="name" value="${dto.name }" placeholder="도서 제목"></td>
+                                                </tr>
+                                                <tr>
+                                                        <th>저자</th>
+                                                </tr>
+                                                <tr>
+                                                        <th>출판사</th>
+                                                </tr>
+                                                <tr>
+                                                        <th>출판일자</th>
+                                                </tr>
+                                                <tr>
+                                                        <th>가격</th>
+                                                </tr>
+                                                <tr>
+                                                        <th>개요</th>
+                                                </tr>
+                                        </table>
+                                </form>
+                                </td>
+                        </tr>
+                        </c:forEach>
+                </table>
+        </c:if>
+        <c:if test="${empty list }">
+                <h3>검색 결과를 찾을 수 없습니다</h3>
+        </c:if>
+</c:if>
+
+<%--        3) 사용자가 데이터를 수정하고 확인 버튼을 누르면 DB에 있는 내용을 수정하고 목록으로 되돌리기 --%>
+
+</body>
+</html>
+
+========================================
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .detail {
+            height: 0;
+            overflow: hidden;
+            transition-duration: 0.2s;
+        }
+        .show {
+            height: 300px !important;
+            border: 1px solid black;
+            transition-duration: 0.2s;
+        }
+        .name {
+            cursor: pointer;
+        }
+        .name:hover {
+            background-color: #dadada;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="item">
+        <div class="name">짱구</div>
+        <div class="detail">액션가면</div>
+    </div>
+    <div class="item">
+        <div class="name">단비</div>
+        <div class="detail">단비꺼야</div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.name').forEach(e => {
+            e.onclick = (event) => {
+		// element로 구성되는 형제 요소를 찾아서 해당 클래스를 추가하는 것이다
+                const detail = event.target.nextElementSibling
+                console.log(detail.className.includes('show'))
+
+                if(detail.className.includes('show')) {
+                    detail.classList.remove('show')
+                }
+                else {
+                    detail.classList.add('show')
+                }
+            }
+        })
+    </script>
+
+
+</body>
+</html>
+
+====================
+
+css는 톰캣입장에서 컴파일 대상이 아니라서 서버를 재시작해서 css가서 새로고침해줘야 한다
+
+브라우저는 캐시로 css를 저장하기 때문에 빨리 업로드안된다
+
+
+=====================
+
+// 타겟을 선정하는 부분이 추가된 것이다
+
+function folding(event) {               		 // 클릭하면 작동할 이벤트 함수를 정의
+        
+        let target = event.target       		 // 클릭 당한 대상을 target 변수에 저장해둔다
+        
+        while(target.className != 'modify_list') {       // 만약 클릭 대상의 클래스 이름이 일치하지 않으면 변수에 부모요소를 저장한다
+                target = target.parentNode               // td를 클릭했으면 그 부모 요소 tr을 대상으로 지정하겠다
+        }
+        
+        const detail = target.nextElementSibling       	 // tr기준으로 다음 tr을 선택
+        
+    if(detail.className.includes('show')) {              // detail이 클래스 이름에 show를 포함하면
+        detail.classList.remove('show')                  // show를 제거
+    }
+    else {                                               // 아니면
+        detail.classList.add('show')                     // show를 추가
+    }
+}
+
+document.querySelectorAll('.modify_list').forEach(e => e.onclick = folding)
+// 클래스 이름이 modify_list 인 모든 요소에 대해서 각각에 클릭 이벤트 함수를 연결한다
+
+=======================
+
+
+table table {                
+        display: none;        /* 표 안에 있는 다른 표는 기본적으로 보여주지 않는다*/
+}
+.show table {                /* 상위 요소 클래스이름이 show인 table이라면 보여준다 */
+        display: table;
+}
+
+.modify_list {                /* 클릭할 대상에 대해서 (표의 한 줄) 마우스 포인터 효과를 부여한다 */
+        cursor: pointer;
+}
+.detail form {                        /* 클릭이벤트에 의해서 show가 추가되는 요소, 평소에는 높이가 0이고 애니메이션(animation) 설정 추가 */
+        height: 0;
+        box-sizing : border-box;
+	overflow-y: hidden;
+        transition-duration: 0.3s;
+}
+.show form {
+	height : 400px;		/*initial은 수치로 처리하지 않아서 애니메이션 불*/
+}
+
+.detail > td {                /* 테이블이 없으면 그 하위의 표도 공간을 차지 하지 않도록 설정 */
+        padding: 0;
+        box-sizing: border-box;
+}
+body > table.search {        /* 하위 요소가 나타나거나 사라짐에 따라 너비가 변경되어서 고정시켜둠 */
+        width: 550px;
+}
+
+=======================
+
+DBCP
+
+DB도 사용할 수 있는 인원이 한정되어 있을텐데 close를 안해주면 트래픽이 과부하 걸려서 out됨 
+
+tomcat-dbcp.jar이라는 파일이 있다
+
+========================
+
+속성에 따른 값을 마크업 언어로 표현한 것 : XML
+
+===========================
+
+context.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+        <Resource 
+                name="jdbc/oracle"				// 사용자가 지정하는 임의의 이름 
+                auth="Container"
+                type="javax.sql.DataSource"
+                driverClassName="oracle.jdbc.OracleDriver"
+                url="jdbc:oracle:thin:@192.168.1.100:1521:xe"	// 원격접속의 경우 반드시 @로 설정한다. 
+                username="c##itbank"				// 연결한 db 사용자 이름
+                password="it"					// 연결한 db의 비밀번호 
+                maxActive="20"					// 커넥션 객체의 최대 갯수  (default 8)
+                maxIdle="10"	 				// 사용하지  않는 idle(대기)상태의 최대 수
+                maxWait="-1" />
+</Context>
+
+
+==========================
+
+web.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource-ref>
+	<description>ConnectionPool</description>
+	<res-ref-name>jdbc/oracle</res-ref-name>	--> meta-INF에 있는 것
+	<res-type>javax.sql.DataSource</res-type>
+	<res-auth>Container</res-auth>
+</resource-ref>
+
+-> *** 현재 보고 있는 day09 프로젝트가 웹 프로그램으로 작동하는 동작하기 위한 기본설정을 넣어주는 것이다 ***
+
+--> 어떤 객체를 받아올지 모르니까 object타입이다
+
+--> 프로젝트를 실행할 때 web.xml을 읽어서 resource를 읽어오래 그래서 meta-inf에서 context.xml을 읽어서
+--> /jdbc/oracle이라는 이름을 찾아서 가지고 오는데 이 과정에서 객체가 어떤 타입인지 모르니까 object타입이다
+
+--> 이런 객체를 준비해주세요 주문서같은 느낌
+
+
+-> 텍스트 형태의 파일로 객체를 지정할 수 있다
+
+-> 따로 만들어주지 않으면 Servers에서 web.xml을  가지고 와서 사용하는 것이다
+
+
+public class ResourceRef{
+	String description = "ConnectionPool";
+	String res-ref-name = "jdbc/oracle";
+	String res-type = "javax.sql.DataSource";
+	String res-auth = "Container";
+}
+
+HashMap<String, String>map = {
+	"description" : "ConnectionPool",
+
+}
+
+
+--> 페이지수가 적어지고 기능들이 압축된다
+
+1.1 Web.xml 이란?
+
+ - 서블릿 클래스는 JSP 페이지와 달리, 설치뿐만 아니라 등록을 하는 과정을 필요로 한다. 
+ - 여기서 서블릿 클래스를 등록하는 위치의 이름을 Web Application Deployment Descriptor라고 하는데 (DD) 이 역할을 하는 위치가 바로 Web.xml이다. 
+ - Web.xml 파일의 경우, 웹 어플리케이션 디렉토리마다 하나씩만 존재할 수 있다.
+ - DD는 WAS 구동 시, /WEB-INF 디렉토리에 존재하는 Web.xml을 읽어 웹 어플리케이션의 설정을 구성하기 위해 존재한다.
+============================
+
+c3p0
+
+hicarliCP
+
+/==========================
+
+InitialContext()
+이 클래스는 네이밍 조작을 실행하기 위한 개시 컨텍스트 입니다.
+
+네이밍 조작은 모두, 컨텍스트를 기준으로 합니다. 
+
+초기 컨텍스트에 는 Context 인터페이스가 구현되어 이름을 해결하는 개시점이 제공됩니다.
+
+초기 컨텍스트를 구축합니다.
+
+============================
+
+CoonectionPool 이후
+
+1. Ex02DAO와 같은 형식으로 도서의 목록만 

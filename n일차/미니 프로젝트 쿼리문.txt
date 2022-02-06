@@ -1,0 +1,109 @@
+프로젝트 쿼리문
+select * from SYS.nls_database_parameters;
+
+
+drop sequence member_seq;
+drop table member;
+
+create sequence member_seq
+	start with 1
+	maxvalue 9999999
+	increment by 1
+	nocache	
+	nocycle;
+
+create table member(
+	idx 		number		    default member_seq.nextval,
+	userid		varchar2(500)	primary key,
+	userpw		varchar2(500)	not null,
+	nickName	varchar2(500)	not null,
+	profile		varchar2(500)	unique
+	);
+commit;
+
+select * from member;
+
+drop sequence store_seq;
+drop table store;
+
+create sequence store_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+create table store(
+	idx		    number		 	    default store_seq.nextval primary key,
+	local		varchar2(600)		not null,
+	storeName	varchar2(500)		not null,
+	address		varchar2(1000)		not null,
+	phoneNumber	varchar2(600)		not null,
+	category	varchar2(600)		not null,	
+	avgPrice 		varchar2(600)		not null,
+	parking		char(10)		    check (parking in ('y', 'n')),
+	openingHour	varchar2(500)		not null,
+	regDate		date			    default sysdate,
+    uploadFileName		varchar2(600)		not null
+	);
+
+commit;
+
+
+drop sequence reply_seq;
+drop table reply;
+
+create sequence reply_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+
+create table reply(
+	idx			    number			    default reply_seq.nextval primary key,
+	store_idx		number			    constraint reply_store_fk references store(idx),
+	writer_id		varchar2(500)		constraint reply_member_fk references member(userid),
+    profile_id		varchar2(500)		constraint reply_profile_fk references member(profile),
+	writeDate		date			    default	sysdate,
+	content			varchar2(2000)		not null,
+	uploadFileName	varchar2(500)	    default null,
+	score			varchar2(50)		not null
+	);
+
+commit;
+
+select * from member;
+
+delete from member where idx = 1;
+
+insert into member values (MEMBER_SEQ.nextval, 'ccc', 'ccc', '홍진호', 'abc');
+insert into member values (MEMBER_SEQ.nextval, 'ddd', 'ddd', '아이유', 'abc.jpg');
+insert into member values (MEMBER_SEQ.nextval, 'eee', 'eee', '임요환', 'eee.jpg');
+
+desc store;
+
+insert into store values (STORE_SEQ.nextval, '해운대구','금수복국','부산광역시 해운대구 중동1로43번길 23','051-742-3600','해산물','3만원~4만원','y','00:00~24:00', sysdate,'abc.jpg');
+
+commit;
+
+insert into store values (STORE_SEQ.nextval, '해운대구','해목','부산광역시 해운대구 구남로24번길 8','051-742-3600','해산물','3만원~4만원','y','00:00~24:00', sysdate, 'def.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','라호짬뽕','부산광역시 해운대구 마린시티1로 137 대우월드마크 110호','051-731-1222','중식','만원미만','y','11:30~22:00', sysdate, 'efq.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','포르타나','부산광역시 해운대구 우동1로20번길 21','051-741-1131','양식','만원미만','n','12:00~21:00', sysdate, 'eef.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','거대갈비','부산광역시 해운대구 달맞이길 22','051-746-0037','고기','4만원 이상','y','11:30~22:00', sysdate, 'eqae.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','나가하마만게츠','부산광역시 해운대구 우동1로 57 대영빌딩 1F','051-731-0886','일식','만원미만','n','11:30~21:00', sysdate, 'edada.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','해운대소문난암소갈비집','부산광역시 해운대구 중동2로10번길 32-10','051-746-0033','고기','3만원~4만원','y','11:30~22:00', sysdate, 'edaaa.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','양산국밥','부산광역시 해운대구 좌동로10번길 75','051-703-3544','한식','만원미만','y','09:30~23:00', sysdate, 'edaaa.jpg');
+
+insert into store values (STORE_SEQ.nextval, '해운대구','동백섬횟집','부산광역시 해운대구 해운대해변로209번나길 17','051-741-3888','해산물','3만원~4만원','y','10:30~22:30', sysdate, 'edaaa.jpg');
+
+select * from store;

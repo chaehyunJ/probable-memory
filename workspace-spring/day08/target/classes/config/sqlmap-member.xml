@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itbank.member.MemberDAO">
+<!-- 
+	파라미터 타입이 resultType이랑 동일해서 작동했던것이다. 하지만 명확하게 parameterType을 적어주는 것이 좋다  
+	줄수가 1줄이상으로 넘어가면 자동으로 List로 반환처리한다
+-->
+	<select id="selectMember" resultType="member" parameterType="member">
+		select * from member where userid = #{userid} 
+		<if test="userpw != null or email != null">
+			and 		
+		</if>
+		<if test="userpw != null">
+			userpw = #{userpw}		
+		</if>
+		<if test="email != null">
+			email = #{email}
+		</if>
+	</select>
+	
+	<insert id="insert" parameterType="member">
+		insert into member values (#{userid}, #{userpw}, #{username}, #{email}, #{gender})
+	</insert>
+	
+	<update id="update" parameterType="member">
+		update member  
+		<!-- 마지막 콤마는 알아서 생략해준다   -->
+			<set>
+				<if test="userpw != null">userpw = #{userpw}, </if>
+				<if test="username != null">username = #{username}, </if>
+				<if test="email != null">email = #{email}, </if>
+				<if test="gender != null">gender = #{gender}, </if>
+			</set>
+			
+			where 
+				userid = #{userid}
+	</update>
+</mapper>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 구글 차트 라이브러리 -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <h1>구글 차트 연습 1</h1>
+    <hr>
+
+    <div class="root"></div>
+
+    <!-- 표를 그려주고 표를 배열로 구성한다 -->
+    
+    <script>
+        const root = document.querySelector('.root')
+        console.log(root)
+
+        google.charts.load('current', {packages : ['corechart'] })
+        // google.charts.setOnLoadCallBack(함수)
+        google.charts.setOnLoadCallback(drawChart)
+
+        function drawChart(){
+            // 1. 데이터를 배열로 준비
+            
+            const arr = [
+                ['짱구', 7],
+                ['단비', 7],
+                ['짱아', 7],
+                ['철수', 7],
+                ['이지은', 30]
+            ]
+
+            // 2. 테이블 생성
+
+            const table = new google.visualization.DataTable()
+
+            // 3. column 추가 (컬럼 이름 및 자료형)
+
+            table.addColumn('string', '이름')
+            table.addColumn('number', '나이')
+
+            // 4. row 추가  (실제 데이터)
+
+            table.addRows(arr)
+
+            // 5. 시각화 (dom을 지정)
+
+            const opt = {
+                title : '구글 차트 연습, 이름과 나이',
+                width : 900,
+                height : 450
+            }
+            const chart = new google.visualization.BarChart(root)
+            chart.draw(table, opt)
+        }
+    </script>
+</body>
+</html>

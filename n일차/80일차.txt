@@ -1,0 +1,209 @@
+80일차
+
+HTTP  내용
+
+Front		Backend			Database
+
+GET					select
+POST					insert
+PUT					update
+DELETE					delete
+
+-> DML과 1:1 대응되는 관계를 가지고 있다
+
+(PATCH)					update
+
+OPTIONS		CORS
+
+
+member
+
+member(GET)
+member/itbank -> 특정id 찾아와라
+member(POST)
+member/itbank
+member/itbank(DELETE)
+-> 쿼리스트링 대신에 깔끔하게 처리할 수 있다
+-> 주소를 간결하게 사용할 수 있다
+
+RESTful
+-> 주소 간결 
+
+제어해야할 파라미터가 많지 않다면 RESTful 형식으로 사용하는 것이 좋다
+
+@RestController		// ajax 요청을 전문적으로 처리하느 컨트롤러
+하위 모든 메서드는 @ResponseBody를 명시하지 않아도 처리하게 된다
+rest가 말하는 것은 주소를 간결하게 해서 HTTP요청으로 보내준다
+어노테이션이 만들어진 것은 많이 사용한다는 뜻
+
+
+마이크로 서비스 
+
+각각의 작은 서버
+서비스가 분산되어 있다. 그래서 유지보수가 다 따로 되어있어서 한쪽이 터저도 다른쪽은 작동가능
+한번에 다 모아두니까 스프링서버가 너무 커진다
+
+각각의 프로젝트를 만들어서 서버를 분산시키는 것이다 
+각각의 서버에 부담을 줄여주는 것
+
+rest가 커지면 마이크로 서비스가 된다
+
+
+-> @PathVariable을 사용하는 방법
+@GetMapping("/idCheck/{userid}")
+public HashMap<String, String> idCheck(@PathVariable String userid){
+	HashMap<String, String> map = new HashMap<String, String>();
+	System.out.println(userid);
+	MemberDTO dto = ms.getMember(userid);
+
+	map.put("msg", dto == null ? "사용 가능한 ID입니다" : "이미 사용중인 ID입니다");
+	map.put("color", dto == null ? "blue" : "red");
+	map.put("focus", dto == null ? "userpw" : "userid");
+	
+    	return map
+}
+-> HashMap을 이용해서 메시지를 더 넣어줄 수 있다
+서버는 결과 판단 용도
+
+==========================
+
+작성자, 내용, 날짜
+
+select * from board2;
+
+select a.writer, a.content, to_char(a.writeDate, 'yyyy-MM-dd') writeDate from board2 a
+    order by idx desc           -- 전체에서 몇개를 건너뛰고 시작할것인가
+    offset 0 rows               -- 한번에 몇 줄을 가져올 것인가
+    fetch next 5 rows only;
+
+===========================
+
+    <script>
+        const root = document.querySelector('.root')
+        console.log(root)
+        root.onscroll = function(event){
+            // console.log(event.target.innerHeight, event.target.srcollY)
+            const ob = {
+                // clientTop : event.target.clientTop,
+                // offsetHeight : event.target.offsetHeight,
+                clientHeight : event.target.clientHeight,   // 현재 스크롤 상단 위치
+                scrollHeight : event.target.scrollHeight,   // 화면에 보여지는 높이
+                scrollTop : event.target.scrollTop          // 스크롤 가능한 전체 높이
+            }
+            console.log(ob)
+
+            const flag = ob.scrollTop + ob.clientHeight === ob.scrollHeight
+            const num= +document.querySelector('.item:last-child').innerText
+            
+            if(flag){
+                console.log('추가 불러오기!')
+                for(let i = num + 1; i < num + 6; i++){
+                    const tag = `<div class="item">${i}</div>`
+                    root.innerHTML += tag
+                }
+            }
+
+        }
+    </script>
+
+==================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden{
+            display: none;
+        }
+        .hidden > div{
+            display: none;
+        }
+        .modal{
+            width : 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            margin: auto;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
+        .overlay{
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content{
+            width: 400px;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            background-color: skyblue;
+            z-index: 2;
+            box-shadow: 5px 5px grey;
+            border-radius: 10px;
+            z-index : 1;
+            
+        }
+        #closeBtn{
+            width : 200px;
+            margin :auto;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function openHandler(event){
+            const modal = document.querySelector('.modal')
+            const btn = document.getElementById('openBtn')
+            console.log(modal)
+            modal.classList.remove('hidden')
+            btn.classList.add('hidden')
+        }
+        function closeHandler(event){
+            const modal = document.querySelector('.modal')
+            const btn = document.getElementById('openBtn')
+            modal.classList.add('hidden')
+            btn.classList.remove('hidden')
+        }
+    </script>
+    
+    <h1>model test</h1>
+
+    <hr>
+    <button id="openBtn">모달 열기</button>
+    <div class="modal hidden">
+        <div class="overlay"></div>
+        <div class="modal-content">
+            <h2>이 창은 모달입니다</h2>
+            <p><img src="http://221.164.9.222/img/iu.jpg" alt="" width="200px"></p>
+            <p><button id="closeBtn">닫기</button></p>
+        </div>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('openBtn')
+        const closeBtn = document.getElementById('closeBtn')
+        const overlay = document.querySelector('.overlay')
+        console.log(openBtn)
+        console.log(closeBtn)
+
+        closeBtn.onclick = closeHandler
+        overlay.onclick = closeHandler
+        openBtn.onclick = openHandler
+
+    </script>
+</body>
+</html>
+
+=====================

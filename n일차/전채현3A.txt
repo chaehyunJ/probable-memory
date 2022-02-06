@@ -1,0 +1,126 @@
+(문제해결 시나리오)
+- 클라우드 컴퓨팅을 통해 데이터베이스를 구축해야 하는 상황이다.
+- 운영체제는 Redhat 계열의 리눅스를 사용한다
+- 당신은 설치 직후의 리눅스에 Oracle DB 설치 및 환경 구축을 담당한다
+
+
+
+1. yum 명령어를 통해 패키지를 설치하려고 했으나, 
+진행이 되지 않아 네트워크를 점검한다.
+네트워크 설정파일의 내용을 읽고, 잘못된 줄을 선택하고, 
+해당 줄을 수정하여 문제를 해결하세요
+
+① BOOTPRPTO=static
+② IPADDR=192.168.1.100
+③ NETMASK=255.255.255.0
+④ GATEWAY=192.168.1.2
+⑤ DNS=168.126.63.1
+
+정답 : 5 
+DNS1 = 168.126.63.1
+
+2. 초기 테스트 환경이므로, Oracle DB XE를 설치한다
+설치된 리눅스 배포판은 Redhat 계열의 오라클 리눅스이며, 
+버전 호환성을 맞춰야 한다
+다음 중 적절한 버전을 선택하세요
+
+① Oracle 9g
+② Oracle 11g
+③ Oracle 12c
+④ Oracle 18c
+⑤ Oracle 21c
+
+정답 : 4
+
+3. Oracle DB의 설치 이후, 네트워크 방화벽을 설정한다
+기본 설치 직후이므로, 포트번호는 기본설정을 따른다.
+다음 명령어의 빈칸에 맞는 번호를 선택하여 문제를 해결하세요
+
+[ firewall-cmd --permanent --zone=public --add-port=____/tcp ]
+
+① 8080 
+② 443
+③ 1521
+④ 3306
+⑤ 3434
+
+정답 : 3
+
+4. 오라클 DB에 관리자 계정으로 접속해야 한다
+관리자 비밀번호가 oracle이라고 할 때, 
+다음 중 적절한 명령어를 선택하여 문제를 해결하세요
+
+① sql sys:oracle
+② sqlplus sys as sysdba
+③ sqlplus sys/oracle as sysdba
+④ sqlplus sys/oracle
+⑤ sqlplus c##sys/oracle as sysdba
+
+정답 : 3
+
+
+5. 일반 사용자 계정을 생성하는 명령어를 완성하여 문제를 해결하세요
+(사용자 계정 이름은 c##itbank 이며, 비밀번호는 it로 지정한다)
+
+① create user itbank identified by it;
+② alter user itbank account unlock;
+③ grant connect, resource, dba to c##itbank;
+④ create user c##itbank identified by it;
+⑤ drop user c##itbank identified by it;
+
+
+정답 : 4
+
+
+
+
+
+
+
+
+6. 위에서 생성한 계정에 대해서 권한을 부여하는 명령어를 완성하여 
+문제를 해결하세요
+(부여하는 권한은 접속 권한, 자원에 대한 접근 권한, 관리자급 권한이다)
+
+① create user itbank identified by it;
+② alter user itbank account unlock;
+③ grant connect, resource, dba to c##itbank;
+④ create user c##itbank identified by it;
+⑤ drop user c##itbank identified by it;
+
+정답 : 3
+
+
+7. 계정 생성과 권한이 부여된 이후, 생성한 계정에 대해서 접속 테스트를 수행한다
+명령어를 직접 작성하여 문제를 해결하세요
+
+답안> sqlplus c##itbank/it;
+
+
+8. 접속한 DB의 기본 버전 정보를 출력하는 sql 명령어를 입력하려고 한다.
+빈 칸을 채워넣어 명령어를 완성하여 문제를 해결하세요
+답안> select banner from v$version;
+
+
+9. 자바코드에서 DB에 접속이 되는지 확인하기 위한 테스트 코드를 작성하여 실행한다
+3개의 문자열 변수 내용을 작성하세요
+(접속 주소는 192.168.1.100 이며, 포트번호는 기본설정을 따른다)
+
+String url = "jdbc:oracle:thin:@192.168.1.100:1521:xe";
+String user = "c##itbank";
+String password = "it";
+
+
+
+
+(서술형)
+
+10. 데이터베이스 관련 용어로 영속성이라는 용어가 있다.
+영속성을 만족하지 않는 경우와, 영속성을 만족하는 경우에 대해
+비교하는 형식으로 영속성에 대한 서술을 200자 이내로 서술하세요
+
+영속성은 데이터를 생성한 프로그램의 실행이 종료되어도 사라지지 않는 데이터의 특성을 의미한다.
+영속성을 만족하는 데이터의 경우 데이터베이스에 저장되어서 사용자의 요청에 따라 데이터를 불러올 수 있는 영구적인 저장 형태를 말하고,
+영속성을 만족하지 않는 경우는 데이터가 메모리에만 할당되어서 존재하기 때문에 프로그램이 종료되면 데이터도 같이 사라지게 된다. 
+
+

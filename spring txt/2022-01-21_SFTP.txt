@@ -1,0 +1,51 @@
+웹사이트를 준비하기 위해 일반적으로 구성하는 3가지 서버
+
+- Web Server 	(WAS, Tomcat)
+처리
+
+- DB Server	(Oracle)
+내부 데이터 보관 및 쿼리
+
+- Static Resource Server (AWS S3 Bucket)
+파일 자원 보관
+
+-----------------------------------------
+SSH (putty)
+- SSH (접속 및 제어)
+- SCP (파일 복사)
+- SFTP (파일 전송)	<-
+
+1) 거의 대부분의 리눅스가 기본으로 설치되어 있다
+2) Secure SHell (SSL) (데이터 암호화 전송)
+
+-----------------------------------------
+
+yum install httpd -y 	(아파치 웹서버 설치)
+
+/etc/httpd/conf/httpd.conf 편집 및 저장
+
+# Listen 80
+Listen 1234
+
+systemctl enable httpd.service
+systemctl restart httpd.service
+
+firewall-cmd --add-port=1234/tcp --permanent
+firewall-cmd --reload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

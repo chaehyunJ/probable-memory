@@ -1,0 +1,188 @@
+// create user는 새로운 계정을 생성하는 명령어, identified by 로 지정된 인증 또는 비번 설정
+echo "create user c##itbank identified by it;" >> /home/oracle/prepareAccount.sql
+
+// c##itbank에게 모든 권한 주기
+// user 계정 생성 시, 계정명에 c##이 들어가야한다 규칙임
+echo "grant connect, resource, dba to c##itbank;" >> /home/oracle/prepareAccount.sql
+(revoke connect, resource, dba to c##itbank -> 사용자 권한 해제하기)
+
+// XEPDB1 (pulggable DB -> DB위에 DB를 만드는 것)
+// alter session 명령을 사용하여 컨테이너 데이터베이스 내에서 컨테이너 간의 전환 가능
+(CDB로 로그인했을 때)
+echo "alter session set container=XEPDB1;" >> /home/oracle/prepareAccount.sql
+
+// HR계정 : 오라클에서 기본적으로 제공해주는 학습용 계정
+// 하지만 이 HR계정은 기본적으로 잠겨있어서 HR계정을 사용하기 위해서는 Unlock시켜줘야 한다
+echo "alter user hr account unlock;" >> /home/oracle/prepareAccount.sql
+
+// HR계정의 비밀번호 변경 -> hr로 
+// alter user 계정이름 idenified by 비밀번호
+echo "alter user hr identified by hr;" >> /home/oracle/prepareAccount.sql
+
+// HR계정 로그인을 가능하게 하는 명령어
+echo "grant create session to hr;" >> /home/oracle/prepareAccount.sql
+
+// HR계정에 연결, 자원을 만들 권한을 부여하지만 insert는 되지 않는다
+echo "grant connect, resource to hr;" >> /home/oracle/prepareAccount.sql
+
+// commit : 내가 명령문을 수행한 내역을 commit으로 실제 DB에 적용하는 명령어
+echo "commit;" >> /home/oracle/prepareAccount.sql
+
+-------------------------------------------------------------
+
+ 오라클 리눅스는 RedHat 계열의 리눅스이며, Oracle Database 를 설치 및 운용하기 적합한 리눅스이다
+   오라클 리눅스 8 이상의 버전에는 18c를 설치하지 않는다
+   반드시 오라클 7버전으로 다운로드 받거나, 오라클 리눅스8이라면 오라클 데이터베이스 19c 이상을 사용한다
+   (하지만 개인이 무료로 사용가능한 XE 버전은 11g, 12c, 18c까지 있다)
+   (19,21 -> 돈이 든다)
+
+-------------------------------------------------------------
+
+SQL : Structured Query Language
+
+DB에 접근하여 원하는 작동을 수행하도록 하는 언어
+
+DDL (Data Definition Language)
+- 데이터를 저장하기 위한 테이블, 계정, 기타 객체를 생성, 수정, 삭제
+- create
+- alter
+- drop
+
+오라클 12부터 관리자 계정이 아닌, 일반 사용자 계정은 c##으로 시작하도록 규칙이 설정되어 있다
+
+DML (Data Manifulation Language)
+- insert : 데이터 추가	CREATE
+- select : 데이터 읽기	READ
+- update : 데이터 수정	UPDATE
+- delete : 데이터 삭제	DELETE
+
+DCL (Data Control Language)
+- grant : 권한 부여
+- revoke : 권한 제거
+
+---------------------------------------
+sqlplus
+=> 단독 실행, 이후 계정과 비밀번호를 순차적으로 물어본다
+
+sqlplus 계정/패스워드
+=> 지정한 계정과 패스워드로 접속,
+=> 서버주소를 명시하지 않으면 localhost(나 자신 / 127.0.0.1)
+=> 서버포트를 명시하지 않으면 기본값 1521
+
+sqlplus 계정/패스워드 as sysdba
+=> 계정뒤에 as sysdba를 작성하면 DB 관리자 계정으로 접근
+=> sys, system 
+=> sqlplus /as sysdba
+ 
+sqlplus 계정/패스워드@서버주소:서버포트/SID
+=> 계정 뒤에 @를 지정하여 어떤 서버에 접속할 것인지 작성한다
+=> at
+=> sqlplus c##itbank/it@221.164.9.200:1521/xe
+
+JDBC에서 접속할때는
+String url = "jdbc:oracle:thin:@192.168.1.100:1521:xe";  
+-> ':' 으로 구분한다 jdbc연결할 때는 / sql접속할 때는 '/'로 구분한다
+
+String uesr = "c##itbank";
+String password = "it";
+
+==========================================================
+영속성(persistence)이란?
+
+데이터를 생성한 프로그램의 실행이 종료되더라도 사라지지 않는 데이터의 특성을 의미한다.
+
+영속성은 파일 시스템, 관계형 테이터베이스 혹은 객체 데이터베이스 등을 활용하여 구현한다.
+
+영속성을 갖지 않는 데이터는 단지 메모리에서만 존재하기 때문에 프로그램을 종료하면 모두 잃어버리게 된다.
+
+영속성을 만족하지 않는 경우 : 메모리(휘발성)에 저장되는 데이터는 날아간다
+영속성을 만족하는 경우 : DB에 저장하는 경우 
+
+출처: https://choong0121.tistory.com/entry/영속성-이란 [내일의 나를 만드는 방법]
+
+
+
+// 영속성 정리 블로그
+https://hckcksrl.medium.com/%EC%98%81%EC%86%8D%EC%84%B1-%EC%BB%A8%ED%85%8D%EC%8A%A4%ED%8A%B8-986464f8b1e8
+
+
+sqldeveloper -> with jdk8 
+//https://www.oracle.com/tools/downloads/sqldev-downloads.html
+
+8080포트 : Tomcat / oracle하고 충돌안나게 해야됨
+443 포트 : https
+3306 포트 : mysql
+
+웹 브라우저가 클라이언트 환경이 되는 것이다
+
+
+Server : Apache, nginX, IIS, Tomcat
+
+Client : Chrome, Egde, Firefox, Safari
+
+Oracle DB
+Server : Oracle DB
+Client : sqlplus, sqldeveloper  -> 데이터에 대한 클라이언트 프로그램이 sqldeveloper이다
+클라이언트 연결되어 있다면 접속이 가능하다
+-> 서버에 클라이언트를 설치하지 않아도 된다
+
+// 내가 원하는 유형의 데이터 형식을 정의하려면
+// 자바에서는 클래스를 작성하고
+// DB에서는 테이블을 작성한다
+// 컬럼의 자료형을 클래스를 정의하는 것과 거의 동일하다
+// private 필도와 public getter/setter, 기본생성자
+// 위 항복으로 작성된 클래스를 dto 클래스라고 한다
+// db데이터를 자바로 가지고 오려면 형태가 동일해야 한다
+// 엔티티와 릴레이션 사이를 왔다갔다하면서 데이터를 주고 받는다
+// DB에서는 세부 데이터를 조정할 수 있다
+// 자바에서는 getter와 setter를 활용하는것이다
+
+package jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.ResultSet;
+
+// Java에서 DataBase에 Connection 하기 위한 라이브러리(클래스 파일묶음)
+// JDBC (Java DataBase Connectivity)
+// JAR : Java ARchive File, 내부에 패키지 및 클래스 파일이 저장되어 있다
+
+public class Ex03 {
+        public static void main(String[] args) throws Exception {
+                
+                String url = "jdbc:oracle:thin:@192.168.1.100:1521/xe";                // 접속할 DB의 주소
+                String user = "c##itbank";                                                                        // 접속할 DB의 계정
+                String password = "it";                                                                                // 접속할 DB의 암호
+                String sql = "select * from mem";                                // 접속후 수행할 SQL 쿼리문
+                String name = null, age = null;                                                                                        // 결과를 저장할 문자열 변수
+                
+                // 1) 접속에 사용할 드라이버를 불러온다
+                Class.forName("oracle.jdbc.driver.OracleDriver");
+                
+                // 2) 드라이버와 주소,계정,암호를 이용하여 연결 객체를 만들어낸다(접속한다)
+                Connection conn = DriverManager.getConnection(url, user, password);
+                
+                // 3) 접속 상태 객체를 불러온다 (상태 정보를 가지는 객체에게 SQL문을 전달하여 결과를 받을 수 있다)
+                Statement stmt = conn.createStatement();
+                
+                // 4) 상태 객체에서 쿼리문을 전달하여 결과를 ResultSet 형태로 받는다
+                ResultSet rs = stmt.executeQuery(sql);
+                
+                while(rs.next()) {        // 5) 결과 셋에 다음 내용(아직 조회하지 않은)이 있으면 반복문을 수행한다
+                        name = rs.getString("name");
+                        age = rs.getString("age");
+                        System.out.println(name + " : " + age + "살");
+                        
+                        Member2 ob = new Member2();
+                        ob.setName(rs.getString("name"));
+                        ob.setAge(Integer.parseInt(rs.getString("age")));
+                }
+                
+//                System.out.println(data);        // 7) 변수에 저장된 값을 출력한다
+                
+                rs.close();                // 8) 사용이 끝났으면 연결의 역순으로 객체를 close() 한다
+                stmt.close();
+                conn.close();
+        }
+}

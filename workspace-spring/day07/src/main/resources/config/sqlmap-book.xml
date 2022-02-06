@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itbank.book.BookDAO">
+	<select id="selectList" resultType="com.itbank.book.BookDTO">
+		select * from book order by idx
+	</select>
+	
+	<select id="selectOrder" resultType="com.itbank.book.BookDTO" parameterType="String">
+		select * from book order by ${ order }
+	</select>
+</mapper>

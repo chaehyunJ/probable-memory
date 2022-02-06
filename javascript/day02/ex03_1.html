@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content {
+            display: flex;
+            flex-flow: wrap;
+            width: 700px;
+            margin: auto;
+        }
+        .item {
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid black;
+            box-shadow: 5px 5px grey;
+            border-radius: 10px;
+            width: 300px;
+            cursor: pointer;
+        }
+        .item:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        .item > div:first-child {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 함수 선언
+
+        // 객체 하나를 HTML 태그 형식으로 반환하는 함수
+        function JSONtoHTML(ob) {
+            const item = document.createElement('div')
+            item.classList.add('item')
+
+            for(key in ob) {
+                const value = ob[key]   // 배열의 인덱스, 맵의 key처럼 value에 접근하는 형태
+                // console.log(key + ' : ' + value)
+                const div = document.createElement('div')
+                div.classList.add(key)
+                if(key == 'img') {
+                    const img = document.createElement('img')
+                    img.src = value
+                    img.height = 200
+                    div.appendChild(img)
+                }
+                else {
+                    div.innerText = key + ' : ' + value
+                }
+                item.appendChild(div)
+            }
+            return item
+        }
+
+        // 음식 배열을 정렬하는 함수
+        function sortFoodArr(event) {
+            const order = event.target.dataset.order            // 정렬 기준을 가져온다
+            const asc = event.target.dataset.asc                // 정렬 순서를 가져온다
+
+            arr.sort((a, b) => (a[order] > b[order] ? 1 : -1) * asc)    // 정렬하고
+            event.target.dataset.asc = -asc                             // 정렬 순서 뒤집기
+            content.innerHTML = ''                                  // 기존 내용을 제거하고
+            showFoodList()                                          // 화면에 띄우기
+        }
+
+        // 음식 목록을 화면에 띄우는 함수
+        function showFoodList() {
+            arr.forEach(food => {
+                const div = JSONtoHTML(food)    // JavaScript Object Notation
+                content.appendChild(div)
+            })
+        }
+    </script>
+
+    <div id="root">
+        <div class="sortMenu">
+            <button id="sortByName" class="sortBtn" data-order="name" data-asc="1">메뉴 이름 순</button>
+            <button id="sortByPrice" class="sortBtn" data-order="price" data-asc="1">가격 순</button>
+        </div>
+        <div class="content"></div>
+    </div>
+    <!-- content 내부에 데이터를 ex02와 같은 방법으로 넣어서 출력하세요-->
+    <!-- 음식의 이미지, 메뉴 이름, 가상의 가격으로 데이터를 구성하고 -->
+    <!-- 길이 5 이상의 배열을 먼저 만들어서 화면에 구현하세요 -->
+    <!-- 이후, 버튼을 누르면 정렬이 수행되도록 처리하세요 -->
+    <!-- content의 내부 요소를 모두 삭제하려면, content.innerHTML = '' 로 처리 -->
+
+    <script>
+        const arr = [
+            {
+                img: 'http://db.kookje.co.kr/news2000/photo/2019/1024/L20191024.22015010246i1.jpg',
+                name: '소고기 전골',
+                price: 30000,
+            },
+            {
+                img: 'https://lh3.googleusercontent.com/proxy/huXJBbHrNa64YDMhYwFnMoLV-b0tPAgbR4Uhn25xl9C1iVPzEIxeQHFh1AKzBZruwXyicUJ1ohiv1dbtzaNqlvCZ961tN6B5CxFxwA',
+                name: '치킨',
+                price: 20000,
+            },
+            {
+                img: 'http://imagescdn.gettyimagesbank.com/500/201709/a10985218.jpg',
+                name: '양념갈비',
+                price: 35000,
+            },
+            {
+                img: 'https://rimage.gnst.jp/livejapan.com/public/article/detail/a/00/00/a0000370/img/basic/a0000370_main.jpg?20201002142956&q=80&rw=750&rh=536',
+                name: '초밥',
+                price: 27000,
+            },
+            {
+                img: 'https://mblogthumb-phinf.pstatic.net/MjAxOTExMTBfMTU2/MDAxNTczMzczNjc0OTcw.A0oC6fKkxVE42E68RwKtrZggpOBUYlyGdoaRnz6ZWmYg.VTyVGLLlyMY-rkGmpvQuRcHFS1tZrqy-kNW1x1TlxVIg.JPEG.cshee32/stkm9433_1110-72.jpg?type=w800',
+                name: '새우튀김',
+                price: 18000,
+            },
+            {
+                img: 'https://media.istockphoto.com/photos/breaded-pork-cutlet-picture-id1134158942?k=20&m=1134158942&s=612x612&w=0&h=hmwGymTmJJtxQ865-DcCBQZYUGL1VF4KXcBA4k8NN2s=',
+                name: '돈까스',
+                price: 24000,
+            },
+        ]
+        console.log(arr)
+
+        // 이벤트 대상을 불러와서 이벤트 함수를 연결
+        const sortMenu = document.querySelector('.sortMenu')
+        const content = document.querySelector('.content')
+
+        // 배열의 데이터를 (원하는 기준으로 정렬하여) 화면에 표시한다
+        const btnList = document.querySelectorAll('.sortBtn')
+        btnList.forEach(btn => btn.addEventListener('click', sortFoodArr))
+            
+        // 문서 로딩이 끝나면 실행할 함수
+        window.onload = showFoodList
+    </script>
+
+    <script>
+        // 자바스크립트 객체 <=> 문자열 변환
+
+        const jsonString = JSON.stringify(arr)      // 객체를 문자열로
+        const jsonObject = JSON.parse(jsonString)   // 문자열을 다시 객체로
+        // console.log(jsonString)
+        // console.log(jsonObject)
+    </script>
+    
+</body>
+</html>

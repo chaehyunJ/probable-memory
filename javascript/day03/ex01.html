@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        th, td{
+            border : 2px solid black;
+            padding: 10px;
+            font-size: 20px;
+        }
+        th{
+            background-color: #dadada;
+        }
+        .root{
+            display: flex;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <script src="convert.js"></script>
+    <script src="ex01.js"></script>
+    <h1>필터링과 정렬</h1>
+    <hr>
+
+    <div class="root">
+        <div class="left">
+            <fieldset>
+                <p><label><input type="radio" name="ageFilter" value="10">10대</label></p>
+                <p><label><input type="radio" name="ageFilter" value="20">20대</label></p>
+                <p><label><input type="radio" name="ageFilter" value="30">30대</label></p>
+                <p><label><input type="radio" name="ageFilter" value="40">40대</label></p>
+            </fieldset>
+            <fieldset>
+                <p><input type="radio" name="genderFilter" value="남성">남성</p>
+                <p><input type="radio" name="genderFilter" value="여성">여성</p>
+            </fieldset>
+        </div>
+        
+        <div class="right">
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>나이</th>
+                        <th>성별</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // List<DTO타입> list = Arrays.asList(new DTO[] {dto1, dto2, dto3});
+        // list.forEach ( (dto) -> {
+        //      System.out.println(dto.getName());
+        //})
+
+        const arr = [
+            {name : '이지은', age : 29, gender : '여성'},
+            {name : '홍지노', age : 41, gender : '남성'},
+            {name : '나단비', age : 7, gender : '여성'},
+            {name : '카이조쿠', age : 18, gender : '남성'},
+            {name : '이병건', age : 18, gender : '남성'},
+        ]
+
+        const tbody = document.querySelector('.right tbody')
+        console.log(tbody)
+        tbody.innerHTML = ''
+        arr.forEach(dto => {
+            const tr = convert(dto)    // 함수작성 필요함
+            tbody.appendChild(tr)
+
+        })
+
+        const boxList = document.querySelectorAll('.left input[type="radio"]')
+        console.log(boxList)
+
+        // box를 클릭하면 filterHandler를 실행시켜라
+        boxList.forEach(box => box.onclick = filterHandler)
+    </script>
+</body>
+</html>

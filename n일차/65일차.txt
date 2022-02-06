@@ -1,0 +1,116 @@
+65일차
+
+<mapper namespace="com.itbank.member.MemberDAO">
+<!-- 
+	파라미터 타입이 resultType이랑 동일해서 작동했던것이다. 하지만 명확하게 parameterType을 적어주는 것이 좋다  
+	줄수가 1줄이상으로 넘어가면 자동으로 List로 반환처리한다
+-->
+	<select id="selectMember" resultType="member" parameterType="member">
+		select * from member where userid = #{userid} and userpw = #{userpw}
+	</select>
+</mapper>
+
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ include file="header.jsp" %>
+
+<div id="alert" class="jcce aice ffc" 
+    style="border: 2px solid black;
+           box-shadow: 5px 5px grey;
+           width: 500px;
+           height: 300px;
+           margin: 50px auto;
+           border-radius: 25px;
+           
+           opacity: 0;
+           position: absolute;
+           top: 50%;
+           transition-duration: 1.5s">
+   <div style="font-size: 16px; font-weight: bold; margin: 30px;">
+      ${msg }
+   </div>
+   <button class="btn">확인</button>
+</div>
+
+<script>
+   const cpath = '${cpath}'
+   const msg = '${msg}'
+   const url = '${url}'
+   const alert = document.getElementById('alert')
+   
+   const clientWidth = document.body.clientWidth
+   const alertWidth = alert.clientWidth
+   const left = (clientWidth / 2) - (alertWidth / 2)
+   
+   window.onload = function(event) {
+      alert.style.left = left + 'px'
+      console.log('onload !!')
+      alert.style.opacity = 1;
+      alert.style.top = '30%'
+   }
+   document.querySelector('button').onclick = function() {
+      if(url == '') {
+          history.go(-1);
+       }
+       else {
+          location.href = cpath + '/' + url
+       }
+   }
+   
+//    alert(msg)
+//    if(url == '') {
+//       history.go(-1);
+//    }
+//    else {
+//       location.href = cpath + '/' + url
+//    }
+</script>
+
+</body>
+</html>
+
+================
+
+전역으로 처리하면 ControllAdvice 아니라면 ExceptionHandler
+
+
+
+================
+
+비밀번호 인증처리
+
+1. 인증 처리 
+- 사용자 ID + Email
+- 일치하면 새로운 비밀번호 발급
+
+select * from member userid = 'userid' and email = 'email'
+
+2. 랜덤한 문자열 8자리를 만들어서 member 테이블의 userpw값을 <update>
+
+3. 새로운 비밀번호를 사용자에게 알려주고 로그인창으로 페이지 이동
+
+
+================
+
+<select id="selectBlogsLike" resultType="Blog">
+  <bind name="pattern" value="'%' + _parameter.getTitle() + '%'" />
+  SELECT * FROM BLOG
+  WHERE title LIKE #{pattern}
+</select>
+
+=================
+
+select * from book order by ${ order }
+
+slect * from book
+	<if test="type != null and search == 'idx'">
+		where
+	</if>
+	
+
+
+String order, type search
+
+HashMap<String, String> param = new HashMap<String, String>();
+param.put("order, order);

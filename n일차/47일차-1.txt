@@ -1,0 +1,346 @@
+47일차
+
+
+리눅스 서버시간하고 하드웨어 시간하고 일치시키는 방법
+- 시스템의 하드웨어 시간 확인 및 변경
+
+시스템의 하드웨어 시간은 mainboard 에 저장되어 있는 시간이며, 시스템의 로드 증가나, 메인보드 battery에 따라 시간이 느려질 수 있다.
+hwclock 명령으로 하드웨어 시간을 확인 할 수 있으며, -w 옵션을 추가하면 하드웨어 시간을 시스템시간과 동일하게 맞출 수 있다. 
+
+[root@localhost ~]# date
+2021. 11. 05. (금) 17:56:58 KST
+[root@localhost ~]# rdate -s time.bora.net
+[root@localhost ~]# date
+2021. 11. 05. (금) 08:57:16 KST
+[root@localhost ~]# date
+2021. 11. 05. (금) 08:57:21 KST
+[root@localhost ~]# hwclock -w
+[root@localhost ~]# hwclock 
+2021년 11월 05일 (금) 오전 08시 58분 28초  -0.397850 seconds
+[root@localhost ~]# date
+2021. 11. 05. (금) 08:58:34 KST
+[root@localhost ~]# 
+
+
+====================================
+
+
+localhost:8080말고 자신의 ip주소를 넣으면 getromteAddr로 가지고 오는 값이 본인의 ip주소가 된다
+
+
+min-height : 400px 
+-- > 최소 높이는 400px 이며 내용이 크기에 따라 달라짐
+
+===================================
+
+	// ip 주소 마킹2
+	private String ipMarking(String ipAddress) {
+		String data = "";
+		int cnt = 0;
+		for(int i = 0; i < ipAddress.length(); i++) {
+			char ch = ipAddress.charAt(i);
+			if(ch == '.') {
+				cnt++;
+			}
+			data += ch;
+			if(cnt > 2) {
+				data += "***.***";
+				return data;
+			}
+		}
+		return data;
+	}
+
+해당 메서드를 dto.setIpAddress(ipMarking(rs.getIpAddress()));
+이렇게 rs로 받오는 값에 해당 메서드를 넣어서 변환을 시켜준다
+==================================
+
+
+목록에 버튼을 만들경우
+
+<button class="btn" data-set="1">버튼 1</button>
+<button class="btn" data-set="1">버튼 1</button>
+<script>
+	const btnList = document.querySelectorAll('.btn')
+	
+	btnList.forEach(btn => {
+		btn.onclick = function(event){
+		const idx = event.target.dataset.idx
+		alert('버튼에 연결된 data-set : ' + idx)
+		}
+  	})
+
+</script>
+
+=================================
+
+const row = '${ dao.delete(param.idx) }'	// 만약 EL의 값이 없으면 빈문자열이 되면 문법상 오류는 발생하지 않는다
+
+그레서 따옴표로 묶어주는 것이 안전하다
+
+=================================
+
+글자 위, 아래, 중간 정렬하기 (세로 정렬)
+글자를 상하로 세로 정렬할 때는 'vertical-align' 속성을 사용합니다.
+
+테이블에서 글자의 위치를 지정하기 위해 'top', 'middle', 'bottom' 값을 사용할 수 있습니다.
+
+
+=================================
+
+form 안에 버튼은 submit역할을 한다
+
+=================================
+
+POST 방식은 새로고침하면 팝업창이 뜬다
+
+================================
+
+수정에는 ip하고 시간도 들어가야 한다
+
+================================
+
+
+<c:choose>
+	<c:when test="${ dao.modify(dto) == 1 }">
+		<script>
+			alert('수정 성공')
+			location.href='${cpath}/board/list.jsp'
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			alert('수정실패')
+			history.back()
+		</script>
+	</c:otherwise>
+</c:choose>
+
+<%
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String today = sdf.format(new Date());
+%>
+
+new Date (new java.util.Date().getTime());
+
+================================
+
+autocomplete="off"
+-> input타입의 속성 자동완성을 꺼준다
+
+================================
+
+sql 구문을 이용해서 함수를 줄일 수 있다
+
+================================
+
+include 액션태그를 사용할 때 해더를 나눠서 사용할 수 있다
+
+헤더를 java만 있는 헤더와 html만 있는 헤더를 나눠서 처리할 수 있다
+
+===============================
+
+paging ??
+
+어떤 개념인가, 어떤 방식으로 구현할 수 있는가??
+
+페이지 개수 = 총 게시글 수 / 화면당 표현할 게시글 수 (조건에 따라서  + 1)
+
+select * from board where idx = 1 order by idx desc
+
+
+============================
+
+페이징 처리 순서 생각하기
+
+1. 페이징에 필요한 데이터
+- 화면에 보여줄 테이블의 수
+- 페이징 처리 넘버부분
+
+2. 쿼리문 rownum을 사용하려면 서브쿼리 사용
+
+
+
+===========================
+
+where hit > 10
+
+데이터 필터링, 정렬, 그룹화 등의 모든 데이터 연산은 데이터베이스에서 처리한다
+자바는 UI 레이아웃만, 데이터 가공처리는 SQL이
+
+==========================
+
+writedate를 desc로 정렬해서 rownum을 붙여서 출력학
+
+-- 정렬이 된 결과물에 rownum을 붙여서 작업을 해야하기 때문에 서브쿼리를 사용한다
+
+select * from (
+	select rownum num, b.* from (
+		select * from board order by writedate desc
+		) b
+	)
+where num between 1 and 10;
+
+=========================
+
+create view board_view
+as
+select * from (
+    select b.* from (
+        select * from board order by writedate desc
+        ) b
+    )
+
+-> view를 만들때는 where절을 빼고 select문만 들어가게끔 해서 만든다
+========================
+
+select * from board_view where num between 11 and 20;
+
+이렇게 줄일 수 있다
+
+=======================
+
+
+create view board_view
+as
+select * from (
+	select rownum num, b.* from (
+		select * from board order by writedate desc
+		) b
+	);
+
+select * from board_view where num between 11 and 20;
+
+=======================
+
+이전과 다음구현
+
+page++; page--;
+
+=======================
+
+스칼라 값을 얻는 함수를 만들어라 : 단일 값을 얻는 함수를 만들어라랑 동일한 의미
+
+======================
+
+트랜잭션이란 
+- 하나의 단위로 수행되길 바라는 쿼리의 묶음(= 업무 수행단위, 논리적인 수행단위)
+
+일괄공개 
+- update notice set pub = 1 where id in (2,4,6,8);
+- update notice set pub = 0 where id in (1,3,5,7);
+
+트랜잭션 처리란?
+ACID 를 유지하는 것
+
+- Automaticity : 원자성
+- Consistency : 일관성
+- Isolation : 고립성
+- Durability : 지속성
+
+
+====================
+
+jsessionid를 쿠키에 저장할 때 처리한 jsp파일을 경로로 만들어진다 그럼 
+
+이걸 해결하려면  ?? 어떻게 해야 되나...
+
+======================
+
+application은 전역적으로 사용 가능
+
+session은 세션 범주에서만 사용 가능(현재 접속한 사용자 - 사용자마다 그 공간이 달라진다)
+
+브라우저가 달라지면 사용자를 다르게 인식한다
+
+크롬도 창을 여러개 띄워도 하위그룹 쓰레드 개념으로 프로세스의 흐름을 나눠 같는 쓰레드이다
+
+
+==============================
+
+웹 서버가 현재 사용자(session)을 구분하는 방식
+
+- 세션 ID 와 사용자 저장소 구별
+
+사용자는 (SID) 가 없는 상태로 WAS(Web Application Server) 로 오게 된다 (헬스장에 등록안하고 처음 온 경우)
+
+이 경우에는 session 사물함은 사용할 수 없다 (session은 사물함마다 번호가 있는데 처음 온 회원은 번호가 할당되지 않았기 때문이다)
+
+그래서 사용자는 application에 저장됨 
+
+그리고 이제 사용자가 돌아갈 때 SID를 부여 받음 (그러면 이제 회원등록하고 SID를 챙겨간거니까 다음에 올때 쿠키에 SID를 가져오면 해당 SID로 안내해줌)
+
+SID 가 JSESSIONID이다
+
+===============================
+
+상태 저장을 위한 값의 저장소의 특징
+
+ 이 쿠키가 어느경우에 사용자로부터 전달되어야 하는지
+-> 이렇게 하면 모든 페이지를 요청할 때마다 c쿠키를 가져오라는 뜻
+c.setPath("/");
+
+이렇게 하고 확인해보면
+
+Set-Cookie : 값, Path=/
+
+만약 
+c.setPath("/login");
+login이라는 URL을 호출해야지 해당 쿠키가 호출된다
+이렇게 하면 /login이 호출될 때만 해당 쿠키를 호출한다는 뜻
+
+===============================
+
+쿠키의 저장시간을 설정해주지 않으면 In-Memory상태인데
+
+저장시간을 설정해주면 In-File이 된다
+
+==============================
+
+application 
+
+- 사용범위 : 전역 범위에서 사용하는 저장 공간
+- 생명주기 : WAS가 시작해서 종료할 때 까지
+- 저장위치 : WAS 서버의 메모리
+
+session 
+
+- 사용범위 : 세션 범위에서 사용하는 저장 공간
+- 생명주기 : 세션이 시작해서 종료할 때 까지
+- 저장위치 : WAS 서버의 메모리
+
+cookie
+
+- 사용범위 : Web Browser별 지정한 path범주 공강
+- 생명주기 : Browser에 전달한 시간부터 만료시간까지
+- 저장위치 : Web Browser의 메모리 또는 파일
+
+================================
+
+varStatus : forEach 문이 반복할 때 관리되는 상태 값을 사용할 수 있게 하는 속성
+
+vatStatus="st"
+
+${ st.current }
+${ st.index }
+${ st.count }
+${ st.first }
+${ st.last }
+${ st.begin }
+${ st.end }
+${ st.step }
+
+=====================
+
+
+pager 번호 생성
+
+5개씩 나눈다고 가정할 때
+
+page = 3 -> 3 - (3-1) % 5 -> 1
+page = 21 -> 21-(21-1) % 5 -> 21
+page = 14 -> 14-(14-1) % 5 -> 11
+
+
+
+

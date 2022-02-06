@@ -1,0 +1,21 @@
+
+
+1) 클래스를 작성할 패키지를 root-context.xml 혹은 servlet-context.xml 에 base-package로 등록한다
+   (스프링 빈을 설정하기 위한 밑작업)
+
+2) 내가 직접 작성하는 클래스가 아니라면, <bean> 태그를 이용하여 클래스를 불러와서 빈으로 등록한다
+
+3) 클래스를 작성한다. @Controller, @Service, @Repository 와 같은 어노테이션에 의해 스프링 빈으로 등록된다
+   (스프링이 객체를 컨테이너 내부에 싱글톤형식으로 생성하고, 필요하다면 객체 간의 의존성을 스프링이 연결(주입)한다)
+
+4) 요청 -> 컨트롤러 @RequestMapping 함수 -> @Service 의 함수 -> @Repository의 함수
+   반환값이 역순으로 반환되고, 보통 반환값을 model.addAttribute(name, value)
+				  mav.addObject(name, value) 형식으로 처리한다
+
+5) 컨트롤러의 @RequestMapping 함수는 String 혹은 ModelAndView를 반환하면서 ViewName을 DispatcherServlet에게 전달
+
+6) DispatcherServlet 은 prefix + viewName + suffix를 만들어서 포워딩한다
+   단, viewName.startWith("redirect:") 이면 포워드를 수행하지 않고, 지정한 주소로 리다이렉트 한다
+
+7) 포워드라면, jsp의 내용이 화면에 출력되고, 
+   리다이렉트라면, 다시 @RequestMapping의 함수를 호출한다

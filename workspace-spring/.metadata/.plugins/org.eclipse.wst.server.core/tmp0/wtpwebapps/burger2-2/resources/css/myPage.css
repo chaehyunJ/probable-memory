@@ -1,0 +1,107 @@
+.myPage-container{
+	display: flex;
+	min-height: 600px;
+}
+.myPage-list {
+	border: 1px solid white;
+	width: 10%;
+	min-width: 160px;
+	margin-right: 0px;
+}
+.myPage-table {
+	border: 1px solid white;
+	margin-left: 180px;
+}
+.myPage-tableType01{
+	border: 1px solid black;
+	justify-content: center;
+	text-align: left;
+}
+
+
+.myPage-tableType01 input{
+	width: 200px;
+    height: 25px;
+    border: 1px solid #dadada;
+}
+.myPage-tableType01 input[name="gender"]{
+	width : 60px;
+}
+
+.myPage-title {
+	padding-left: 15px;
+}
+.myPage-navPath {
+	padding-left: 10px;
+}
+.myPage-navPath > li {
+	display: inline-block;
+	font-weight: 500px;
+	margin-top: 10px;
+}
+.myPage-navPath li:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 14px 0 10px;
+    vertical-align: middle;
+    border-radius: 100%;
+    background: #f5bd43;
+}
+.myPage-History {
+	margin-left: 180px;	
+}
+.myPage-tableType01 dd:before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 14px 0 10px;
+    vertical-align: middle;
+    border-radius: 100%;
+    background: #f5bd43;
+}
+.myPage-tableType01 dd{
+	margin-inline-start: 00px;
+	text-align: left;
+}
+.memberInfo-wrap{
+	margin-left: 180px;
+}
+
+/* chkPw */
+.chk-pw{
+	display: flex;
+	border : 1px solid black;
+	width : 1200px;
+	margin : auto;
+	margin-top : 20px;
+	margin-bottom: 200px;
+}
+
+.chk-pw-form{
+	width : 500px;
+	border : 1px solid black;
+	margin : auto;
+	margin-top : 50px;
+	margin-bottom: 80px;
+	text-align: center;
+}
+.chk-pw-form > form > input[name="userpw"]{
+	width : 350px;
+	height: 50px;
+	border : 0;
+	border-bottom: 1px solid #dadada;
+}
+.chk-pw-form > form > input[type="submit"]{
+	border : 0;
+	width : 100px;
+	height: 50px;
+	background-color :  #ffbc0d;
+	border-radius : 30px;
+	cursor: pointer;
+	font-size: 18px;
+	font-weight: bold;
+	color : white;
+}

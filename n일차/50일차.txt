@@ -1,0 +1,203 @@
+http://localhost:8080/day13_board_2_my_paging/login/loginForm.jsp?url=http://localhost:8080/day13_board_2_my_paging/board/view.jsp
+
+			
+<c:if test="${ login.userid != more.userid }">				
+	<script>					
+		alert('게시글 작성자가 아닙니다')					
+		history.go(-1)				
+	</script>
+</c:if>	
+
+<c:if test="${ login.userid == more.writer }">
+	<a href="${ cpath }/board/modify.jsp?idx=${ more.idx}"><button>수정</button></a>
+	<button id="deleteBtn">삭제</button>			
+</c:if>
+<c:if test="${ login.userid != more.writer }">				
+	<script>					
+		alert('게시글 작성자가 아닙니다')					
+		history.go(-1)				
+	</script>
+</c:if>	
+
+<c:if test="${ empty login }">
+	<div>
+		<a href="${ cpath }/login/loginForm.jsp?url=${ pageContext.request.requestURL }?idx=${ more.idx}&page=${ param.page }"><button>수정</button></a>
+		<a href="${ cpath }/login/loginForm.jsp?url=${ pageContext.request.requestURL }"><button>삭제</button></a>
+	</div>
+</c:if>
+
+<c:set var="del" value="${ dao.searchByIdx(param.idx) }" />
+
+
+<c:if test="${ login.userid != del.writer }">
+	<script>
+		alert('작성자가 아닙니다')
+		history.go(-1)
+	</script>
+</c:if>
+
+/view.jsp?idx=137&page=
+
+=========================
+
+
+쪽번호
+
+<fmt:parseNumber var="section" value="${(param.page -1) / 10 }" integerOnly="true"/>
+<p>section : ${ section }</p>
+
+<c:set var="begin" value="${ section*10 + 1 }"/>
+<c:set var="end" value="${ pageCount < begin + 9  ? pageCount : begin + 9 }"/>
+
+===========================
+
+1~5까지를 하나의 section(덩어리로)으로 만들어서 처리하기
+
+section은 ( param.page -1 ) / 5로 처리
+why? 1~5 까지 0으로 만들기 위해서 5로 나눠서 몫을 0으로 맞춤
+(1~5까지 동일한 숫자를 뽑아내기 위해서)
+
+page	section		begin	end
+1	0		1	5
+2	0		1	5
+3	0		1	5
+4	0		1	5
+5	0		1	5
+
+begin => section*5 + 1
+if
+ end가 딱 떨어질 경우
+ end => begin + 4
+ ()
+else 
+ end가 딱 안 떨어지는 경우
+ end => pageCount
+-> 여기서 pageCount가 begin+4 보다 작으면 pageCount를 출력하고 아니면 begin+4를 출력하도록 한다
+6	1		6	10
+7	1		6	10
+8	1		6	10
+9	1		6	10
+10	1		6	10
+
+11	2		11	12
+12	2		11	12
+
+이전은 section이 0이 아니라면 띄워주기
+다음은 pageCount 를 5로 나눈 값이 end를 5로 나눈 값이 다르면 띄워주기
+
+
+====
+
+<c:set var="modify" value="${ loginDAO.modify(dto) }"/>
+
+
+<script>
+	if(modify == 1){
+		<%
+			session.invalidate();
+		%>
+		alert('수정 성공')
+		location.href='${ cpath }'
+	}
+	else{
+		alert('수정 실패')
+		history.go(-1)
+	}
+
+</script>
+
+=====
+
+paging class
+
+준비물 
+1. param.page / pageCount
+
+
+// 멤버 필드의 초기값이니까 내가 알아서 설정가능
+int page = 1
+
+2. 처리할거
+- 페이징 처리
+- 쪽 번호
+
+3. 변수 선언
+
+<%-- 마지막 페이지를 pageCount로 고정시키기 --%>
+<fmt:parseNumber var="section" value="${(param.page -1) / 5 }" integerOnly="true"/>
+<c:set var="begin" value="${ section*5 + 1 }"/>
+<c:set var="end" value="${ pageCount < begin + 4  ? pageCount : begin + 4 }"/>
+<c:set var="prev" value="${ section != 0 }"/>
+<c:set var="next" value="${ pageCount / 5 != end / 5 }"/>
+<p>section : ${ section }</p>
+<p>begin : ${ begin }</p>
+<p>end : ${ end }</p>
+<p>prev : ${ prev }</p>
+<p>next : ${ next }</p>
+
+int page = 1;
+int begin, end, section;
+boolean prev, next;
+
+
+public int section(int page){
+	section = (page-1) / 5;
+	
+	return section;
+}
+
+
+public int begin(int section){
+	begin = section*5 + 1;
+	
+	return begin;
+}
+
+public int end (int begin, int pageCount){
+	end = pageCount < begin+4 ? pageCount : begin+4;
+	
+	return end;
+}
+
+public boolean prev (int section){
+	prev = true;
+	if(section != 0){
+	prev = false;
+	}
+	return prev;
+}
+
+public boolean next(int pageCount, int end){
+	next = false;
+	boolean flag = pageCount / 5 != end / 5;
+	if(flag){
+	next = true;
+	}
+	return next;
+}
+
+==============
+
+select * from member;
+select * from board2;
+desc board2;
+
+delete member where userid = 'bbb' and userpw = 'bbb';
+
+update member set username = 'dragon', email='af@naver.com', gender='여성' where userid = 'ccc';
+
+commit;
+
+rollback;
+delete from member where userid = 'zerg' and userpw ='zerg'; 
+
+
+
+alter table board2 disable constraint board2_member_fk;
+
+===============
+
+
+https://jinyeanseok.tistory.com/87
+
+===============

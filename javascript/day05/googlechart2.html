@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <div class="root"></div>
+
+
+    <script>
+        const root = document.querySelector('.root')
+
+        google.charts.load('current',{'packages' : ['corechart']})
+        google.charts.setOnLoadCallback(drawChart)
+
+        function drawChart(){
+            let table = new google.visualization.DataTable()
+            table.addColumn('string','year')
+            table.addColumn('number','sale')
+            table.addColumn('number','expense')
+            table.addColumn('number','profit')
+            table.addRows([
+                ['2018', 1000, 400, 200],
+                ['2019', 2000, 200, 700],
+                ['2020', 3000, 300, 400],
+                ['2021', 5000, 500, 100]
+            ])
+            
+            const opt ={
+                title : 'itbank',
+                subtitle : 'Sales, Expense, and Profit : 2018-2021'
+            }
+            
+            const chart = new google.visualization.BarChart(root)
+            chart.draw(table, opt)
+        }
+
+        
+
+       
+
+     
+    </script>
+</body>
+</html>

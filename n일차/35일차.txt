@@ -1,0 +1,130 @@
+<%@  %> : 지시자 
+-> 페이지 전반에 적용되는 설정, 다른 JSP파일 포함, 다른 라이브러리 불러오기
+
+<%!  %> : 선언부
+-> 멤버 필드나 멤버 메서드를 선언하거나 정의하는 영역
+
+<%  %>  : 스크립틀릿
+-> 메인에 해당하는 자바 코드를 작성하는 함수영역, service()
+
+<%=  %> : 표현식
+-> 스크립틀릿 out.print()을 이용해 HTML문서에 자바 값을 출력하는 구문
+
+===================================
+
+내장 객체 : 생성자를 통해서 생성하지 않아도, JSP페이지가 기본저긍로 참조할 수 있는 객체
+
+입출력 : request, response, out
+
+서블릿 : page, config
+
+외부환경 정보 제공 : session, application, pageContext
+
+예외 : Exception
+
+
+==================================
+
+request 내장 객체
+
+request : 클라이언트가 웹 서버에 전달하는 요청을 객체화한 형태
+request : 클라이언트가 웹 서버에 전달하는 요청을 객체화한 형태
+
+보내는 사람 : 클라이언트 (ip)
+받는 사람 : 웹 서버(ip)
+요청 방식 : 내가 문서를 받고 싶다면 get, 내가 어떤 내용을 담아서 보낸다면 post
+요청 내용 : 받고 싶은 문서의 이름이나, 클라이언트가 보내는 내용을 받기 원하는 서버의 페이지 이름 (자원의 위치)
+URL : Uniform Resource Locator (웹 브라우저의 주소창을 통해서 전달)
+
+
+http://search.naver.com/search.naver?query=이지은
+
+http://				프로토콜, 서버와 클라이언트가 통신하는 규칙과 약속
+search.naver.com		서버 도메인(IP), 어떤 서버에게 요청을 전달하는가 (받는 사람)
+search.naver			문서, 페이지의 이름 (자원의 이름)
+?query=이지은			파라미터, ?변수이름1=변수값1&변수이름2=변수값...
+				클라이언트가 서버에게 전달하고자 하는 값 (내가 원하는 문서를 특정하기 위해서)
+		
+http://도서관.com/대여.html?책이름=드래곤볼&책번호=3
+도서관에 가서 대여 창구에서 "책 이름은 드래곤볼이구요, 번호는 3권입니다. 이 책을 저에게 주세요(GET)"
+
+
+	<h4>보내는 사람 : <%=request.getRemoteAddr() %></h4>
+	<h4>받는 사람 : <%=request.getLocalAddr() %></h4>
+	<h4>요청 방식 : <%=request.getMethod() %></h4>
+	<h4>요청 내용 : <%=request.getRequestURL() %></h4>
+	<h4>자원 식별자 : <%=request.getRequestURI() %></h4>
+
+
+-> method를 post로 하면 인코딩하는 방식이 달라지기 때문에 출력하는 쪽에서 인코딩을 해줘야 한다
+<%-- post 방시긍로 전달받는 데이터의 인코딩을 지정한다(rquest.getParameter() 호출전) --%>
+<%-- 봉투에 담았더니 글자가 깨졌다고 생각 --%>
+<% request.setCharacterEncoding("UTF-8"); %>
+
+
+-> autofocus는 페이지에 하나만
+-> required 는 필수 입력값 (HTML5에서 지원 / form이 있고 submit이 있어야 작동한다)
+
+button 태그는 조건부로 form태그안에서는 submit을 할 수 있다
+
+input의 type="button"은 form태그 안에 있어도 안됨
+
+<%-- 시작태그 끝에 / 넣어서 마무리 태그를 생략할 수 있다 XML형식 --%>
+<jsp:useBean id="dto" class="day02.Quiz01DTO"/>
+	
+<%-- request는 String 형식이지만 setProperty를 이용하면 자동파싱이 된다 --%>
+-- > 사용자 입력이라서 request는 String 형식이다
+<%-- parseInt를 자동으로 해준다 --%>
+<jsp:setProperty property="*" name="dto"/>
+
+
+public class DTO{
+	// private 멤버 필드
+	// public getter/setter
+	// 작성하지 않은 경우 기본 생성자
+
+<jsp:useBean id="dto" class="day02.Quiz01DTO"/>
+<jsp:setProperty property="*" name="dto"/>
+
+- input태그의 name속성을 기준으로 파라미터와 getter/setter를 맵핑한다
+- request.getParameter()는 String이지만,
+  <jsp:setProperty/> 는 primitive에 대한 파싱도 자동 지원한다
+
+- 다수의 파라미터를 캡슐화해서 하나의 객체로 취급하기 때문에, 다른 페이지나 DB에 전달하기 용이하다
+
+======================================================================
+
+<form action="파라미터를 전달받을 주소" method="파라미터를 전달하는 방식">
+- method 안쓰면 default는 GET
+
+- GET : 폼을 제출하면 파라미터를 포함하여 GET방식의 새로운 요청을 만들어낸다
+	(파라미터를 쿼리스트링형태로 전달, 주소창을 통해서 전달)
+
+- POST : 폼을 제출하면 파라미터는 별도의 헤더를 통해서 전달
+	(request 해더의 form-data 영역으로 전달)
+	(주소창을 통해서 전달하는 방식이 아니므로, 글자를 전달하는 규칙(인코딩)이 달라질 수 있다)
+	<% request.setCharacterEncoding("UTF-8); %>
+	request.getParameter()를 호출하기 전에 위 코드가 있어야 한다 (한글자가 2바이트 이상인것들은 깨질 수 있다)
+
+
+=====================================================================
+
+request.getMethod()
+요청 방식에 따른 분류
+
+GET vs. POST
+
+GET (검색?)
+- 주소창을 통해서 파라미터를 전달한다
+- POST에 비해서 빠르다 
+- 글자로 표현가능한 데이터만 전달할 수 있다(파일 전송 불가)
+- 글자수에 대한 제한이 있는 경우도 있다(최근 환경에서는 사실상 길이 제한은 거의 없음)
+- 용량 제한은 어느정도 있다
+- 자바스크립트를 통한 주소변경(location.href = 'http://egoing.net';), <a>태그를 통한 주소변경은 모둔 GET방식의 요청이다
+
+POST (로그인, 파일 전송 경우에 사용)
+- 요청헤더의 form-data 영역에 파라미터를 담아서 전송한다(주소창을 통하지 않는다)
+- 비밀번호와 같이 보안상 민감한 데이터를 다룰때에는 글자로 구성된 데이터라고 해도, POST를 사용한다
+- 주소창에 노출이 되지 않을 뿐, 패킷을 열어보면 패스워드도 식별가능하다 (암호화로 보완 가능, HTTPS)
+- 데이터 자체가 암호화되는 것이 아니다 개발자도구로 들어가서 보면 다 확인할 수 있다
+- 파일 전송 가능(추가적인 속성을 작성해야 함)

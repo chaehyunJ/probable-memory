@@ -1,0 +1,147 @@
+47일차
+
+
+리눅스 서버시간하고 하드웨어 시간하고 일치시키는 방법
+- 시스템의 하드웨어 시간 확인 및 변경
+
+시스템의 하드웨어 시간은 mainboard 에 저장되어 있는 시간이며, 시스템의 로드 증가나, 메인보드 battery에 따라 시간이 느려질 수 있다.
+hwclock 명령으로 하드웨어 시간을 확인 할 수 있으며, -w 옵션을 추가하면 하드웨어 시간을 시스템시간과 동일하게 맞출 수 있다. 
+
+[root@localhost ~]# date
+2021. 11. 05. (금) 17:56:58 KST
+[root@localhost ~]# rdate -s time.bora.net
+[root@localhost ~]# date
+2021. 11. 05. (금) 08:57:16 KST
+[root@localhost ~]# date
+2021. 11. 05. (금) 08:57:21 KST
+[root@localhost ~]# hwclock -w
+[root@localhost ~]# hwclock 
+2021년 11월 05일 (금) 오전 08시 58분 28초  -0.397850 seconds
+[root@localhost ~]# date
+2021. 11. 05. (금) 08:58:34 KST
+[root@localhost ~]# 
+
+
+====================================
+
+
+localhost:8080말고 자신의 ip주소를 넣으면 getromteAddr로 가지고 오는 값이 본인의 ip주소가 된다
+
+
+min-height : 400px 
+-- > 최소 높이는 400px 이며 내용이 크기에 따라 달라짐
+
+===================================
+
+	// ip 주소 마킹2
+	private String ipMarking(String ipAddress) {
+		String data = "";
+		int cnt = 0;
+		for(int i = 0; i < ipAddress.length(); i++) {
+			char ch = ipAddress.charAt(i);
+			if(ch == '.') {
+				cnt++;
+			}
+			data += ch;
+			if(cnt > 2) {
+				data += "***.***";
+				return data;
+			}
+		}
+		return data;
+	}
+
+해당 메서드를 dto.setIpAddress(ipMarking(rs.getIpAddress()));
+이렇게 rs로 받오는 값에 해당 메서드를 넣어서 변환을 시켜준다
+==================================
+
+
+목록에 버튼을 만들경우
+
+<button class="btn" data-set="1">버튼 1</button>
+<button class="btn" data-set="1">버튼 1</button>
+<script>
+	const btnList = document.querySelectorAll('.btn')
+	
+	btnList.forEach(btn => {
+		btn.onclick = function(event){
+		const idx = event.target.dataset.idx
+		alert('버튼에 연결된 data-set : ' + idx)
+		}
+  	})
+
+</script>
+
+=================================
+
+const row = '${ dao.delete(param.idx) }'	// 만약 EL의 값이 없으면 빈문자열이 되면 문법상 오류는 발생하지 않는다
+
+그레서 따옴표로 묶어주는 것이 안전하다
+
+=================================
+
+글자 위, 아래, 중간 정렬하기 (세로 정렬)
+글자를 상하로 세로 정렬할 때는 'vertical-align' 속성을 사용합니다.
+
+테이블에서 글자의 위치를 지정하기 위해 'top', 'middle', 'bottom' 값을 사용할 수 있습니다.
+
+
+=================================
+
+form 안에 버튼은 submit역할을 한다
+
+=================================
+
+POST 방식은 새로고침하면 팝업창이 뜬다
+
+================================
+
+수정에는 ip하고 시간도 들어가야 한다
+
+================================
+
+
+<c:choose>
+	<c:when test="${ dao.modify(dto) == 1 }">
+		<script>
+			alert('수정 성공')
+			location.href='${cpath}/board/list.jsp'
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			alert('수정실패')
+			history.back()
+		</script>
+	</c:otherwise>
+</c:choose>
+
+<%
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String today = sdf.format(new Date());
+%>
+
+new Date (new java.util.Date().getTime());
+
+================================
+
+autocomplete="off"
+-> input타입의 속성 자동완성을 꺼준다
+
+================================
+
+sql 구문을 이용해서 함수를 줄일 수 있다
+
+================================
+
+include 액션태그를 사용할 때 해더를 나눠서 사용할 수 있다
+
+헤더를 java만 있는 헤더와 html만 있는 헤더를 나눠서 처리할 수 있다
+
+===============================
+
+paging ??
+
+어떤 개념인가, 어떤 방식으로 구현할 수 있는가??
+
+페이지 개수 = 총 게시글 수 / 화면당 표현할 게시글 수 (조건에 따라서  + 1)

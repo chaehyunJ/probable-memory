@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+</head>
+<body>
+    <!-- 자바의 import랑 비슷한 의미로 가지고 가면 된다 -->
+    <!-- 밑에 script는 main함수 느낌 html요소가 다 불러온 다음에 실행되어야 해서 밑에 작성하는 것 -->
+    <script src="convert.js"></script>
+    <script src="ex02.js"></script>
+
+    <h1>필터링과 정렬</h1>
+    <hr>
+
+    <div class="root">
+        <div class="left">
+            <fieldset>
+                <p><label><input type="checkbox" name="ageFilter" value="10">10대</label></p>
+                <p><label><input type="checkbox" name="ageFilter" value="20">20대</label></p>
+                <p><label><input type="checkbox" name="ageFilter" value="30">30대</label></p>
+                <p><label><input type="checkbox" name="ageFilter" value="40">40대</label></p>
+            </fieldset>
+        </div>
+        
+        <div class="right">
+            <table>
+                <thead>
+                    <tr>
+                        <th>이름</th>
+                        <th>나이</th>
+                        <th>성별</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+            // ex02.js에서 불러오는 데이터
+            const arr = getData()
+            
+            // HTML 문서에서 불러오는 객체
+            const tbody = document.querySelector('.right tbody')
+            console.log(tbody)
+            tbody.innerHTML = ''
+            // 배열의 각 요소를 불러와서
+            arr.forEach(dto => {        
+            const tr = convert(dto)    // 자바스크립트 객체를 HTML Element로 변환하여
+            tbody.appendChild(tr)       // HTML 문서에 그린다(rendering)
+
+            })
+
+        const boxList = document.querySelectorAll('.left input[type="checkbox"]')
+        boxList.forEach(box => box.onclick = filterHandler)
+
+    </script>
+</body>
+</html>

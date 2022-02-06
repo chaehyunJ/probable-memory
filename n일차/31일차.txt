@@ -1,0 +1,35 @@
+31일차
+
+css reset방법
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+해당 링크 삽입해주기
+
+아니면 reset.css를 만들어 두는 것
+
+
+z-index : 100% 
+/*
+z축으로 겹친 요소간의 우선순위를 준다  숫자가 높은게 더 위로 올라온다 
+사용자가 보는 시각이라서 z-index라고 한다
+스크롤 내릴때 이미지끼리 겹치는 현상을 방지해야 한다
+*/
+
+--> css 이미지 위에 글자 보여주기
+https://zzznara2.tistory.com/806
+
+복습 : 삼각형 display: none / display : block 상태 
+
+script : 클릭하면 다른 화면 보이게 하기 
+(원리 -> 내용들을 absolute로 해서 겹치게 한 다음에 버튼을 클릭하면 해당 내용이 보이도록 하는 것이다)
+
+
+js
+
+classList란
+Element.classList : 읽기 전용 프로퍼티!
+공백으로 구분된 문자열인 element.className을 통해 엘리먼트의 클래스 목록에 접근하는 방식을 대체하는 간편한 방법이다.
+
+
+다음주 금요일까지 개인과제
+특정사이트의 메인화면을 구현하기
+-> 해당 사이트 URL첨부

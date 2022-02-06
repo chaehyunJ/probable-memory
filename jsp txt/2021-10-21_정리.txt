@@ -1,0 +1,78 @@
+JSP (Java Server Page)
+
+지시자, 선언부, 스크립틀릿, 표현식, 주석
+
+내장객체
+
+request		클라이언트 -> 서버	
+
+요청 내용			URL, URI, ServerName, ServerPort
+요청 방식			GET, POST
+요청에 포함되는 사용자 입력값	Parameter, 문자열
+
+response	서버 -> 클라이언트
+사용자에게 보낼 응답을 만들어내는 객체
+
+응답 코드
+200	OK
+302	Redirect
+400	Client Error
+401 	Unauthorized
+403	Forbidden
+404	Not Found
+500	Server Internal Error
+
+
+요청받은 문서가 존재하면, 해당 문서를 컴파일 -> HTML형식의 텍스트를 보낸다
+
+out	문서에 문자열을 출력하기 위해 사용하는 내장객체
+	<%= %> 으로 대체할 수 있다
+	out 객체는 response에서 참조할 수 있다
+
+	PrintWriter out = response.getWriter();
+
+pageContext
+	현재 문서에서 유효한 정보를 가지고 있다
+	뿐만 아니라, attribute를 저장할 수 있는 최소 범위이며 대부분 기본값이다
+	JSP에서 다른 attribute 저장 가능한 객체에 접근하려면 
+	pageContext 에서부터 찾아갈 수 있다
+
+session
+	주로 로그인 정보를 저장하는데 많이 사용된다
+	쿠키와 대비되는 개념이며, 특정 정보를 서버에 저장하기 위해 많이 활용된다
+	
+application
+	서버가 열려 있는 동안 유지되는 attribute저장소 이면서
+	동시에 서블릿 정보를 포함하고 있다
+
+
+----------------------------------------------------------------------
+
+parameter
+	사용자가 서버에게 전달하는 데이터
+	문자열이 기본 타입이다
+	사용자에 의해서 만들어지는 값이므로, setParameter()는 없다
+	<jsp:useBean> <jsp:setProperty> 로 객체화 할 수 있다
+
+attribute
+	서버에서 만들어내는 데이터
+	Object가 기본 타입이다
+	서버에서 만들어낼 수 있으며, 내장 객체에 저장할 수 있다
+	스크립틀릿에서 참조하려면 형변환을 거쳐야 하지만
+	EL Tag를 통해서 손쉽게 접근할 수 있다
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

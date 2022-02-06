@@ -1,0 +1,13 @@
+package com.itbank.controller;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AjaxController {
+
+	@GetMapping(value="/vaccine", produces="application/json; charset=utf-8")
+	public String vaccine() {
+		
+	}
+}

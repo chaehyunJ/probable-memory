@@ -1,0 +1,11 @@
+1. 5
+2. 5
+3. 5
+4. 3
+5. 5
+6. 4
+7. resources 태그를 사용한다. mapping은 브라우저가 요청하느 주소형식, location은 mapping 형식의 요청이 들어오면 자원을 찾을 폴더의 위치를 말한다.
+style.css를 링크하는 방법은 아래와 같다.
+link 태그는 head태그 내부에 작성해야한다.
+<link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/style.css" type="text/css">
+

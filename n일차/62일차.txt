@@ -1,0 +1,75 @@
+62일차
+
+1. myBatis 
+
+영속성(Persistent) 프레임워크
+-> 프로그램이 종료되어도 데이터가 유실되지 않는다.
+-> 데이터베이스에 저장해두면 웹서버를 꺼도 데이터는 살아있다
+
+jdbcTemplate 보다 db에 접근하는 것을 쉽게 해준다
+
+
+-> 간편한 방법과 상세한 방법이 있다
+
+mybatis-spring 도 scan할 때 쓴다
+
+-> mybatis를 사용할 때 DAO에서 @Repository 안써도 되는데 다른 사람들 가독성을 위해서 사용한다
+
+
+
+
+2. orm ( Object Relation Mapping )
+
+O : Object 	객체 ( Object Oriented Programming )
+R : Relation	관계 ( Relation DBMS ) <- 테이블 안에 있는 데이터가 Relation
+M : Mapping	맵핑 ( 자동으로 맵핑해준다 )
+
+-> mybatis가 만들어낸 public class DAO implement test~ 이걸로 객체를 만듬
+-> 이걸 proxy라고 한다 (대리자) proxy 객체 / 중간 다리 역할을 한다
+-> 테이블안에 있는 것을 자동을 맵핑해준다
+
+developer에서 익스포트하기 
+
+전부 체크하고 저장할 장소 지정하고 해당 파일을 끌어와서 ctrl+enter하면 됨
+
+
+스프링의 커멘트 객체가 날짜까지 다 받아준다
+더이상 수동으로 맵핑할 필요가 없다
+
+
+// 프록시 객체로 찾아내는 것
+
+//@Repository   // myBatis:spring-scan 으로 찾을때는 실제 작업을 프록시객체가 처리하므로 @Repository 안해도 됨
+public interface BookDAO {
+
+	@Select("select * from book order by idx")
+	List<BookDTO> selectList();
+
+	@Insert("insert into book values (book_seq.nextval, #{name}, #{author}, #{publisher}, #{publishDate}, #{price}, #{description})")
+	int insert(BookDTO dto);
+	
+	
+	// #{} 는 매개변수의 getter에 접근하며, 자료형에 따라 따옴표 처리하거나 숫자이면 따옴표 붙이지 않는다
+	
+	// ${} 는 매개변수의 getter에 접근하며, 자료형에 상관없이 따옴표 처리 및 변환 없이 그대로 맵핑한다
+	
+	// 특수한 경우를 제외하면, myBatis는 매개변수로 하나의 Object만 받는다
+	
+	// 여러 매개변수를 묶어서 전달하려면 HashMap을 사용할 수 있다.
+
+============================
+
+myBatis Mapper 자동 주입
+
+1. DAO는 interface형식으로 생성한다
+
+2. root-context.xml에서 interface등록
+
+	<!-- 여기가 간단하게 만들어주는 것이다  -->
+	<mybatis-spring:scan base-package="com.itbank.model"/>
+
+=============================
+
+proxy는 결국 DB와 큰 덩어리 사이에 하나의 레이어가 있는데 거기서 DAO의 인터페이스로 객체를 만들어서 주고 받아주는 역할을 하는 것이다
+
+

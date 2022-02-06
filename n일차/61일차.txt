@@ -1,0 +1,55 @@
+61일차
+
+1. 클래스를 작성할 패키지를 root-context.xml 혹은 servlet-context.xml 에 base-package 로 등록한다.
+   ( 스프링 빈을 설정하기 위한 밑작업 )
+
+2. 내가 직접 작성하는 클래스가 아니라면, <bean> 태그를 이용하여 클래스를 불러와서 빈으로 등록한다
+
+3. 클래스를 작성한다. @Controller,-> @Service, -> @Repository 와 같은 어노테이션에 의해 스프링 빈으로 등록된다.
+   ( 스프링이 객체를 컨테이너 내부에 싱글톤형식으로 생성하고, 필요하다면 객체 간의 의존성을 스프링이 연결(주입)된다 )
+
+-> 자바 단독 : service 
+-> 만약 DB에서 바로 호출해도 되는 상황이라면 생략되지만 / legacy특성상 service를 써주는 것이 좋다  -> why ? 일관성을 유지시켜 주기 위해서
+-> DB에 있는 것을 정제해서 가져오기 위해서 service를 사용한다.
+-> DB에 있는 것을 바로 보여주면 안되는 상황같을 때 service에서 처리를 해준다
+
+4. 요청 -> 컨트롤러 @RequestMapping 함수 -> @Service 의 함수 -> @Repository 의 함수
+   반환값이 역순으로 반환되고, 보통 반환값을 model.addAttribute(name, value), mav.addObject(name, value)형식으로 처리한다
+
+5. 컨트롤러의 @RequestMapping 함수는 String 혹은 ModelAndView를 반환하면서 ViewName을 DispatcherServlet에게 전달
+
+6. DispatcherServlet 은 prefix + viewName + suffix 를 만들어서 포워딩한다
+   단, viewName.startWith("redirect:") 이면 포워드를 수행하지 않고, 지정한 주소로 리다이렉트 한다
+
+7. 포워드라면, jsp의 내용이 화면에 출력되고, 리다이렉트라면, 다시 @RequestMapping의 함수를 호출한다.
+
+-> 싱글톤으로 되어있기 때문에 참조가 너무 쉽다 / 하나가 두개를 참조해도 된다 /
+
+
+========================
+
+실습)
+
+JSP때 만들었던 Book 프로젝트를 스프링 기반으로 리빌드하세요
+
+1. Book 테이블에 도서 정보가 들어가 있고, 목록/추가/수정/삭제/검색 기능이 구형되어야 합니다
+
+1-1. 로그인 했을 때 session이 없으면 로그인 화면으로 이동
+
+2. 로그인 기능을 추가하고, admin/1234 계정으로 로그인하면 추가/수정/삭제가 가능하도록 변경하세요
+
+
+IDX         NOT NULL NUMBER         
+NAME        NOT NULL VARCHAR2(200)  
+AUTHOR      NOT NULL VARCHAR2(50)   
+PUBLISHER   NOT NULL VARCHAR2(100)  
+PUBLISHDATE          DATE           
+PRICE       NOT NULL NUMBER         
+DESCRIPTION NOT NULL VARCHAR2(2000) 
+
+IDX               NUMBER        
+USERID   NOT NULL VARCHAR2(500) 
+USERPW   NOT NULL VARCHAR2(500) 
+NICKNAME NOT NULL VARCHAR2(500) 
+PROFILE           VARCHAR2(500)
+	

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="quiz.css" type="text/css">
+</head>
+<body>
+    <script src="quiz.js"></script>
+    <h1>중복 선택 가능한 필터와 정렬</h1>
+    <hr>
+    <h3>음식을 주제로 사진, 이름, 가격, (카테고리)로 데이터를 구성하고 기능적용</h3>
+
+    <div class="root">
+        <div class="left">
+            <fieldset>
+                <p><label><input type="checkbox" name="priceFilter" value="10000">1만원대</label></p>
+                <p><label><input type="checkbox" name="priceFilter" value="20000">2만원대</label></p>
+                <p><label><input type="checkbox" name="priceFilter" value="30000">3만원대</label></p>
+                <p><label><input type="checkbox" name="priceFilter" value="40000">4만원대</label></p>
+                <p><label><input type="checkbox" name="priceFilter" value="0">전체</label></p>
+            </fieldset>
+            <fieldset>
+                <p><label><input type="checkbox" name="cateFilter" value="한식">한식</label></p>
+                <p><label><input type="checkbox" name="cateFilter" value="일식">일식</label></p>
+                <p><label><input type="checkbox" name="cateFilter" value="중식">중식</label></p>
+            </fieldset>
+            <fieldset>
+                <p><label><input type="radio" name="sort" value="name">이름순</label></p>
+                <p><label><input type="radio" name="sort" value="price">가격순</label></p>
+            </fieldset>
+        </div>
+        <div class="right"></div>
+    </div>
+
+    <script>
+        const arr = getDataArray()
+
+        const right = document.querySelector('.root > .right')
+        console.log(right) 
+
+        const dom = getDom(arr)
+        
+        render(right, dom)
+
+        const boxList = document.querySelectorAll('.root > .left input')
+        console.log(boxList)
+        boxList.forEach(box => box.onclick = filterHandler)
+    </script>
+</body>
+</html>

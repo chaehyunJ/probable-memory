@@ -1,0 +1,107 @@
+네트워크 연결 안될때 확인
+1. 방화벽 firewall-cmd --list-all
+	firrwall-cmd -add-port=1521/tcp --permanent로 1521포트 열어준다
+2. /etc/sysconfig/network-scripts/ifcfg-ens33가서 network설정확인하기
+3. listener 확인하기
+   -> oracle계정으로 들어간다 su - oracle -> . oraenv
+   -> lsnrctl status 로 lsnrctl이 작동하는지 확인
+
+4. 포트 열러있는지 확인
+   -> netstat -lntup | grep 22
+   -> netstat -lntup | grep 1521
+
+5. service network restart해서 다시 네트워클 재시작해보기
+
+6. 그리고 ping보내보기
+
+=====================================================================
+
+sql.Date하고 util.Date하고 공존은 안되나..?
+
+=====================================================================
+
+idx를 조건으로 검색하여 데이터를 찾고,	-- select * from book where idx = '%s';
+해당 줄의 데이터를 입력받은 내용으로 수정하기
+
+1. 어떤 데이터를 수정할 것인가? (검색)
+- DTO를 반환
+
+2. 반환받는 DTO에 새로 넣을 값을 입력받느다
+- dto.setName(name);
+
+3. DAO에 전달해서 sql을 수행하고 결과를 화면에 출력
+
+
+
+select * from tabs;
+
+select * from book order by idx;
+-- order by 뒤에 정렬을 붙여주지 않으면 asc가 기본으로 작동한다
+
+delete book where idx = 7;
+-- where 조건을 name으로 하면 오타가 발생할 수 있다
+-- 동일한 이름의 책이 날아갈 수 있다
+-- 그래서 기본키로 날려야 한다
+
+rollback;
+
+
+update book set score = 7.6 where idx = 8;
+-- 변경사항이 들어가는 set구문이 존재한다
+
+insert into book(name, author, publisher, publish_date, isbm, book_price, ebook_price, score)
+    select 
+    name, author, publisher, publish_date, isbm+1, book_price, ebook_price, score
+    
+    from book where idx = 4;
+-- 기본의 값을 불러와서 다시 insert into 해준 것이다
+
+select * from book order by idx;
+
+
+select name from book
+    where book_price = max(book_price); -- 집계함수를 where절에 사용할 수 없다
+    
+select * from book where book_price > (select avg(book_price) from book);
+
+select book.* from book;   --book.* *은 book안의 모든 컬럼을 조회하기
+
+select max(book_price) max from book;
+select min(book_price) from book;
+select avg(book_price) from book;
+select sum(book_price) from book;
+select count(*) from book;  --idx를 사용해도 되지만 *을 사용하는게 관용적이다
+                            -- 줄수를 파악하여 데이터가 저장되어 있는지 찾아낸다
+
+
+select rownum, book.name, book.author from book;
+
+
+select rownum, book.idx idx,  book.name name from book where rownum between 1 and 5;
+-- 별칭을 사용하면 자바에서 불러올 때도 별칭을 사용해야 한다
+
+select * from (select * from book order by book_price) where rownum between 1 and 6;
+-- 서브쿼리를 사용할 때는 테이블 자리에 서브쿼리가 들어가는 것이므로 테이블 명이 빠져야 한다(실수)
+--------------------------------------------------------------------------------
+
+select name from book
+    where book_price = max(book_price); -- 분석 함수는 조건절에 사용할 수 없다
+    
+select book.* from book;
+select rownum, book.name, book.author from book;    -- rownum : 불러온 요소에 대한 현상태의 줄번호
+delete book where idx = 3;
+select rownum, book.idx, book.name from book where rownum >= 1 and rownum < 5;
+--------------------------------------------------------------------------------
+
+select * from book;
+
+
+
+update book set
+        name = '헝그리', author = '홍진호', publisher = '대한출판사', isbm = '12323323',
+        publish_date ='19/11/11',
+        book_price = 12200, ebook_price = 10000, score = 9.3
+    where idx = 10;
+
+update book set name = '연벙', author = 'sss' where idx = 10;
+

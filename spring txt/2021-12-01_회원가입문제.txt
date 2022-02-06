@@ -1,0 +1,19 @@
+1) 대문페이지에서 회원가입 링크를 클릭 
+- /join/step1
+
+2) 회원가입 페이지(step1)에서는 프로젝트에 포함된 텍스트 파일을 읽어서 약관을 jsp에게 넘기고
+   약관에 동의하세요 라는 form을 띄워준다 (체크박스 활용)
+- /join/step1
+- <form action="step2">
+
+3) 약관에 동의했다면 회원정보 입력(step2) form을 띄워준다
+- /join/step2
+- <form action="step3" method="POST">
+
+4) 회원정보 입력이 끝나면 확인차 비밀번호를 가린상태로 정보를 한번 더 출력(step3)
+   하고 확인/취소를 받는다
+- /join/step3
+- <script> confirm('입력하신 정보가 맞습니까?') </script>
+
+5) 확인을 입력받으면 DB에 insert 하고 로그인 페이지로 리다이렉트한다
+

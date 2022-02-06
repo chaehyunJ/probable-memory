@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<!-- HikariCP를  이용한 DB접근 정보   -->
+	<!-- 
+			Connection을 관리해주는 dataSource는 hikariCP로 처리하고,
+			DB에 접속 및 쿼리문 수행, 객체-관계 맵핑은 myBatis로 처리한다.
+	
+	 -->
+	
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@221.164.9.200:50000:xe"/>
+		<property name="username" value="c##itbank"/>
+		<property name="password" value="it"/>
+	</bean>
+	
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+	
+	<!-- 실질적으로 template를 설정해주는 곳 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		
+		<property name="configLocation" value="classpath:config/mybatis-config.xml"/>
+		
+		<!-- mapper 파일의 경로를 리스트 형식으로 작성 -->
+		<property name="mapperLocations">
+			<list>
+				<!-- 
+					classpath 는 src/main/resource를 말한다 여기에 있는 것이 실제로 있어야 작동할 수 있다 
+					각각의 mapper파일이 DAO와 1:1 대응된다
+				 -->
+					<value>classpath:config/sqlmap-member.xml</value>
+					<value>classpath:config/sqlmap-book.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close">
+		<constructor-arg ref="sqlSessionFactory"/>	
+	</bean>
+	
+	
+	<context:component-scan base-package="com.itbank.service"/>
+	<context:component-scan base-package="com.itbank.member"/>
+	
+	<!-- DB에 접근할 mybatis-spring scan선언  -->
+	<!-- myBatis는 interface일 때만 등록한다  -->
+	<mybatis-spring:scan base-package="com.itbank.model"/>
+	<mybatis-spring:scan base-package="com.itbank.member"/>
+	<mybatis-spring:scan base-package="com.itbank.book"/>
+</beans>

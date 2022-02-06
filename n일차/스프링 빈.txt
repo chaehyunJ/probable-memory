@@ -1,0 +1,47 @@
+ <!--  지금 밑에 있는 것들이 IoC 컨테이너에 담겨있는 것이다. -->
+    
+<!--     <bean id="exam" class="teset3.Exam"> -->
+<!--     	<property name="kor" value="30"></property> -->
+<!--     	<property name="mat" value="40"></property> -->
+<!--     	<property name="eng" value="50"></property> -->
+<!--     </bean> -->
+	
+	<!-- Battery b1 = new Battery();  -->
+	<bean id="b1" class="teset3.Battery"/>
+	
+	<!--  Toy toy = new Toy(); -->
+	<bean id="toy" class="teset3.Toy">
+		<property name="battery" ref="b1"/>
+		<!--  setBattery(Battery b1) 라고 만들어서 battery라는 이름으로 사용가능 한거다 / 아니면 사용불가 -->
+		<!--  setBattery를 호출하는 방법 : name의 이름을 넣을 때 set을 빼고 맨 앞의 문자를 소문자로 -->
+		<!--  받는 값에 따라서 value인지 ref인지 판단해야 한다 
+			    받는 값이 참조변수인지 아닌지 판단해서 참조변수이면 ref 아니면 value를 사용
+		 -->
+		
+<!-- 	 생성자 매개변수를 만드는 방법 :	<constructor-arg ref="b1"></constructor-arg> -->
+	
+	</bean>
+	
+		<!--  Dependency 객체 생성과 초기화 -->
+	 	<!--  Exam 객체 constructor를 이용한 속성 값 설정 -->
+	 	<!--  Exam exam = new Exam(int num1, int num2, int num3); -->
+<!-- 	 	<bean id="exam" class="teset3.Exam"> -->
+<!-- 	 		<constructor-arg index="0" value="50"/> -->
+<!--                        위에 처럼 index로 들어갈 순서를 지정할 수 있다 
+							아니면 name="kor" 처럼 직접 컬럼이름을 지정해줄 수 있다 
+							type도 넣어줄 수 있다    -->
+<!-- 	 		<constructor-arg value="30"/> -->
+<!-- 	 		<constructor-arg value="70"/> -->
+<!-- 	 	</bean> -->
+
+<!--         이렇게 접두사를 붙여서 사용할 수 있다 근데 사용하려면 Namespaces에 들어가서 p를 체크해야 한다 -->
+<!-- 		<bean id="exam" class="teset3.Exam" p:kor="30" p:eng="40" p:mat="70"/> -->
+
+<!-- 		<bean id="exams" class="java.util.ArrayList"> -->
+<!-- 			<constructor-arg> -->
+<!-- 				<list> -->
+<!-- 					<bean class="teset3.Exam"  p:kor="30" p:eng="40" p:mat="70"> -->
+<!-- 					<ref bean="exam"> -->
+<!-- 				</list> -->
+<!-- 			</constructor-arg> -->
+</beans>	

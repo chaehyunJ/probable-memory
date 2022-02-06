@@ -1,0 +1,310 @@
+@charset "utf-8";
+
+
+/* 전역 태그 지정 */
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+ul {
+	list-style: none;
+	margin: 0;
+}
+
+div {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0px;
+	padding : 0px;
+}
+
+.top-left>ul>li {
+	width: 100px;
+}
+
+/* header - css */
+
+header {
+	border-bottom: 1px solid #ffbc0d;
+}
+
+.header {
+	display: flex;
+	width: 1200px;
+	justify-content: space-between;
+	margin: auto;
+}
+
+.main-logo {
+	width: 80px;
+}
+
+.search-icon {
+	width: 40px;
+}
+
+.top-left {
+	display: flex;
+}
+
+.top-left>.top-menu>ul {
+	display: flex;
+}
+
+.top-left>ul>li {
+	border: 0px solid black;
+	padding-top: 30px;
+	line-height: 25px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.top-left>ul>li:hover {
+	border-bottom: 2px solid #ffbc0d;
+}
+
+.top-inner {
+	display: flex;
+}
+
+.top-right {
+	margin-top: -15px;
+}
+
+.top-right>ul {
+	display: flex;
+}
+
+.top-right>ul>li {
+	border: 0px solid black;
+	width: 90px;
+	text-align: center;
+}
+
+.top-right>ul>li:nth-child(1), .top-right>ul>li:nth-child(2), .top-right>ul>li:nth-child(3)
+	{
+	border: 0px solid black;
+	border-radius: 45px;
+	width: 110px;
+	height: 40px;
+	padding-top: 12px;
+	margin-top: 20px;
+	margin-right: 20px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.top-right>ul>li:nth-child(1) {
+	background-color: red;
+}
+
+.top-right>ul>li:nth-child(2) {
+	background-color: #ffbc0d;
+}
+
+.top-right>ul>li:nth-child(3) {
+	background-color: #264a36;
+}
+
+.top-right>ul>li:nth-child(4) {
+	padding-top: 20px;
+}
+
+/* main-slide */
+
+.main-slide {
+	display: flex;
+	overflow: hidden;
+	width: 1700px;
+	margin: auto;
+}
+
+.slide {
+	display: flex;
+	width: 11900px;
+	margin: auto;
+	transition-duration: 0.5s;
+}
+
+.slide>.slide-img {
+	width: 1700px;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.menu-inner {
+	display: block;
+	padding-left: 0px;
+	margin-right: 10px;
+}
+
+/* 서브메뉴 */
+
+.top-menu {
+	width: 600px;
+	padding-top: 35px;
+	border: 0px solid black;
+}
+
+.top-menu>ul {
+	border: 0px solid black;
+	width: 500px;
+}
+
+.top-menu>ul>li {
+	width: 100px;
+	margin-right: 20px;
+}
+
+.top-menu-submenu {
+	border: 0px solid black;
+	display: none;
+	width: 150px;
+	height: 250px;
+	margin-left: -40px;
+	/* margin-right: 30px; */
+	position: absolute; -
+	-transition: 0.5s;
+	background-color: white;
+	/* 혜린 추가  */
+	z-index: 2; 
+}
+
+.top-menu-inner {
+	margin-top: 30px;
+	display: block;
+	border: 0px solid black;
+	width: 150px;
+	padding-left: 0px;
+	margin-left: 30px;
+	/* margin-left: 900px; */
+}
+
+.top-menu-submenu>.top-menu-inner>li {
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+.top-menu-submenu>.top-menu-inner>li>a {
+	transition-duration: 0.3s;
+}
+
+.top-menu>ul:hover .top-menu-submenu {
+	display: block;
+}
+
+.main-inner {
+	border: 1px solid black;
+	width: 950px;
+	margin: auto;
+	display: flex;
+	flex-flow: wrap;
+}
+
+.main-inner-one {
+	display: flex;
+	flex-flow: wrap;
+}
+
+.main-inner-one1 {
+	display: flex;
+	flex-flow: wrap;
+}
+
+.main-inner-one2 {
+	display: flex;
+	flex-flow: wrap;
+}
+
+.main-inner-event {
+	width: 250px;
+	height: 280px;
+	margin: 30px;
+	border: 1px solid black;
+}
+
+.title-main {
+	width: 950px;
+	border: 1px solid black;
+	margin: auto;
+	margin-top: 30px;
+}
+
+.hidden1 {
+	display: none;
+}
+
+.btn-list {
+	width: 950px;
+	border: 0px solid black;
+	margin: auto;
+}
+
+#btn, #btn1 {
+	border: 0;
+	font-size: 40px;
+	background-color: #ffbc0d;
+	color: white;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	cursor: pointer;
+	border: 0px solid black;
+	margin-left: 440px;
+}
+
+/* footer - css */
+
+.footer {
+	width: 100%;
+	height: 400px;
+	margin-top: 10px;
+	background: #292929;
+}
+
+.footer-inner {
+	padding-top: 30px;
+	display: flex;
+	width: 1100px;
+	height: inherit;
+	border: 0px solid white;
+	margin: auto;
+}
+
+.footer-left>ul {
+	list-style: none;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	display: block;
+	border: 0px solid white;
+}
+
+.footer-left>ul>li {
+	margin-bottom: 10px;
+}
+
+.footer-right>ul {
+	list-style: none;
+	color: white;
+	font-size: 18px;
+	font-weight: bold;
+	display: block;
+}
+
+.footer-right>ul>li {
+	margin-bottom: 10px;
+}
+
+.footer-icon {
+	margin-left: 30px;
+}
+
+.footer-icon>a>img {
+	width: 50px;
+	height: 50px;
+}

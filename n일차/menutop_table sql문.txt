@@ -1,0 +1,43 @@
+create sequence menutop_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+create table menutop_table(
+	menutop_seq			number		default menutop_seq.nextval primary key,
+	burger_table_description	varchar2(1000)	not null,
+	burger_background		varchar2(1000)	not null,
+	mcmorning_table_description	varchar2(1000)	not null,
+	mcmorning_background		varchar2(1000)	not null,
+	side_table_description		varchar2(1000)	not null,
+	side_background			varchar2(1000)	not null,
+	drink_table_description		varchar2(1000)	not null,
+	drink_background		varchar2(1000)	not null,
+	dessert_table_description	varchar2(1000)	not null,
+	dessert_background		varchar2(1000)	not null,
+	mccafe_table_description	varchar2(1000)	not null,
+	mccafe_background		varchar2(1000)	not null
+	);
+
+
+insert into menutop_table values (
+menutop_seq.nextval, 
+'빅맥®에서 맥스파이시® 상하이버거까지, 주문 즉시 바로 조리해 더욱 맛있는, 맥도날드의 다양한 버거를 소개합니다.',
+'https://www.mcdonalds.co.kr/uploadFolder/images/menu/2020/bg_visual_menu01.jpg',
+'새벽 4시부터 오전 10시 30분까지 갓 구워내 신선한 맥모닝으로 따뜻한 아침 식사를 챙겨 드세요!',
+'https://www.mcdonalds.co.kr/uploadFolder/images/menu/bg_visual_menu02.jpg',
+'가볍게 즐겨도, 버거와 함께 푸짐하게 즐겨도, 언제나 맛있는 사이드와 디저트 메뉴!',
+'https://www.mcdonalds.co.kr/uploadFolder/images/menu/bg_visual_menu04.jpg',
+'언제나 즐겁게, 맥카페와 다양한 음료를 부담없이 즐기세요!',
+'https://www.mcdonalds.co.kr/uploadFolder/images/menu/2021/bg_visual_menu05.jpg',
+'가볍게 즐겨도, 버거와 함께 푸짐하게 즐겨도, 언제나 맛있는 사이드와 디저트 메뉴!',
+'https://www.mcdonalds.co.kr/uploadFolder/images/menu/bg_visual_menu04.jpg',
+'언제나 즐겁게, 맥카페와 다양한 음료를 부담없이 즐기세요!',
+'https://www.mcdonalds.co.kr/uploadFolder/images/menu/2021/bg_visual_menu05.jpg'
+);
+
+commit;
+
+select * from menutop_table;

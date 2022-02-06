@@ -1,0 +1,41 @@
+33일차
+
+append와 appendChild는 모두 부모 노드에 자식 노드를 추가하는 메서드
+
+append
+-> 노드객체나 DOMString('text')을 사용할 수 있다.
+-> 또한 한번에 여러 개의 자식 요소를 설정할 수 있다
+-> return 값을 반환하지 않는다
+
+노드 객체 사용 예시
+const p = document.createElement('div')
+const c = document.createElement('p')
+
+p.append(c)
+
+//결과
+<div><p></p></div>
+
+문자열 (DOMString) 사용 예시
+const p = document.createElement('div')
+p.append('append 예시')
+
+//결과
+<div>append 예시</div>
+
+
+appendChild
+-> 오직 Node 객체만 받을 수 있다
+-> 한번에 오직 하나의 노드만 추가할 수 있다
+-> return 값을 반환합니다
+
+문자열(DOMString) 사용 예시
+const p = document.createElement('div')
+p.appendChild('텍스트')
+-> 이러면 에러 발생
+
+return 값 반환
+const p = document.createElement('div')
+const s = document.createElement('span')
+
+console.log(document.body.appendChild(div))

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;sqlmap-member.xml&apos; to &apos;sqlmap-member.xml&apos;&#x0D;&#x0A;- Original project: &apos;burger2-3&apos;&#x0D;&#x0A;- Destination element: &apos;sqlmap-member.xml&apos;&#x0D;&#x0A;- Original element: &apos;sqlmap-member.xml&apos;" description="Copy file" element1="src/main/resources/config/sqlmap-member.xml" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1642554705854" target="/burger2-3/src/main/resources/config/sqlmap-member.xml" units="0" version="1.0"/>
+</session>

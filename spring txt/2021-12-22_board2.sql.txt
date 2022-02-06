@@ -1,0 +1,868 @@
+--------------------------------------------------------
+--  파일이 생성됨 - 수요일-12월-22-2021   
+--------------------------------------------------------
+DROP SEQUENCE "C##ITBANK"."BOARD2_SEQ";
+DROP SEQUENCE "C##ITBANK"."REPLY_SEQ";
+DROP TABLE "C##ITBANK"."BOARD2" cascade constraints;
+DROP TABLE "C##ITBANK"."REPLY" cascade constraints;
+DROP TABLE "C##ITBANK"."MEMBER" cascade constraints;
+DROP TABLE "C##ITBANK"."MEMBER" cascade constraints;
+DROP TABLE "C##ITBANK"."BOARD2" cascade constraints;
+DROP TABLE "C##ITBANK"."REPLY" cascade constraints;
+--------------------------------------------------------
+--  DDL for Sequence BOARD2_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##ITBANK"."BOARD2_SEQ"  MINVALUE 1 MAXVALUE 999999999 INCREMENT BY 1 START WITH 383 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Sequence REPLY_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "C##ITBANK"."REPLY_SEQ"  MINVALUE 1 MAXVALUE 999999999 INCREMENT BY 1 START WITH 13 NOCACHE  NOORDER  NOCYCLE  NOKEEP  NOSCALE  GLOBAL ;
+--------------------------------------------------------
+--  DDL for Table BOARD2
+--------------------------------------------------------
+
+  CREATE TABLE "C##ITBANK"."BOARD2" 
+   (	"IDX" NUMBER DEFAULT "C##ITBANK"."BOARD2_SEQ"."NEXTVAL", 
+	"WRITER" VARCHAR2(500 BYTE), 
+	"TITLE" VARCHAR2(500 BYTE), 
+	"CONTENT" VARCHAR2(2000 BYTE), 
+	"WRITEDATE" DATE DEFAULT sysdate, 
+	"IPADDRESS" VARCHAR2(50 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table REPLY
+--------------------------------------------------------
+
+  CREATE TABLE "C##ITBANK"."REPLY" 
+   (	"IDX" NUMBER DEFAULT "C##ITBANK"."REPLY_SEQ"."NEXTVAL", 
+	"BOARD_IDX" NUMBER, 
+	"WRITER" VARCHAR2(500 BYTE), 
+	"CONTENT" VARCHAR2(2000 BYTE), 
+	"WRITEDATE" DATE DEFAULT sysdate
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table MEMBER
+--------------------------------------------------------
+
+  CREATE TABLE "C##ITBANK"."MEMBER" 
+   (	"USERID" VARCHAR2(500 BYTE), 
+	"USERPW" VARCHAR2(500 BYTE), 
+	"USERNAME" VARCHAR2(500 BYTE), 
+	"EMAIL" VARCHAR2(500 BYTE), 
+	"GENDER" VARCHAR2(500 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table MEMBER
+--------------------------------------------------------
+
+  CREATE TABLE "C##ITBANK"."MEMBER" 
+   (	"USERID" VARCHAR2(500 BYTE), 
+	"USERPW" VARCHAR2(500 BYTE), 
+	"USERNAME" VARCHAR2(500 BYTE), 
+	"EMAIL" VARCHAR2(500 BYTE), 
+	"GENDER" VARCHAR2(500 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table BOARD2
+--------------------------------------------------------
+
+  CREATE TABLE "C##ITBANK"."BOARD2" 
+   (	"IDX" NUMBER DEFAULT "C##ITBANK"."BOARD2_SEQ"."NEXTVAL", 
+	"WRITER" VARCHAR2(500 BYTE), 
+	"TITLE" VARCHAR2(500 BYTE), 
+	"CONTENT" VARCHAR2(2000 BYTE), 
+	"WRITEDATE" DATE DEFAULT sysdate, 
+	"IPADDRESS" VARCHAR2(50 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Table REPLY
+--------------------------------------------------------
+
+  CREATE TABLE "C##ITBANK"."REPLY" 
+   (	"IDX" NUMBER DEFAULT "C##ITBANK"."REPLY_SEQ"."NEXTVAL", 
+	"BOARD_IDX" NUMBER, 
+	"WRITER" VARCHAR2(500 BYTE), 
+	"CONTENT" VARCHAR2(2000 BYTE), 
+	"WRITEDATE" DATE DEFAULT sysdate
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+REM INSERTING into C##ITBANK.BOARD2
+SET DEFINE OFF;
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (4,'yellow','외래키 테스트3','내용',to_date('21/11/08','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (100,'danbi','축하드립니다 100번째 글입니다','ㅋㅋㅋㅋㅋ',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (224,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (225,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (226,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (227,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (228,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (229,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (230,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (231,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (232,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (233,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (234,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (235,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (236,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (237,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (238,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (239,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (240,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (241,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (242,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (243,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (244,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (245,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (246,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (247,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (248,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (249,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (250,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (251,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (252,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (253,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (254,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (255,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (256,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (257,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (258,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (259,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (260,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (261,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (262,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (263,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (264,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (265,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (266,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (267,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (268,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (269,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (270,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (271,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (272,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (273,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (274,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (275,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (276,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (277,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (278,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (279,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (280,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (281,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (282,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (283,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (284,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (285,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (286,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (287,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (288,'danbi','축하드립니다 100번째 글입니다','ㅋㅋㅋㅋㅋ',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (289,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (290,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (291,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (292,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (293,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (294,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (295,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (296,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (297,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (298,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (299,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (300,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (301,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (302,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (303,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (304,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (305,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (306,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (307,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (308,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (309,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (310,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (311,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (312,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (313,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (314,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (315,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (316,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (317,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (318,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (319,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (320,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (321,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+commit;
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (322,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (323,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (324,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (325,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (326,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (327,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (328,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (329,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (330,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (331,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (332,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (333,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (334,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (335,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (336,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (337,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (338,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (339,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (340,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (341,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (342,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (343,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (344,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (345,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (346,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (347,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (348,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (349,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (350,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (351,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (352,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (353,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (354,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (355,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (356,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (357,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (358,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (359,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (360,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (361,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (362,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (363,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (364,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (365,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (366,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (367,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (368,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (369,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (370,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (371,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (372,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (373,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (374,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (375,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (376,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (377,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (378,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (379,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (380,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (381,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (382,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (2,'yellow','외래키 테스트 2','내용',to_date('21/11/08','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (6,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (7,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (8,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (9,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (10,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (11,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (12,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (13,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (14,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (15,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (16,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (17,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (18,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (19,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (20,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (21,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (22,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (23,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (24,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (25,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (26,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (27,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (28,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (29,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (30,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (31,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (32,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (33,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (34,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (35,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (36,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (37,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (38,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (39,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (40,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (41,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (42,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (43,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+commit;
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (44,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (45,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (46,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (47,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (48,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (49,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (50,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (51,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (52,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (53,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (54,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (55,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (56,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (57,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (58,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (59,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (60,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (61,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (62,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (63,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (64,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (65,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (66,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (67,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (68,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (69,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (70,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (71,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (72,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (73,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (74,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (75,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (76,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (77,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (78,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (79,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (80,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (81,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (82,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (83,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (84,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (85,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (86,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (87,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (88,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (89,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (90,'iu930516','안녕하세요','반갑습니다',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (91,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (92,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (101,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (94,'yellow','외래키 테스트3','내용',to_date('21/11/09','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (95,'yellow','외래키 테스트 2','내용',to_date('21/11/09','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (102,'danbi','축하드립니다 100번째 글입니다','ㅋㅋㅋㅋㅋ',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (97,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/09','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (98,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/09','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (103,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (104,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (105,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (106,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (107,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (108,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (109,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (110,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (111,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (112,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (113,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (114,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (115,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (116,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (117,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (118,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (119,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (120,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (121,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (122,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (123,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (124,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (125,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (126,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (127,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (128,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (129,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (130,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (131,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (132,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (133,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (134,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (135,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (136,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (137,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (138,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (139,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (140,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (141,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (142,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (143,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (144,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (145,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (146,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (147,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+commit;
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (148,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (149,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (150,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (151,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (152,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (153,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (154,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (155,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (156,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (157,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (158,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (159,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (160,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (161,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (162,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (163,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (164,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (165,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (166,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (167,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (168,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (169,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (170,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (171,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (172,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (173,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (174,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (175,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (176,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (177,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (178,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (179,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (180,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (181,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (182,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (183,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (184,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (185,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (186,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (187,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (188,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (189,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (190,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (191,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (192,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (193,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (194,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (195,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (196,'danbi','축하드립니다 100번째 글입니다','ㅋㅋㅋㅋㅋ',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (197,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (198,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (199,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (200,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (201,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (202,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (203,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (204,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (205,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (206,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (207,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (208,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (209,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (210,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (211,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (212,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (213,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (214,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (215,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (216,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (217,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (218,'danbi','단비꺼야 !!','단비꺼야 !!',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (219,'ssamza','글글글','ㅇㅇㅇ',to_date('21/11/10','RR/MM/DD'),'127.0.0.1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (220,'yellow','외래키 테스트3','내용',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (221,'yellow','외래키 테스트 2','내용',to_date('21/11/10','RR/MM/DD'),'2.2.2.2');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (222,'iu930516','안녕하세요','반갑습니다',to_date('21/11/10','RR/MM/DD'),'0:0:0:0:0:0:0:1');
+Insert into C##ITBANK.BOARD2 (IDX,WRITER,TITLE,CONTENT,WRITEDATE,IPADDRESS) values (223,'test','테스트 제목','테스트 내용
+1
+2
+3
+',to_date('21/11/10','RR/MM/DD'),'192.168.0.89');
+commit;
+REM INSERTING into C##ITBANK.REPLY
+SET DEFINE OFF;
+Insert into C##ITBANK.REPLY (IDX,BOARD_IDX,WRITER,CONTENT,WRITEDATE) values (5,381,'danbi','테스트도 내가 다 할꺼야 !!',to_date('21/11/11','RR/MM/DD'));
+Insert into C##ITBANK.REPLY (IDX,BOARD_IDX,WRITER,CONTENT,WRITEDATE) values (2,381,'danbi','테스트도 내가 다 할꺼야 !!',to_date('21/11/11','RR/MM/DD'));
+Insert into C##ITBANK.REPLY (IDX,BOARD_IDX,WRITER,CONTENT,WRITEDATE) values (8,381,'danbi','테스트도 내가 다 할꺼야 !!',to_date('21/11/11','RR/MM/DD'));
+Insert into C##ITBANK.REPLY (IDX,BOARD_IDX,WRITER,CONTENT,WRITEDATE) values (11,381,'danbi','테스트도 내가 다 할꺼야 !!',to_date('21/11/11','RR/MM/DD'));
+Insert into C##ITBANK.REPLY (IDX,BOARD_IDX,WRITER,CONTENT,WRITEDATE) values (10,382,'danbi','다 내꺼야 !!',to_date('21/11/11','RR/MM/DD'));
+commit;
+REM INSERTING into C##ITBANK.MEMBER
+SET DEFINE OFF;
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('itbank','it','관리자','admin@itbank.com','남성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('test3','1234','테스트3','test3@itbank.com','남성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('test','47b76480','테스트','test@itbank.com','남성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('yellow','kong','홍진호','yellow@itbank.com','남성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('danbi','1','단비','danbi@itbank.com','여성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('iu930516','iu','이지은','iu@itbank.com','여성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('ssamza','1234','민경훈','ssamza@itbank.com','남성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('test2','1234','테스트2','test2@itbank.com','여성');
+Insert into C##ITBANK.MEMBER (USERID,USERPW,USERNAME,EMAIL,GENDER) values ('blizzard','1234','맥크리','mc.cree@blizzard.com','남성');
+commit;
+--------------------------------------------------------
+--  DDL for Index SYS_C007451
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##ITBANK"."SYS_C007451" ON "C##ITBANK"."BOARD2" ("IDX") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index SYS_C007467
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##ITBANK"."SYS_C007467" ON "C##ITBANK"."REPLY" ("IDX") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  DDL for Index SYS_C007424
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "C##ITBANK"."SYS_C007424" ON "C##ITBANK"."MEMBER" ("USERID") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS" ;
+--------------------------------------------------------
+--  Constraints for Table BOARD2
+--------------------------------------------------------
+
+  ALTER TABLE "C##ITBANK"."BOARD2" MODIFY ("WRITER" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."BOARD2" MODIFY ("TITLE" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."BOARD2" MODIFY ("CONTENT" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."BOARD2" MODIFY ("IPADDRESS" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."BOARD2" ADD PRIMARY KEY ("IDX")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table REPLY
+--------------------------------------------------------
+
+  ALTER TABLE "C##ITBANK"."REPLY" MODIFY ("BOARD_IDX" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."REPLY" MODIFY ("WRITER" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."REPLY" MODIFY ("CONTENT" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."REPLY" ADD PRIMARY KEY ("IDX")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table MEMBER
+--------------------------------------------------------
+
+  ALTER TABLE "C##ITBANK"."MEMBER" ADD PRIMARY KEY ("USERID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "USERS"  ENABLE;
+  ALTER TABLE "C##ITBANK"."MEMBER" MODIFY ("USERPW" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."MEMBER" MODIFY ("USERNAME" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."MEMBER" MODIFY ("EMAIL" NOT NULL ENABLE);
+  ALTER TABLE "C##ITBANK"."MEMBER" MODIFY ("GENDER" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Ref Constraints for Table BOARD2
+--------------------------------------------------------
+
+  ALTER TABLE "C##ITBANK"."BOARD2" ADD CONSTRAINT "BOARD2_MEMBER_FK" FOREIGN KEY ("WRITER")
+	  REFERENCES "C##ITBANK"."MEMBER" ("USERID") ON DELETE SET NULL ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table REPLY
+--------------------------------------------------------
+
+  ALTER TABLE "C##ITBANK"."REPLY" ADD CONSTRAINT "REPLY_BOARD_FK" FOREIGN KEY ("BOARD_IDX")
+	  REFERENCES "C##ITBANK"."BOARD2" ("IDX") ENABLE;
+  ALTER TABLE "C##ITBANK"."REPLY" ADD CONSTRAINT "REPLY_MEMBER_FK" FOREIGN KEY ("WRITER")
+	  REFERENCES "C##ITBANK"."MEMBER" ("USERID") ENABLE;

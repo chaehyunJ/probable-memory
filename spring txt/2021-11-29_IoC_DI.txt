@@ -1,0 +1,9 @@
+IoC : Inversion Of Control, 제어 역전
+	스프링 컨테이너에 선언되어 있는 스프링 빈을 개발자가 받아서 프로그램을 진행한다
+	객체 관리(선언 및 의존성 관리)를 개발자가 아니라, 스프링이 한다
+
+DI : Dependency Injection
+	스프링 빈 간의 참조가 필요하다면, setter 나 생성자 매개변수를 통해 연결할 수 있다
+
+	Auto DI : 스프링이 타입과 id로 추론하여 의존관계를 연결시켜줄 수 있다
+	@Autowired, @Resource

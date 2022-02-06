@@ -1,0 +1,53 @@
+- 스프링 프레임워크에서는 객체를 미리 등록하여 불러와서 사용한다
+- 객체 용도별로 연관성 있는 객체가 모여 있다 (참조, 의존성)
+- 스프링에서 사용하기 위해서는 객체를 미리 등록해야 한다
+
+1) <bean id="객체이름" class="패키지.클래스" />
+
+2) <bean id="객체이름" class="패키지.클래스">
+       <property name="age" value="29" />
+       <property name="score">100</property>
+   </bean>
+
+3) <bean id="객체이름" class="패키지.클래스">
+       <property name="member" ref="m1" />
+   </bean>
+
+4) <bean id="객체이름" class="패키지.클래스">
+       <constructor-arg value="이지은" />
+       <constructor-arg value="29" />
+   </bean>
+
+-----------------------------------------------
+
+1) 클래스 객체이름 = new 클래스();
+2) 클래스 객체이름 = new 클래스();
+   객체이름.setAge(29);		// 상수값
+
+3) 클래스 객체이름 = new 클래스();
+   객체이름.setMember(m1);	// 참조변수값
+
+4) 클래스 객체이름 = new 클래스("이지은", 29);
+
+-----------------------------------------------
+
+<context:component-scan base-package="com.itbank.test2" />
+
+// 지정한 패키지 내에 클래스 중에서 특정 어노테이션이 붙은 클래스를
+// 객체로 생성하고 스프링 빈으로 등록해라
+// 특정 어노테이션의 종류
+
+@Controller (Web)	: MVC에서 컨트롤러, 서블릿에게 요청을 넘겨받음
+@Service    (Java)	: 컨트롤러가 호출할 수 있는 함수를 모아서 가지는 객체, Model이나 Controller에 종속적이지 않은 코드를 작성
+@Repository (DB)	: 데이터의 저장소, 즉 DB에 접근하는 객체, 보통 DAO를 가리킨다
+@Component		: 용도는 명확하지 않으나, 스프링 빈으로 등록하여 사용할 객체
+@RestController		: 기존 컨트롤러의 기능에서 모든 메서드에 @ResponseBody가 자동으로 적용된다. AJAX용으로 사용
+@ControllerAdvice 	: 지정한 범위에서 발생하는 모든 예외를 집중시켜 처리하는 클래스
+
+
+
+
+
+
+
+

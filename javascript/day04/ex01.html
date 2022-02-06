@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden{
+            display: none;
+        }
+        .hidden > div{
+            display: none;
+        }
+        .modal{
+            width : 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            margin: auto;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
+        .overlay{
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-content{
+            width: 400px;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid black;
+            background-color: skyblue;
+            z-index: 2;
+            box-shadow: 5px 5px grey;
+            border-radius: 10px;
+            z-index : 1;
+            
+        }
+        #closeBtn{
+            width : 200px;
+            margin :auto;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function openHandler(event){
+            const modal = document.querySelector('.modal')
+            const btn = document.getElementById('openBtn')
+            console.log(modal)
+            modal.classList.remove('hidden')
+            btn.classList.add('hidden')
+        }
+        function closeHandler(event){
+            const modal = document.querySelector('.modal')
+            const btn = document.getElementById('openBtn')
+            modal.classList.add('hidden')
+            btn.classList.remove('hidden')
+        }
+    </script>
+    
+    <h1>model test</h1>
+
+    <hr>
+    <button id="openBtn">모달 열기</button>
+    <div class="modal hidden">
+        <div class="overlay"></div>
+        <div class="modal-content">
+            <h2>이 창은 모달입니다</h2>
+            <p><img src="http://221.164.9.222/img/iu.jpg" alt="" width="200px"></p>
+            <p><button id="closeBtn">닫기</button></p>
+        </div>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('openBtn')
+        const closeBtn = document.getElementById('closeBtn')
+        const overlay = document.querySelector('.overlay')
+        console.log(openBtn)
+        console.log(closeBtn)
+
+        closeBtn.onclick = closeHandler
+        overlay.onclick = closeHandler
+        openBtn.onclick = openHandler
+
+        
+    </script>
+</body>
+</html>

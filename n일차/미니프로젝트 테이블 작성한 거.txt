@@ -1,0 +1,78 @@
+// 미니 프로젝트 테이블 작성한 것
+
+select * from SYS.nls_database_parameters;
+
+
+drop sequence member_seq;
+drop table member;
+
+create sequence member_seq
+	start with 1
+	maxvalue 9999999
+	increment by 1
+	nocache	
+	nocycle;
+
+insert into member(dda,addad,)
+
+create table member(
+	idx 		number		default member_seq.nextval,
+	userid		varchar2(500)	primary key,
+	userpw		varchar2(500)	not null,
+	nickName	varchar2(500)	not null,
+	profile		varchar2(500)   unique,
+	);
+commit;
+
+drop sequence store_seq;
+drop table store;
+
+create sequence store_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+create table store(
+	idx			number			default store_seq.nextval primary key,
+	local			varchar2(600)		not null,
+	storeName		varchar2(500)		not null,
+	address			varchar2(1000)		not null,
+	phoneNumber		varchar2(600)		not null,
+	category		varchar2(600)		not null,	
+	price 			varchar2(600)		not null,
+	parking			char(10)		check (parking in ('y', 'n')),
+	openingHour		varchar2(500)		not null,
+	regDate			date			default sysdate
+	uploadFileName		varchar2(600)		not null
+	);
+
+commit;
+
+
+drop sequence reply_seq;
+drop table reply;
+
+create sequence reply_seq
+	start with 1
+	maxvalue 99999999
+	increment by 1
+	nocache
+	nocycle;
+
+
+
+create table reply(
+	idx			number			    default reply_seq.nextval primary key,
+	store_idx		number			    constraint reply_store_fk references store(idx),
+	writer_id		varchar2(500)		    constraint reply_member_fk references member(userid),
+    	profile_id		varchar2(500)		    constraint reply_profile_fk references member(profile),
+	writeDate		date			    default sysdate,
+	content			varchar2(2000)		    not null,
+	uploadFileName		varchar2(500)	    	    default null,
+	score			varchar2(50)		    not null
+	);
+
+commit;

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<<<<<<< HEAD
+    <style>
+        .timer{
+            width : 100px;
+            height: 30px;
+            border: 2px solid black;
+            text-align: center;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="timer"></div>
+
+    <div id="clock"></div>
+
+    1<input  id="?"type="range" min="1" max="100" checked>100
+    <script>
+
+        let second = 10
+
+        function timer(){
+            if(second < 0){
+                // 무한반복 방지
+                clearInterval(timer)
+                return
+            }
+
+
+            let min = Math.floor(second / 60) + ''
+            let sec = second % 60 + ''
+
+            if(min.length < 2) min = '0' + min
+            if(sec.length < 2 ) sec = '0' + sec
+            const format = `${min} : ${sec}`
+            const div = document.querySelector('.timer')
+            div.innerText = format
+            second -= 1
+        } 
+        setInterval(timer, 1000)    // setInterval(함수, ms)
+
+    </script>
+
+    <script>            
+        const clock = document.getElementById('clock')
+
+        
+        console.log(clock)
+        
+        let today = new Date();
+        console.log(today)
+
+        console.log(dateFormat(today))
+
+
+        function dateFormat(){
+            let date = new Date();
+            const clock = document.getElementById('clock')
+            let month = date.getMonth() + 1
+            let day = date.getDate()
+            let hour = date.getHours()
+            let min = date.getMinutes()
+            let sec = date.getSeconds()
+
+            month = month >= 10 ? month : '0'+ month
+            day = day >= 10 ? day : '0' + day
+            hour = hour >= 10 ? hour : '0' + hour
+            min = min >= 10 ? min : '0' + min
+            sec = sec >= 10 ? sec : '0' + sec
+
+            let time = date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec
+            // console.log(time)
+            return clock.innerText = time
+        }   
+       
+        function timer2(){
+            setInterval(dateFormat, 1000)
+        }
+
+        window.onload = timer2
+   
+     
+       
+    </script>
+=======
+</head>
+<body>
+    <div>
+        <input type="button" class="up-button" value="업">
+        <input type="button" class="down-button" value="다운">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>번호</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>조회수</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>1</th>
+                <th>23</th>
+                <th>32</th>
+                <th>32</th>
+            </tr>
+            <tr>
+                <th>2</th>
+                <th>23</th>
+                <th>32</th>
+                <th>32</th>
+            </tr>
+            <tr>
+                <th>3</th>
+                <th>23</th>
+                <th>32</th>
+                <th>32</th>
+            </tr>
+            <tr>
+                <th>4</th>
+                <th>23</th>
+                <th>32</th>
+                <th>32</th>
+            </tr>
+        </tbody>
+    </table>
+>>>>>>> c8686ad22e8615358ebcf73ff999ac2517da8d6c
+</body>
+</html>

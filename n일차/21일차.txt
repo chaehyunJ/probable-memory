@@ -1,0 +1,38 @@
+-> 리눅스에서 방화벽 설치가 안되어서 그런거였다
+-> 맨 처음 확인하자 .... 생각도 못함...
+
+varchar2 : 가변길이 문자열
+char : 고정길이 문자열
+number : 정수 혹은 실수
+date : 날짜
+
+drop table [tablename];
+
+desc [tablename];
+
+insert into [tablename] (column1..)
+	values (values1,..);
+-> 지정한 컬럼에 대해서만 값을 입력하는 경우
+-> 지정하지 않은 컬럼에 대한 기본값 처리가 준비되어 있을 때
+
+insert into [tablename] values (values1,values2,...);
+-> 테이블에 명시된 모든 컬럼의 값을 순서대로 입력하는 경우
+
+insert into phonebook (name, pnum) values ('이지은', '010-2311-1321');
+
+insert into phonebook values ('홍진호','010-2332-1111',23);
+
+
+select [column1][column2] from [tablename] where [조건] order by [정렬기준컬럼] (asc/desc);
+
+select * from [tabelname];
+
+select name, pnum from phonebook;
+
+select * from phonebook where name = '이지은';
+
+select * from phonebook order by name asc;
+
+select * from phonebook order by name desc;
+
+select * from tabs; -> table 확인하기

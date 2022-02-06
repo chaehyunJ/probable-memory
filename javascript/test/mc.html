@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            box-sizing: border-box;
+        }
+        .root{
+            display: flex;
+        }
+        .sideMenu{
+            position: sticky;
+            top: 0;
+        }
+        .mainMenu{
+            border: 1px solid black;
+            width : 450px;
+            display: flex;
+            flex-flow: wrap;
+        }
+        .item{
+            border: 1px solid black;
+            width: 200px;
+            height: 200px;
+  
+        }
+        .top-menu{
+            display: flex;
+            width: 1140px;
+            border-radius: 10px;
+            background-color: #3d3d3d;
+            box-shadow:  5px 5px grey;
+        }
+        .top-right{
+            background-color: #3d3d3d;
+        }
+        .top-menu-inner{
+            display: flex;
+            list-style: none;
+            background-color: #3d3d3d;
+        }
+        .top-menu-inner > li {
+            width: 200px;
+            height: inherit;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #3d3d3d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="top-menu">
+        <img src="https://www.mcdelivery.co.kr/kr//static/1639621479089/assets/82/img/mcdelivery_logo_ko.jpg" alt="">
+        <div class="top-right">
+            <ul class="top-menu-inner"> 
+                <li>메뉴</li>
+                <li>마이페이지</li>
+                <li>기타정보</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="root">
+        <div class="sideMenu">
+            <ul>
+                <li>추천메뉴</li>
+                <li>맥모닝&세트</li>
+                <li>스낵&사이드</li>
+                <li>음료</li>
+                <li>디저트</li>
+                <li>해피밀</li>
+            </ul>
+        </div>
+
+        <div class="mainMenu">
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+            <div class="item">5</div>
+            <div class="item">6</div>
+            <div class="item">7</div>
+            <div class="item">8</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC 
+		"-//mybatis.org//DTD Config 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+		
+<configuration>
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="mapUnderscoreToCamelCase" value="false"/>
+	</settings>
+	
+	<!-- type== 자료형, 자료형 이름이 너무 길어서 별명으로 부르면 길이를 짧게 사용할 수 있다  -->
+	
+	<typeAliases>
+		<typeAlias type="com.itbank.member.MemberDTO" alias="member"/>
+	</typeAliases>
+</configuration>

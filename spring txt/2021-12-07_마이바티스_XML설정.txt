@@ -1,0 +1,23 @@
+1) myBatis (XML) 형식을 사용하기 위한 준비
+
+root-context.xml 에서
+- configLocation: mybatis-config.xml 이 등록되어 있고, 파일이 제자리에 있는지 확인
+- mapperLocations: sqlmap-***.xml 이 등록되어 있고, namespace 가 DAO와 연결되어 있는지 확인
+
+2) 연결이 모두 완료되었다면 Controller -> Service -> DAO -> mapper.xml 로 연결됨
+
+<mapper.xml 을 작성하는 요령>
+
+- namespace는 DAO의 이름을 작성한다
+
+- <select> <insert> <update> <delete> 태그를 사용한다
+
+- <select> 는 resultType을 명시해야 한다
+
+- <insert> <update> <delete> 는 resultType이 int 로 고정이기 때문에 생략한다
+
+- 매개변수를 전달한다면 parameterType 을 명시한다
+
+- parameterType 은 패키지이름.클래스이름을 모두 작성해야 한다
+
+- 자주 사용하는 클래스 자료형이 있다면, 마이바티스 설정파일에서 typeAliase 를 설정하여 줄일 수 있다

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content {
+            display: flex;
+            flex-flow: wrap;
+            width: 700px;
+            margin: auto;
+        }
+        .item {
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid black;
+            box-shadow: 5px 5px grey;
+            border-radius: 10px;
+            width: 300px;
+            cursor: pointer;
+        }
+        .item:hover {
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        .item > div:first-child {
+            display: flex;
+            justify-content: center;
+        }
+        .asc, .desc {
+            display: none;
+        }
+        .usingAsc > .asc, 
+        .usingDesc > .desc {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // 함수는 상단에 지정해주는 것이 좋다
+        function JSONtoHTML(ob){
+            const item = document.createElement('div')
+            item.classList.add('item')
+
+            for(key in ob){
+                const value = ob[key]
+                const div = document.createElement('div')
+                div.classList.add(key)
+                if(key == 'img'){
+                    const img = document.createElement('img')
+                    img.src = 'img/' + ob.img
+                    img.height = 200
+                    div.appendChild(img)
+                }
+                else{
+                    div.innerText = key + ':' + value
+                }
+                item.appendChild(div)
+            }
+            return item
+        }
+
+        function sortFoodArr(event){
+            const order = event.target.dataset.order
+            const asc = +event.target.dataset.asc
+            
+            // 부모노드의 자식들(형제 노드 가져오기)
+            // forEach가 안되어서 반복문으로
+            const brother = event.target.parentNode.children
+            for(let i = 0; i < brother.length; i++){
+                const element = brother[i]
+                element.classList.remove('usingAsc')
+                element.classList.remove('usingDesc')
+            }
+            event.target.classList.add((+asc > 0 ? 'usingAsc' : 'usingDesc'))
+
+            // 정렬하고 정렬 순서 뒤집고 기존 내용 제거하고 화면에 띄우기
+            arr.sort((a,b) => (a[order] > b[order] ? 1 : -1) * asc)
+            event.target.dataset.asc = -asc
+            content.innerHTML = ''
+            showFoodList()
+        }
+
+        // 음식 목록을 화면에 띄우는 함수
+        function showFoodList(){
+            arr.forEach(food => {
+                const div = JSONtoHTML(food)
+                content.appendChild(div)
+            })
+        }
+    </script>
+    
+    <div id="root">
+        <div class="sortMenu">
+            <button class="sortBtn" data-order="name" data-asc="1">
+                메뉴 이름 순
+                <span class="asc">▲</span>
+                <span class="desc">▼</span>
+            </button>
+            <button class="sortBtn" data-order="price" data-asc="1">
+                가격 순
+                <span class="asc">▲</span>
+                <span class="desc">▼</span>
+            </button>
+        </div>
+        <div class="filetrMenu">
+            <label><input class="filtered" type="checkbox" data-pri="10000">1만원대</label>
+            <label><input class="filtered" type="checkbox" data-pri="20000">2만원대</label>
+            <label><input class="filtered" type="checkbox" data-pri="30000">3만원대</label>
+            <label><input class="filtered" type="checkbox">전체</label>
+        </div>
+    </div>
+    <div class="content"></div>
+
+    <script>
+        const arr =[
+            {
+                img : '돈까스.png',
+                name : '돈까스',
+                price : 20000
+            },
+            {
+                img : '떡볶이.jpg',
+                name : '떡볶이',
+                price : 40000
+            },
+            {
+                img : '로제떡볶이.jpg',
+                name : '로제떡볶이',
+                price : 16000
+            },
+            {
+                img : '어묵탕.jpg',
+                name : '어묵탕',
+                price : 14500
+            },
+            {
+                img : '쫄면.jpg',
+                name : '쫄면',
+                price : 17000
+            }
+        ]
+        console.log(arr)
+
+        // 이벤트 대상을 불러와서 이벤트 함수를 연결
+        const sortMenu = document.querySelector('.sortMenu')
+        const content = document.querySelector('.content')
+
+        // 배열의 데이터를 (원하는 기준으로 정렬하여) 화면에 출력
+        const btnList = document.querySelectorAll('.sortBtn')
+        btnList.forEach(btn => btn.addEventListener('click', sortFoodArr))
+
+        // 문서 로딩이 끝나면 실행할 함수
+        window.onload = showFoodList
+    </script>
+
+    <script>
+        // 자바스크립트 객체 <=> 문자열 변환
+        const jsonString = JSON.stringify(arr)
+        const jsonObject = JSON.parse(jsonString)
+        // console.log(jsonString)
+        // console.log(jsonObject)
+    </script>
+
+    <script>
+        const fd = document.querySelectorAll('.filtered')
+        console.log(fd)
+        fd.forEach(btn =>{
+            btn.onclick = function(){
+                const pri = btn.dataset.pri
+                console.log(pri)
+                let p1 = arr.filter(ob => ob.price >= pri)
+                console.log(p1)
+                content.innerHTML = ''
+
+                p1.forEach(bt =>{
+                    const p11 = JSONtoHTML(bt)
+                    content.appendChild(p11)
+                })
+                               
+            }
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        function check1(count, link, good){
+            count < 3 ? link() : good()
+        }
+
+        function link2(){
+            console.log('callback, test')
+        }
+
+        function good(){
+            console.log('test2')
+        }
+
+        check1(2, link2, good)
+    </script>
+
+    <script>
+        function add(a, b, callback){
+            callback(a + b)
+        }
+
+        function result(value){
+            console.log(value)
+        }
+        add(4,6,result)
+    </script>
+</body>
+</html>

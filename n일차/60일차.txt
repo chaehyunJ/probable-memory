@@ -1,0 +1,139 @@
+[Handler adapter] => Handler를 실행시켜주는 역할
+
+[Handler] => 우리가 @Controller에 정의한 요청을 처리하는 역할
+
+[Handler Mapping] => 스프링 빈을 찾는것 : 어노테이션이 @Controller인 것을 스프링 빈이 된 것을 객체로 인식해서 찾아가는 것
+
+[view Resolver] => jsp 이름 지정해주는 것 servlet-context.xml에 prefix, suffix를 붙여주는 것
+
+[Controller] => 컨트롤러 찾아주는 것
+
+[Service] => Controller 내부에 ( @Autowired )로 참조되는 객체를 찾아오는 것
+
+[DAO] => DB 연결  
+
+[View] => 화면 출력
+
+===============
+
+@GetMapping / @PostMapping => 스프링 4.1.0이상부터 사용가능
+
+주소랑 jsp랑 이름이 같으면 자료형을 void로 지정할 수 있다.
+
+==============
+
+request.setAttribute("dto", dto);
+model.addAttribute("dto", dto);
+mav.addObject("dto", dto);
+
+===============
+
+@GetMapping("/ex05")
+
+@PostMapping("/ex05")
+
+("/ex05") -> mapping path
+
+주소가("/ex05") 같으면 메서드[@GetMapping / @PostMapping]로 분간한다
+-> 주소를 판별하고 메서드를 판별해서 해당 함수를 실행시킨다.
+
+-> 쿼리스트링은 맵핑 경로에 포함X (당연한 소리)
+===============
+
+-> 동의를 할 경우 이런 방식으로 return을 시켜줄 수 있다.
+
+String agree 
+
+if(agree.equals("y")){
+	return "step1";
+}
+else{
+	return "step2";
+}
+
+=============
+
+spring jdbc 4.3.30 을 가져온다
+
+c3p0 => 최신버전
+
+ojdbc ->  com.oracle.database.jdbc => ojdbc8
+
+
+<!-- https://mvnrepository.com/artifact/xerces/xercesImpl -->
+	<!--  XML의 서버상 경로에 한글이 포함되어도 예외를 발생시키지 않게 처리해주는 라이브러리  -->
+	<dependency>
+		<groupId>xerces</groupId>
+		<artifactId>xercesImpl</artifactId>
+		<version>2.12.1</version>
+	</dependency>
+		
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+<!-- 스프링에서 DB접속 기능을  지원하는 라이브러리 -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${org.springframework-version}</version>
+	</dependency>
+		
+<!-- https://mvnrepository.com/artifact/com.mchange/c3p0 -->
+<!-- Connection Pool  -->
+	<dependency>
+		<groupId>com.mchange</groupId>
+		<artifactId>c3p0</artifactId>
+		<version>0.9.5.5</version>
+	</dependency>
+		
+<!-- https://mvnrepository.com/artifact/com.oracle.database.jdbc/ojdbc8 -->
+<!-- 오라클 데이터베이스에 접근하기 위한 드라이버 라이브러리  -->
+	<dependency>
+		 <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>21.3.0.0</version>
+		</dependency>
+
+-> alt + f5 
+-> 라이브러리에 spring-jdbc, spring-tx, c3p0, mchange, ojdbc8이 들어왔는지 확인
+
+===================
+
+root-context.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+        
+        <!-- Root Context: defines shared resources visible to all other web components -->
+        <!-- DispatcherServlet이 아니더라도 모든 웹 컴포넌트가 공유할 수 있는 객체를 스프링 빈으로 선언 -->
+        
+        <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+                <property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
+                <property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.1.100:1521:xe" />
+                <property name="user" value="c##itbank" />
+                <property name="password" value="it" />
+                <property name="maxPoolSize" value="100" />
+                <property name="maxIdleTime" value="600" />
+                <property name="idleConnectionTestPeriod" value="300" />
+        </bean>
+        
+        <!-- JSP에서는 dataSource를 우리가 직접 받아서 사용했지만, 여기서는 jdbcTemplate에게 넘겨준다 -->
+        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+                <property name="dataSource" ref="dataSource" />
+        </bean>
+                
+</beans>
+
+-> 접속에 필요한 정보를 넣어준 것이다.그러면 jdbcTemplate가 알아서 해준다
+
+
+-> 서비스에 request 자체를 전달하지 말것, request는 컨트롤러 밖으로 벗어나면 안됨
+
+=============================
+
+jt.query 	jt.queryForList   ( 리스트 뽑을 때 )
+		jt.queryForObject ( 하나만 뽑을 때 )	
+jt.update
+
+pstmt.executeQuery();
+pstmt.executeUpdate();

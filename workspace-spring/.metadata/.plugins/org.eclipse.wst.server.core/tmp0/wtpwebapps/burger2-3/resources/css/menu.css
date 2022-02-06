@@ -1,0 +1,104 @@
+@charset "utf-8";
+
+*{
+	font-family: SpeedeeK, Malgun Gothic,'맑은 고딕', Dotum,'돋움', Arial, sans-serif;
+}
+/* menu-container */
+div{
+	box-sizing: border-box;
+}
+.menu-top {
+	position: relative;
+	padding: 15px;
+	padding-left: 368px;
+}
+.menu-img {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+}
+.menu-title{
+	font-size: 50px;
+	margin: 0;
+}
+.menu-text{
+	font-size: 18px;
+	font-weight: bold;
+	height: 50px;
+	display: flex;
+	align-items: center;
+}
+.menu-ul {
+	display: flex;
+	list-style: none;
+	color: black;
+	font-size: 16px;
+	padding: 10px 0px 50px 0px;
+}
+.menu-ul li{
+	margin-right: 10px; 
+}
+.menu-ul li:nth-child(2n){
+	color: #f5bd43;
+}
+.menu-total{
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	font-weight: bold;
+}
+.menu-total p{
+	color: #f5bd43; 
+	margin-right: 5px;
+}
+.menu-list {
+	width: 1170px;
+	margin: 0 auto;
+}
+.menu-list div{
+	border: 1px solid black;
+}
+.menu-product-list {
+	display: flex;
+	flex-flow: wrap;
+	max-height: 600px;
+	overflow: hidden;
+}
+.menu-product-item {
+/* 	margin: 30px; */
+	cursor: pointer;
+	width : 300px;
+	height: 300px;
+	margin: 0 auto;
+}
+.menu-product-img > img{
+	width: 280px;
+	margin: 5px;
+}
+.menu-product-name {
+	text-align: center;
+}
+.menu-button{
+	width: 90px;
+	margin: 20px auto 0px auto;
+}
+.menu-button > #menuOpen{
+	background-image: url(https://www.mcdonalds.co.kr/kor/images/common/btn_more.png);
+	background-repeat: no-repeat;
+	background-color: inherit;
+	width: 90px;
+	height: 90px;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+}
+.menu-button > #menuClose{
+	background-repeat: no-repeat;
+	background-color: inherit;
+	width: 90px;
+	height: 90px;
+	border: 0;
+	outline: 0;
+	cursor: pointer;
+}

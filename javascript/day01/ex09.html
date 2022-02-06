@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            margin : 20px;
+        }
+        body > div{
+            display: flex;
+        }
+        input[type="button"],
+        input[type="submit"],
+        button{
+            font-size:  20px;
+        }
+        .img{
+            
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            transition-duration: 0.5s;
+        }
+        .hidden{
+           opacity: 0;
+        }
+        .show{
+            opacity: 1;
+        }
+        .order > ul>  li{
+            height:  40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h2>이벤트 연습</h2>
+    <hr>
+    <div class="root">
+        <div class="btns">
+            <div class="div1">
+                <div class=""><input type="button" value="버튼1"></div>
+                <div class=""><input type="submit" value="버튼2"></div>
+                <div class=""><button>버튼3</button></div>
+            </div>
+        
+            <div class="div2">
+                <div class=""><input type="button" value="버튼4"></div>
+                <div class=""><input type="submit" value="버튼5"></div>
+                <div class=""><button>버튼6</button></div>
+            </div>
+        </div>
+        <div class="order">
+            <ul>
+                <li>1) 버튼1을 클릭하면 alert으로 hello, world를 출력</li>
+                <li>2) 버튼2를 클릭하면 버튼의 배경색과 글자색이 변경되도록 하세요</li>
+                <li>3) 버튼3을 클릭하면 두가지 상태가 번갈아 바뀌도록 처리하세요</li>
+                <li>4) 버튼4에 마우스를 올리면 confirm을 띄우고 확인을 누르면 네이버 페이지로 이동하세요</li>
+                <li>5) 버튼5를 오른쪽 클릭하면 아무 그림이나 화면 가운데</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="hidden img">
+        <img src="https://placeimg.com/900/300/any/grayscale" alt="">
+    </div>
+
+    <script>
+        // 이벤트 대상  : 버튼1
+        // 이벤트 리스너 : 클릭
+        // 이벤트 핸들러(함수) : alert('hello, world')
+
+        const btn1 = document.querySelector('.root > .btns > .div1 input[type="button"]')
+        const btn2 = document.querySelector('.root > .btns > .div1 input[type="submit"]')
+        console.log(btn1)
+        console.log(btn2)
+        console.log({btn1 : btn1})
+
+        btn1.onclick = function(){
+            alert('hello, world')
+        }
+        btn2.onclick = function(){
+            btn2.style.backgroundColor = 'pink'
+            btn2.style.color = 'white'
+        }
+    </script>
+    
+    <script>
+        const btn3 = document.querySelector('.root > .btns > .div1 button')
+        console.log(btn3)
+        
+     
+
+        btn3.onclick = function(){
+            // 조건을 파악할 대상이 필요하다
+            // 그걸 여기서 innerText를 사용했다
+            if(btn3.innerText == '정상'){
+                btn3.innerText = '취소'
+                btn3.style.color = 'red'
+                btn3.style.backgroundColor = 'yellow'
+            }
+            else{
+                btn3.innerText = '정상'
+                btn3.style.color = 'white'
+                btn3.style.backgroundColor = 'blue'
+            }
+        }
+    </script>
+
+    <script>
+        // 4. 버튼4에 마우스를 올리면 confirm을 띄우고
+        // 확인을 누르면 네이버 페이지로 이동하세요
+        const btn4 = document.querySelector('.root > .btns > .div2 input[type="button"]')
+        console.log(btn4)
+        btn4.onmouseover = function(){
+            if(confirm('네이버로 고?')){
+                location.href='https://www.naver.com/'
+            }
+        }
+    </script>
+
+    <script>
+        // 5. 버튼5를 오른쪽 클릭하면 아무 그림이나 화면 가운데 
+        // 요소를 미리 만들어두고 display : none;
+        const btn5 = document.querySelector('.root > .btns > .div2 input[type="submit"]')
+        console.log(btn5)
+
+        // 오른쪽 마우스 클릭 : oncontextmenu
+        // opacity ->  transition-duration : 0.5s
+        btn5.oncontextmenu = function(event){
+            event.preventDefault()
+            const img = document.querySelector('.img')
+            console.log(img)
+            img.classList.remove('hidden')
+        }
+    
+    </script>
+    <script>
+        const btn6 = document.querySelector('.root > .btns > .div2 button') 
+        const img2 = document.querySelector('.img')
+        console.log(btn6)
+        console.log(img2)
+
+        btn6.oncontextmenu = function(event){
+            event.preventDefault()
+            console.log(img2.className)     // 문자열 띄워쓰기로 구분됨
+            console.log(img2.classList)     // 배열형식, 클래스 하나가 멤버
+            console.log(img2.classList.replace('hidden','show'))
+
+            // boolean 값을 뽑아내기 위해서 hidden이 포함되어 있는지를 확인
+            const flag = img2.classList.contains('hidden')
+            if(flag){
+                img2.classList.remove('hidden')
+                img2.classList.add('show')
+            }
+            else{
+                img2.classList.remove('show')
+                img2.classList.add('hidden')
+            }
+        }
+       
+    </script>
+</body>
+</html>

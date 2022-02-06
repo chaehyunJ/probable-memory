@@ -1,0 +1,163 @@
+spring id 환경 구성하는 것을 ppt로 만드는 것이 평가
+
+메이저 버전은 1.8을 유지 뒤는 상관없음
+
+spring 이라는 이름을 가진 폴더를 하나 만들고
+
+그 안에 새로운 이클립스 압축파일을 넣어서 알아서 풀기로 푼다
+
+spring 폴더에 workspace-spring이라는 폴더를 만들고 이클립스의 workspce경로로 지정한다
+
+
+web browser -> use exteral web browser
+
+workspace -> 인코딩 UTF-8로 변경
+
+jre => 기본으로하면 1.8 안에서 찾아준다
+
+
+help -> install new software(주소지정)
+
+help -> eclipse marketplace -> 검색 -> sts (spring tools suite)
+
+-> spring tools 3 -> install -> confirm
+
+-> accept 하고 finish -> 중간에 install뜨면 맨 왼쪽꺼 누르고 select All해서 진행 -> 그러면 restart 하면 됨
+
+-> 사용자에 들어가면 .p2, .m2(maven 관련)
+
+
+New Project -> Spring ->  spring legacy project 선택한다
+
+template -> spring MVC Project
+
+top level  -> com.itbank.test  주소를 역순으로 적어주면 된다 (도메인의 역순으로 작성한다)
+
+
+spring legacy project 
+
+(요청을 받기 전에 미리 세팅이 된거고 요청을 받으면 작성된 xml대로 실행해준다)
+
+1. pom.xml (project object model)
+- 스프링 프로젝트는 메이븐 기반 프로젝트이다
+- ( 프로젝트 자체에 대한 설정 )
+- 메이븐은 외부 라이브러리를 관리한다 -> 인터넷에 있는 외부 라이브러리  url로 가지고 와서 .p2에 담는다 -> 외부에서 복사해서 넣는 일이 거의 없다
+- pom.xml 은 메이븐 프로젝트에 포함시킬 라이브러리를 관리한다
+
+- java version : 1.8
+- spring version : 4.3.30 으로 수정
+ (test/pom.xml) 가서 수정
+-> alt + f5 -> 업데이트 해서 1.8로 해준다
+
+2. web.xml
+- 요청과 응답을 어떻게 받을 것인가 web-app version ( jsp version, el version, tomcat version )
+- 웹 프로그램으로 가져야할 기본 사항을 설정 (DD)
+- 모든 요청을 처리하는 DispatcherServlet(자바 파일은 DS에 의해 호출되는 것) 을 선언 -> frontController  최상위로 경로 지정
+- 인코딩 필터(모든 요청에 대해서 request.set...을 다 할 수 있는 것), 서블릿 상세 설정 파일 경로 포함
+
+- web-app version : 3.1
+
+(상단에 )web-app_2_5.xsd  -> web-app_3_1.xsd 로 변경하기
+
+
+(dispatcherservlet의 상세 정보가 3번과 4번)
+3. root-context.xml
+- 요청과 응답에 상관없이 프로젝트가 참조해야할 객체를 선언
+ 
+
+4. servlet-content.xml
+- 주로 요청과 응답에 관여하는 객체를 선언
+
+
+servlet-content.xml에 가보면 -> base-package 가 있는데 거기에 @Controller가 있는 것을 참조해라
+
+
+제어의 역전 -> 스프링의 규칙에 내가 규칙을 추가하는 것
+
+
+maven 프로젝트
+
+maven 
+
+groupid : com.itbank
+
+artifact id(프로젝트 이름) : test3
+
+packing : jar
+
+
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+        <groupId>com.itbank</groupId>
+        <artifactId>test3</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        
+        <!-- 현재 프로젝트에 포함시킬 라이브러리의 정보를 작성하는 영역 -->
+        <!-- 이 라이브러리가 없으면 우리 프로젝트가 정상적으로 작동할 수 없다 -->
+        <!-- 우리 프로젝트는 여기에 작성하는 라이브러리에 의존적이다 -->
+        <!-- https://mvnrepository.com -->
+        <dependencies>
+        
+                <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+                <dependency>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                    <version>4.3.30.RELEASE</version>
+                </dependency>
+        
+        </dependencies>
+        
+        <!-- 현재 프로젝트가 컴파일 및 빌드되어 실행되는 환경을 지정하는 영역 -->
+        <build>
+                <plugins>
+                        <plugin>
+                                <artifactId>maven-compiler-plugin</artifactId>
+                                <version>3.1</version>
+                                <configuration>
+                                        <source>1.8</source>
+                                        <target>1.8</target>
+                                        <encoding>utf-8</encoding>
+                                </configuration>
+                        </plugin>
+                </plugins>
+        </build>
+        
+        <!-- update maven project : Alt + F5 -->
+        
+</project>
+
+
+
+appCtx.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+                
+                
+
+</beans>
+
+
+
+IOC : Inversion Of Control, 제어 역전
+스프링 컨테이너에 선언되어 있는 스프링 빈을 개발자가 받아서 프로그램을 진행한다
+객체 관리(선언 및 의존성 관리)를 개발자가 아니라, 스프링이 한다
+
+DI : Dependency Injection
+스프링 빈 간의 참조가 필요하다면, (setter 나 생성자 매개변수를 통해 연결할 수 있다)
+(스프링 빈 끼리는 자동으로 참조가 가능하다)
+
+( 우리는 개발만 하라고 제어는 스프링이 다 해준다 )
+
+Auto DI : 스프링이 타입과 id로 추론하여 의존관계를 연결시켜줄 수 있다
+@Autowired : 스프링 비 중에서 자료형이 맞는 객체를 찾아서 알아서 넣어줘라
+
+ @Resource 
+

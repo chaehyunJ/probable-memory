@@ -1,0 +1,185 @@
+package student1007;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class StudentDAO {
+        
+        private Connection conn;
+        private Statement stmt;
+        private PreparedStatement pstmt;
+        private ResultSet rs;
+        
+        private final String url = "jdbc:oracle:thin:@192.168.1.100:1521:xe";
+        private final String user = "c##itbank";
+        private final String password = "it";
+        
+        public StudentDAO() {
+                try {
+                        Class.forName("oracle.jdbc.OracleDriver");
+                        conn = DriverManager.getConnection(url, user, password);
+                } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                }
+        }
+        
+        // 반복되는 코드 1. close()
+        // 연결, 상태, 결과셋 요소가 멤버 필드로 등록되어 있어야 한다
+        // 서로 다른 메서드가 공통으로 참조하려면 멤버 필드로 등록이 되어야 한다
+        private void close() {
+                try {
+                        if(rs != null)                 rs.close();
+                        if(pstmt != null)         pstmt.close();
+                        if(stmt != null)         stmt.close();
+                        if(conn != null)         conn.close();
+                        
+                } catch(SQLException e) {
+                        System.out.println("close 에서 예외 발생 : " + e);
+                }
+        }
+        
+        private ArrayList<StudentDTO> select(String sql) {
+                ArrayList<StudentDTO> list = new ArrayList<StudentDTO>();         
+                // NullPointerException 생기지 않도록~
+                // forEach() 쓸꺼면 길이가 0일 경우 상관 없음
+                
+                try {
+                        stmt = conn.createStatement();
+                        rs = stmt.executeQuery(sql);
+                        
+                        while(rs.next()) {
+                                StudentDTO dto = new StudentDTO();
+                                dto.setIdx(rs.getInt("idx"));
+                                dto.setName(rs.getString("name"));
+                                dto.setKor(rs.getInt("kor"));
+                                dto.setEng(rs.getInt("eng"));
+                                dto.setMat(rs.getInt("mat"));
+                                dto.setTotal(rs.getInt("total"));
+                                dto.setAvg(rs.getDouble("avg"));
+                                list.add(dto);
+                                
+                                if(sql.contains("where idx")) {        // SQL문이 idx에 대한 조건을 사용한다면 반복문안에서 바로 반환(함수 종료)
+                                        return list;
+                                }
+                        }
+                } catch (SQLException e) {
+                        System.out.println("select 예외 : " + e);
+                } finally { close(); }
+                return list;
+        }
+        
+        // select * from student order by idx;                                // 다수의 레코드
+        // select * from student order by avg;                                // 다수의 레코드
+        // select * from student where name like '%홍길동%';        // 다수의 레코드
+        // select * from student where idx = 5;                                // 조건으로 PK를 사용하면 결과는 1개이거나 0개이거나
+        
+        public ArrayList<StudentDTO> selectList() {
+                return select("select * from student order by idx");
+        }
+        
+        public ArrayList<StudentDTO> selectList(String name) {
+                // 1. 서식 문자를 넣었다면 반드시 처리하여 사용하자
+                // 2. SQL에서는 문자열을 표현하기 위해서 따옴표를 사용해야 한다(')
+                // 3. where 전에는 ,를 사용하지 않는다
+                
+                String sql = "select * from student where name like '%%%s%%'";
+                sql = String.format(sql, name);
+                return select(sql);
+        }
+        
+        public ArrayList<StudentDTO> selectListOrderByAvg() {
+                return select("select * from student order by avg desc");
+        }
+        
+        public StudentDTO searchByIdx(int idx) {
+                return select("select * from student where idx = " + idx).get(0);
+        }
+        
+        
+
+}
+
+	// Hashmap을 사용해서 컬럼의 이름과 데이터 타입을 찾아올 수 있다
+//	int colCount = rs.getMetaData().getColumnCount();
+//	for(int i = 0; i < colCount; i++) {
+//		String colName = rs.getMetaData().getColumnName(i +1);
+//		String colType = rs.getMetaData().getColumnTypeName(i +1);
+//	}
+
+===============================================================================
+
+HTTP( Hyper Text Transfer Protocol )
+
+-> (하이퍼) 텍스트를 전송하는(주고받는) 프로토콜 (규약, 규칙이나 약속)
+
+- 정보를 텍스트 형태로 저장하여 보관했음
+- 네트워크의 발달로 인해, 텍스트 형태의 정보(information)를 주고받기 위한 프로토콜
+- 텍스트 + 미디어(비디오, 오디오) 를 전달 가능한 형태로 변경
+- 어떻게 이미지나 오디오나 비디오를 표현할 것이가 에 대한 규칙이 필요해짐
+- 태그라는 형식으로 텍스트, 이미지, 오디오, 비디오를 표현
+- HTML( HyperText Markup Language) -> 다른 프로그램들이 읽어서 객체화 할 수 있다
+- HTTP를 통해서 전달하는 웹 문서는 HTML 규칙에 맞게 작성되어 있다
+- HTML은 태그라는 형태로 구성되며, 화면에 표현하고 싶은 요소를 태그 종류별로 나타낼 수 있다
+- 초창기의 HTML 문서는 항상 고정된 형태를 나타내는 문서이다( Static Web )
+- 세션, ip, 쿠키, 캐시 등에 의해 서로 다른 내용을 나타내는 웹 형태 ( Dynamic Web )
+- Dynamic Web을 구성하기 위해서 프로그래밍 언어가 필요하다(C, Perl, Java, Python)
+
+-> 왜 프로그래밍 언어가 개입하게 되었는지 ?? 
+
+--> 텍스트 기반이며 글자를 사용하는 규칙을 익혀야 한다
+
+
+- Internet : 서로 다른 (소규모) 네트워크들을 통합하여 연결한 거대한 네트워크
+- 인터넷 상에서 용도에 따라 서로 다른 프로토콜(규약)로 통신을 주고 받을 수 있다
+- 그 중 웹 문서를 주고받기 위한 규약을 HTTP이다 ( TCP, IP, UDP )
+- WWW ( World Wide Web )
+- IP ( Internet Protocol ) : 인터넷을 사용하기 위해 지켜야 할 규칙이나 약속
+- IP Address : IP규칙대로 서로 통신하기 위해 컴퓨터가 가지는 논리적인 주소
+- 컴퓨터는 숫자 체계로 각 컴퓨터를 식별한다
+- 사람은 숫자로 구성된 체계를 기억하기 쉽지 않고, 의미부여도 쉽지 않다
+- 숫자를 대체할 수 있는 글자 형태의 주소 체계가 필요하다
+- 영역에 이름을 부여하여 관리하는 시스템 ( Domain Name System, DNS )
+- (IP : 8.8.8.8   Domain : google.com )
+
+=> 네트워크
+
+- Web Server 와 Web Client 로 구성된다
+- 웹 서버는 문서를 가지고 있다가 클라이언트의 요청이 들어오면 문서를 보내준다
+- 웹 클라이언트는 IP 혹은 DNS이름으로 웹 서버를 지정하여, 서버가 가지는 문서를 요청하고 받는다
+- 웹 클라이언트는 HTML 형식으로 구성된 문서를 해석하여 화면에 표시할 수 있다 ( Web Browser )
+- HTML로 문서를 만들어서 웹 서버에 올려두면, 브라우저(크롬, 엣지)로 요청하여 볼 수 있다
+- 웹 서버에 올려둘 문서를 만드는 것이다 ( 도서관 시스템 )
+
+
+=> System Server (Windows, Linux, Unix)
+
+인터넷과 웹의 차이
+- 인터넷은 고속도로고 웹은 고속도로를 통해 택배를 배달해주는 것
+
+
+vscode 설정하기
+
+ctrl + ,  ( 설정 )
+zoom  : 확대 축소
+theme : 색상 테마
+asso  : 확장자 연결 (*.html html 설정) 
+
+확장에서 live server 검색 - 설치
+확장 설정 아래쪽 127.0.0.1 값을 자신의 ip주소로 변경
+이후 파일 편집중 우측 하단의 Go live를 클릭하면 브라우저에서 실행
+(방화벽 허용, 연결 프로그램 : Chrome, Edge..../src/img.gif)
+
+ctrl + , : 설정
+ctrl + b : 좌측 탐색기 숨김/열기
+ctrl + ` : 터미널 열기
+F11	 : 전체 화면
+alt + shift + ↓ : 밑으로 복사
+<!-- 자주 사용하는 HTML 태그 -->
+https://www.advancedwebranking.com/html/#doctype
+
+h1 : 한 페이지에 한번만 사용하는 것이 규약 ( headline level1 )

@@ -1,0 +1,47 @@
+항목		컬럼이름			자료형		제약조건
+-------------------------------------------------------------------------
+고유번호		idx			number		default book_seq.nextval primary key
+책 제목		name			varchar2(500)	not null
+저자		author			varchar2(500)	not null
+출판사		publisher		varchar2(100)	not null
+출판일자		publish_date		date		not null
+ISBM		isbm			varchar2(20)	not null unique
+도서판매가		book_price		number		not null check( book_price > 0)
+e북판매가		ebook_price		number		not null check( ebook_price > 0)
+별점		score			number		not null check( score between 0 and 10)
+
+-> 데이터의 유형을 직접 정의하는 과정이 필요하다 / 설계하는 과정
+
+drop sequence book_seq;
+drop table book;
+-> 기존에 있었다면 drop하고 새로 만든다
+
+create sequence book_seq
+	start with 1
+	maxvalue 9999999999999
+	increment by 1
+	nocycle
+	nocache;
+
+
+create table book(
+		idx			number		default book_seq.nextval primary key,
+		name			varchar2(500)	not null,
+		author			varchar2(500)	not null,
+		publisher		varchar2(100)	not null,
+		publish_date		date		not null,
+		isbm			varchar2(20)	not null unique,
+		book_price		number		not null check( book_price > 0),
+		ebook_price		number		not null check( ebook_price > 0),
+		score			number		not null check( score between 0 and 10)
+		);
+
+public class BookDTO{
+	private int idx;
+	private String name;
+	...
+	// 데이터베이스 테이블의 구조가 자바DTO 클래스의 구조와 거의 유사하게 만들어질 수 있다
+}
+
+-> developer에서 데이터 import하기
+-> 테이블 우클릭 데이터 임포트하기 해서 순서대로 진행하기

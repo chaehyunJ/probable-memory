@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+    <script>
+        // 연산자는 자바와 거의 비슷하게 사용할 수 있으나
+        // 비교 연산자는 주의하기
+        // == : 값의 형태만 검사한다. 숫자와 문자열이 같다라고 판별될 수 있다.
+        // 값의 생김새만 검사한다
+
+        // === : 형태와 자료형 일치여부를 검사한다. 자료형이 다르면 무조건 다르다
+        
+        const a = 0
+        const b = '0'   // 홑따옴표 쌍따옴표 모두 문자열이다
+        const c = []
+
+        console.log(a == b)
+        // 값의 생김새가 동일해서 true
+
+        console.log(a == c)
+        // 내용이 없는 것과 0이 서로 동일하다 해서 true
+        console.log(b == c)
+
+        const d = null
+        const e = undefined
+        console.log(d)
+        console.log(e)
+
+        // 이런건 사용하지 마세요
+        undefined = 1
+        
+        console.log(undefined)
+
+        // 태그 하나하나가 객체가 된다
+        // html이라는 거대한 객체가 있고 
+        // 그 안에 작은 객체들이 존재하는 것이다
+        // getElementById, querySelector, querySelectorAll 로 각각의 요소를 불러올 수 있다
+        // 값을 불러와서 값을 변경하면 실제로 변경됨
+        // DOM  Document Object Model
+
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+63일차
+
+oracleDB 접속 안될때
+
+service oracle-xe-18c restart
+
+netstat -lntup | grep 1521
+
+ifconfig | head -2
+
+===================
+
+라이브러리 추가
+
+HikariCP - 자바버젼에 따라서 사용하는게 다르다 -> java 8 은 4.0.3을 추천한다
+
+HikariCP -> c3p0를 대체하는 역할이다 (커넥션풀 대체역할)
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+        xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+                http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+        
+        <!-- Root Context: defines shared resources visible to all other web components -->
+        <!-- 
+                        Connection을 관리해주는 dataSource는 hikariCP로 처리하고,
+                        DB에 접속 및 쿼리문 수행, 객체-관계 맵핑은 myBatis 로 처리한다
+         -->
+        <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+                <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+                <property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.1.100:1521:xe" />
+                <property name="username" value="c##itbank" />
+                <property name="password" value="it" />
+        </bean>
+        
+        <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+                <constructor-arg ref="hikariConfig" />
+        </bean>
+        
+        <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+                <property name="dataSource" ref="dataSource" />
+        </bean>
+        
+        <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="close">
+                <constructor-arg ref="sqlSessionFactory" />
+        </bean>
+        
+        <context:component-scan base-package="com.itbank.service" />
+        <mybatis-spring:scan base-package="com.itbank.model" />
+                
+</beans>
+
+===============
+
+테이블에 따라서 패키지를 다르게 만들어야 한다
+
+DB관련은 root-context.xml에서 시작한다
+
+mybatis xml로 설정하기 xml이 항상 우선 작성해야 한다
+
+<configuration>
+	<settings>
+		<!-- 캐쉬 활성화 X, 자동키 X, user_name -> userName : 맵핑때문에 언더바를 카멜케이스로 바꾸겠다  -->
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="false"/>
+		<setting name="mapUnderscoreToCamelCase" value="false"/>
+	</settings>
+</configuration>
+
+config를 resources 바로 아래 만들어야 됨 경로를 못찾아서 오류 발생
+
+
+Controller -> Service -> DAO -> SqlSessionTemplate -> sqlmap-***.xml ... (id가 statement가 된다 -> select)
+
+간단한 쿼리문은 어노테이션으로 사용가능
+
+xml로 들어갔을 때 설정이 복잡한 만큼 내가 원하는대로 setting할 수 있다
+
+
+
+
+	<select id="test1" resultType="string" parameterType="string">
+		<!-- 동적 쿼리문 -->
+		select
+		<if test="${test} != null">
+			banner
+		</if>
+		<if test="${ test} != null">
+			*
+		</if>
+		from v$version
+		
+		<foreach collection="">
+		</foreach>
+		
+		<choose>
+			<when test=""></when>
+			<otherwise></otherwise>
+		</choose>
+	</select>
+
+
+=====================
+
+1. myBatis (XML) 형식을 사용하기 위한 준비
+
+root-context.xml에서 
+- configLocation : mybatis-config.xml이 등록되어 있고, 파일이 제자리에 있는지 확인
+- mapperLocations : sqlmap-***.xml이 등록되어 있고, namespace가 DAO와 연결되어 있는지 확인 
+
+2. 연결이 모두 완료되었다면 Controller -> Service -> DAO -> mapper.xml로 연결됨
+- mapper.xml을 작성하는 요령
+
+- namespace는 DAO의 이름을 작성한다
+- <select> <insert> <update> <delete> 태그를 사용한다
+- <select> 는 resultType을 명시해야 한다
+- insert, delete, update는 resultType이 int로 고정이기 때문에 생략가능하다
+- 매개변수를 전달한다면 parameterType을 명시한다
+- paramType은 패키지이름, 클래스이름을 모두 명시해야 한다
+- 자주 사용하는 클래스 자료형이 있다면, mybatis 설정파일에서 typeAliases 를 설정하여 줄일 수 있다 
+====================
+
+<mapper namespace="MemberDAO"> 
+	<select id="itbank" resultType="com.itbank.member.MemberDTO">
+		select * from member
+	</select>
+</mapper>
+
+-->> select 에서 resultType은 DTO , String 등 올 수 있는데 
+-->> insert, delete, update는 정수형으로 반환되기 때문에 따로 resultType을 작성안해도 된다 
+
+
+======
+
+@PathVariable 이중 삼중으로 할 수 있다
+
+모든 요청 request
+
+#{}은 값 
+${}은 문자열
+
+update member set ${ userid } = #{ userid } where ${ useridx } = #{ idx }
+
+redirect는 무조건 GetMapping 주소가 변경되는 것이라서
+
+
+=========
+
+
+		List<MemberDTO> list = ms.selectOrderBy(order);		// 변수 선언만, 값은 switch에 따라서 달라질 수 있음
+		
+//		switch(order) {
+//		case "username":
+//			list = ms.selectOrderBy("username");
+//			break;
+//		case "userid":
+//			list = ms.selectOrderBy("userid");
+//			break;
+//		}
+
+
+========
+
+//		sst.selectList(statement);
+//		별도의 매개변수 전달 없이 id만으로 호출하는 방식
+		
+//		sst.selectList(statement, parameter);
+//		parameter가 object타입이라서 dto나 HashMap타입으로 지정해서 전달하면 된다
+		
+//		sst.selectList(statement, parameter, rowBounds);
+//		파라미터를 전달하면서 결과를 myBatis에 의해서 페이징 처리하여 가져온다
+//		rowBounds가 새로 객체를 만들어서 처리해준다
+
+========
+
+<select id="now" resultType="java.sql.Date">
+		select sysdate from dual
+</select>
+
+-->> resultType 작성시 Date 대문자로 작성하는거 자주 실수함 주의!!!

@@ -1,0 +1,279 @@
+- 인터셉터 기본 기능을 다 구현하고 나중에 구현
+
+- 데이터 모델링, DTO생성, 테이블 생성은 컨트롤러의 작업을 시작하기전에 미리 만들기
+
+- 테이블 작성 시 drop 넣어서 기존에 있는 것을 날리기 위함
+
+- 예약어는 피해서 컬럼이름 작성하기( 최소 두개 이상의 단어를 합성하면 예약어를 피할 수 있다 )
+
+---------------------------------------------------------
+
+===========================
+
+1~5까지를 하나의 section(덩어리로)으로 만들어서 처리하기
+
+section은 ( param.page -1 ) / 5로 처리
+why? 1~5 까지 0으로 만들기 위해서 5로 나눠서 몫을 0으로 맞춤
+(1~5까지 동일한 숫자를 뽑아내기 위해서)
+
+page	section		begin	end
+1	0		1	5
+2	0		1	5
+3	0		1	5
+4	0		1	5
+5	0		1	5
+
+begin => section*5 + 1
+if
+ end가 딱 떨어질 경우
+ end => begin + 4
+ ()
+else 
+ end가 딱 안 떨어지는 경우
+ end => pageCount
+-> 여기서 pageCount가 begin+4 보다 작으면 pageCount를 출력하고 아니면 begin+4를 출력하도록 한다
+6	1		6	10
+7	1		6	10
+8	1		6	10
+9	1		6	10
+10	1		6	10
+
+11	2		11	12
+12	2		11	12
+
+이전은 section이 0이 아니라면 띄워주기
+다음은 pageCount 를 5로 나눈 값이 end를 5로 나눈 값이 다르면 띄워주기
+
+
+=============
+
+---------------------------------------------------------
+
+const uploadForm = document.getElementById('uploadForm')
+
+form.onsubmit = function(event) {
+	event.preventDefault()		// submit을 시도하려면 일단 막는다
+	if(login == ''){
+		alert('로그인 하셔야 파일 업로드가 가능합니다')
+		return
+	}
+	event.target.submit()		// 상단의 if에서 종료되지 않으면 의도했던 대로 제출해라
+
+	uploadForm.querySelector('input[name="uploadFile"]).onclick = function(event){
+		if(login == ''){
+		location.href='${cpath}/login'
+		}
+	}
+
+---------------------------------------------------------
+
+<a href="${ cpath}/upload/${list.fileName}" target="_blank"><img src="${cpath}/upload/${list.fileName}" style="width : 300px;"></a>
+
+---------------------------------------------------------	
+
+외부에서 파일을 참조하는 것은 web서버에서는 처리만 담당하도록 하는 이유가 크다( 성능적인 부분에서 차이가 나기때문이다 )
+
+그래서 나중에는 새로운 서버를 만들어서 사용한다
+
+--------------------------------------------------------
+
+AJAX -> 주소를 변경하지 않고 요청을 날릴 수 있다
+
+<fieldset>
+	<button id="btn">요청</button>
+	<span id="result"></span>
+</fieldset>
+
+<script>
+	function request(){
+		const xhr = new XMLHttpRequest()
+		xhr.onreadystatechange = function(event){
+			if(xhr.status == 200 && xhr.readyState == xhr.DONE){
+				document.getElementById('result').innerText = xhr.responseText
+			}
+		}
+		// xhr.open(method, url)
+		xhr.open('GET', '${ cpath }/ex01-ajax')	
+		xhr.send()
+	}
+
+	const btn = document.getElementById('btn')
+	btn.onclick = request
+</script>
+
+--------------------------------------------------------
+
+	@GetMapping("/ex01-ajax")
+	@ResponseBody				// 이 메서드는 응답의 내용을 직접 반환한다
+	public String ex01Ajax() {
+		return "ex01";
+		
+		// ex01.jsp를 찾아가서 실행하고 그 결과를 response로 반환된다
+		// 반환하는 문자열 자체가 응답이 되지 않는다
+		// viewName을 찾아가는 과정이 생략되고 요청받은 곳에 내용을 반환해준다
+	}
+
+----------------------
+
+화면과 동기화되지 않고 입력받으면 바로 요청에 대한 응답을 해주는 것이 비동기화이다.
+(AJAX를 만드는 기술들이 xhr 하고 뭐였지,, > jQuery  
+
+
+ <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+<groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId>
+		    <version>2.13.0</version>
+		</dependency>
+
+
+---------------------
+
+	@GetMapping("/ex02")
+	public void ex02() {}
+	
+	@GetMapping("/ex02Ajax")
+	@ResponseBody			// 이 함수는 jsp로 포워딩하지 않습니다. 반환값 자체가 응답입니다.
+	public int ex02Ajax(@RequestParam HashMap<String, String> param) {
+		int n1 = Integer.parseInt(param.get("n1"));
+		int n2 = Integer.parseInt(param.get("n2"));
+		System.out.println(param);
+		int answer = n1 + n2;
+		return answer;
+	}
+
+--------------------
+
+	const btn = document.querySelector('input[type="button"]')
+	
+	btn.onclick = function() {		// 사용자가 버튼을 클릭하면  값을 불러온다
+		const n1 = document.querySelector('input[name="n1"]').value 	// Integer.parseInt -> +document
+		const n2 = document.querySelector('input[name="n2"]').value
+		
+		
+		const url = '${ cpath }/ex02Ajax?n1=' + n1 + '&n2=' + n2
+		const opt = {
+				method : 'GET'
+		}
+		// 추가 라이브러리를 가져올 필요가 없다 (IE를 제외하고 다 된다)
+		fetch(url, opt)					// 1. 주소와 옵션으로 요청을 보낸다
+		.then(resp => resp.text())		// 2. 응답을 텍스트 형태로 변환한다
+		.then(text => {					// 3. 텍스트 형태의 응답을 result 태그 내부에 글자로 적는다
+			document.getElementById('result').innerText = text
+		})
+	}
+
+----------------------
+
+jackson
+-> java object 를 json으로 변환하거나 json을 java object로 변환하는데 사용할 수 있는 java라이브러리
+
+jackson 특징
+1. stream API : 스트림 형식으로 데이터를 분석하고 생성하기 때문에 성능이 좋다
+2. Tree Model : XML의 DOM 처럼 Node형태로 데이터를 다룰 수 있기 때문에 유연성이 좋다.
+3. Data Binding : POJO 기반의 자바 객체들을 json으로 변환시킬 수 있다.
+
+----------------------
+
+요청을 만들어내는 요소들
+
+1. <a>태그
+2. <form>태그
+3. javascript - location.href
+4. AJAX (XMLHttpRequest) - 주소를 변경하지 않고 요청을 날릴 수 있다
+
+요청을 전달하는 방식에서는 XMLHttpRequest, jQuery(라이브러리), AJAX, AXIOS(라이브러리), fetch(기본) 등이 있다
+
+----------------------
+
+XHR(XMLHttpRequest)
+-> 기존에 form태그를 사용하여 서버어 데이터를 받는 것은 너무 많은 데이터가 올뿐 아니라 페이지를 새로 받는 불편함이 있었다.
+-> 하지만, XMLHttpRequest 가 나오면서 필요한 부분만 서버에 요청하고 해당하는 내용만 받는 것이 가능해졌다.
+-> 이렇게 되면 대역폭의 낭비를 줄이고 필요한 부분만 요청하기 때문에 상호작용할 수 있게된다
+
+AJAX 
+-> XHR을 사용하여 비동기처리를 하는 기술 AJAX(Asynchronous Javascript And XML)이 등장
+
+
+fetch 
+-> axios와 달리 브라우저에 내장되어있어서 라이브러리를 사용하지 않고 비동기통신을 할 수 있다.
+-> fetch()함수는 첫번째 인자로 URL, 두번쨰 인자로 옵션 객체를 받고, Promise 타입의 객체를 반환한다.
+-> 반환된 객체는 API호출이 성공했을 경우에는 응답객체를 resolve하고, 실패했을 경우에는 예외객체를 reject한다
+-> 옵션 객체에는 HTTP 방식(method : get / post), HTTP 요청 헤더(headers), HTTP 요청 전문 (body) 등을 설정 가능
+-> headers에는 요청헤더를 설정할 수 있고 body는 본문내용을 설정한다.
+-> fetch는 get방식의 통신이 디폴트로 작동하고있어 따로 작성해주지 않아도 된다. get방식은 데이터를 가져올때 쓰는 방식이다.
+-> post방식은 서버에 데이터를 생성한다면 데이터 요청전문을 포함한다. put,delete방식은 데이터 수정, 삭제를하기위해서 사용한다.
+
+Promise 타입
+-> 서버에서 받아온 데이터를 화면에 표시할 때 사용한다
+-> .then은 순서대로 실행되면 실행된 값을 다음 .then에서 value로 값을 받아 실행한다
+
+Axios
+-> Axios는 브라우저, node.js에서 사용가능한 프로미스 API를 활용하는 비동기통신 라이브러리이다.
+-> fetch와 다르게 라이브러리를 install해야 사용가능
+-> 그리고 import를 해야 사용가능
+-> Axios는 모든 브라우저에서 사용가능하며 응답시간 설정을 지원하고 json 자동변환이 지원된다
+
+
+출처-
+https://velog.io/@ldaehi0205/ajax-fetch-xhr-%EB%B9%84%EB%8F%99%EA%B8%B0%ED%86%B5%EC%8B%A0-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B8%B0
+
+----------------------
+
+@GetMapping("/ex01-ajax")
+@RequestBody
+public String ex01Ajax(){
+	return "hello";
+}
+
+
+@RequestBody : 해당 어노테이션이 붙은 메서드는 응답의 내용을 직접 반환한다
+	       ex01.jsp 를 찾아서 실행하고 그 결과를 response로 반환된다
+		반환하는 문자열 자체가 응답이 되지 않는다
+
+----------------------
+
+◾️ SSR은 서버에서 view를 서버에서 렌더링하여 클라이언트가 받기때문에 첫 로딩이 매우 짧다. 하지만 js를 적용하기까지 인터렉션에 반응하지 않는다.
+
+◾️ CSR은 서버에서 js,리소스 파일을 받아 렌더링하기때문에 첫 로딩에 시간이 걸린다. SEO가 잘 되지않는다(빈 html로 읽혀진다)
+
+----------------------
+
+<script>
+	// 버튼 불러옴
+	const btn = document.getElementById('btn')
+	
+	// request()라는 이름의 함수를 만듬
+	function request() {
+		// XMLHttpRequest 생성자 객체를 xhr이라는 이름으로 지정
+		const xhr = new XMLHttpRequest()
+		
+		
+		// readyState 프로퍼티 : XMLHttpRequest 객체의 현재 상태를 나타낸다.
+		// status 프로퍼티 : 서버의 문서 상태를 나타낸다.
+		// onreadystatechange 프로퍼티 : XMLHttpRequest 객체의 readyState 프로퍼티 값이 변할 때마다 자등으로 호출되는 함수를 설정
+		// onreadystatechange : 요청에 대한 응답을 받는 이벤트 리스너
+		
+		// AJAX 요청 시 XHR 객체는 각 상태별로 readyState가 변경됨
+		// 0 (xhr.UNSENT) : 보내지 않음
+		// 1 (xhr.OPENED) : open 메소드를 호출하는 순간 변경
+		
+		// send시 순차적으로 변경
+		
+		// 2 (xhr.HEADER_RECEIVED)
+		// 3 (xhr.LOADING)
+		// 4 (xhr.DONE)	 : 요청이 완료된 것이다. 그래서 xhr.status로 가서 HTTP 상태 코드를 확인하면 200이나 201일 때 응답을 확인한다	 
+		xhr.onreadystatechange = function(event){
+			if(xhr.status == 200 && xhr.readyState == xhr.DONE){
+				// idrk result인 것을 가져온다 그리고 innerText 안에 text를 삽입 
+				// xhr.responseText 응답받은 text를 넣어주는데 
+				// 이건 Controller에서 @RequestBody로 어노테이션을 준 메서드의 반환값을 불러오는 것이다
+				document.getElementById('result').innerText = xhr.responseText
+			}
+		}
+		// get 방식으로 ex01-ajax로 가줘
+		xhr.open('GET','${ cpath }/ex01-ajax')
+		// 요청 전송
+		xhr.send()
+	}
+	btn.onclick = request
+</script>

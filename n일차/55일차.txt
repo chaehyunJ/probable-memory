@@ -1,0 +1,117 @@
+// 상단 sticky 
+// border-radius : 50px 50px
+
+1. 5
+2. 2
+3. 4
+
+// 텍스트 파일에 첨부해서 올리기
+
+// 본인 이름5A.zip
+
+// 파일 이름 바꾸는거 io에 있음
+
+create sequence phone_seq
+	start with 1
+	maxvalue 999999999999
+	increment by 1
+	nocache
+	nocycle;
+
+create phonebook (
+	idx 		number		default phone_seq.nextval primary key,
+	name		varchar2(500)	not null,
+	phoneNumber	varchar2(500)	not null,
+	uploadFileName	varchar2(1000)	not null
+	);
+
+commit;
+
+select * from tabs;
+
+create sequence phone_seq
+	start with 1
+	maxvalue 999999999999
+	increment by 1
+	nocache
+	nocycle;
+
+create table phonebook (
+	idx 		number		default phone_seq.nextval primary key,
+	name		varchar2(500)	not null,
+	phoneNumber	varchar2(500)	not null,
+	uploadFileName	varchar2(1000)	not null
+	);
+
+commit;
+
+insert into phonebook values (PHONE_SEQ.nextval, '홍진호','010-4444-1321','ffdsa.jpg');
+insert into phonebook values (PHONE_SEQ.nextval, '김기안','010-4464-7521','ffdsa.jpg');
+
+select * from phonebook order by name;
+
+delete from phonebook;
+
+
+키오스크 
+
+메뉴 추가 하면 컬럼을 
+alter
+
+상품테이블 주문테이블을 따로 만들어서 처리한다
+외래키로 연결해서 사용한다
+
+create table menu (
+	idx 		number 	
+	
+
+아메리카노		카페라떼 		말차라떼		총합
+1500		2000		1200		4700
+1500		0		1200		2700
+3000		0		2400		5400	
+0		2000		1200		3200
+
+
+
+select sum(총합) from menu
+===
+
+
+================
+
+
+1. ANIMAL_INS 테이블은 동물 보호소에 들어온 동물의 정보를 담은 테이블입니다. 
+
+2. ANIMAL_INS 테이블 구조는 다음과 같으며, 
+   ANIMAL_ID, ANIMAL_TYPE, DATETIME, INTAKE_CONDITION, NAME, SEX_UPON_INTAKE는 각각 
+   동물의 아이디, 생물 종, 보호 시작일, 보호 시작 시 상태, 이름, 성별 및 중성화 여부를 나타냅니다.
+
+3. ANIMAL_OUTS 테이블은 동물 보호소에서 입양 보낸 동물의 정보를 담은 테이블입니다. 
+
+4. ANIMAL_OUTS 테이블 구조는 다음과 같으며, ANIMAL_ID, ANIMAL_TYPE, DATETIME, NAME, SEX_UPON_OUTCOME는 각각 
+   동물의 아이디, 생물 종, 입양일, 이름, 성별 및 중성화 여부를 나타냅니다. 
+
+5. ANIMAL_OUTS 테이블의 ANIMAL_ID는 ANIMAL_INS의 ANIMAL_ID의 외래 키입니다.
+
+   on ANIMAL_OUTS.ANIMAL_ID = ANIMAL_INS.ANIMAL_ID
+
+6. 보호소에서 중성화 수술을 거친 동물 정보를 알아보려 합니다. 
+   보호소에 들어올 당시에는 중성화되지 않았지만, 
+   보호소를 나갈 당시에는 중성화된 동물의 아이디와 생물 종, 이름을 조회하는 아이디 순으로 조회하는 SQL 문을 작성해주세요.
+--> outs에서는 중성화였고 ins에서는 중성화가 아니었던 친구들을 찾으면 되는 문제
+
+두개의 테이블에서 동일한 종목이 같지 않음을 찾으면됨
+
+SELECT a.animal_id, a.animal_type, a.name
+from animal_ins a , animal_outs b
+where a.animal_id = b.animal_id and a.SEX_UPON_INTAKE <> b.SEX_UPON_OUTCOME
+order by a.animal_id asc;
+
+
+<> : 같지 않음
+!< : 작지 않음
+!> : 크지 않음
+
+
+두개의 테이블을 가지고와서 같이 않음을 확인하고 골라내기
+

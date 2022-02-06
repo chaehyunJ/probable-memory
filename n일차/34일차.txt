@@ -1,0 +1,29 @@
+jsp 들어가기 위해서 설치해야 하는 것들
+
+Eclipse for Enterprise Developer (JEE - 2019-06R)
+- General - Workspace - Encoding
+- Web - HTML/CSS/JSP -Encoding
+- Web - Browser - Chrome
+
+Apache Tomcat 8.5.xx (.zip) -> 8.5에서 최신버젼
+core -> zip을 다운받아야 한다
+- 환경변수 설정해줘야 한다
+(Web Application Server, WAS)
+-> 자바로 만들어짐 
+
+- JAVA_HOME 환경변수가 정상적으로 등록되지 않으면 실행불가
+- &JAVA_HOME%\bin 이 PATH에 등록되지 않으면 실행불가
+-> 환경변수에 bin까지 넣어버리면 안된다
+
+- CATARINA_HOME : 톰캣의 설치 경로 (apache-tomcat-8.5.xx)
+- PATH에 추가 : %CATARINA_HOME%\bin
+
+tomcat -> bin 
+bat확장자는 window 
+sh 확장자는 linux
+
+start.bat 을 실행하면 브라우저에서 localhost:8080으로 들어가면 tomcat으로 들어가진다
+
+-> tomcat이 실행이 안될경우
+c:/> taskkill /f /im java.exe
+-> 실행중인 java를 강제 종료

@@ -1,0 +1,38 @@
+[member]
+
+userid	userpw	username email		 gender deleted
+-------------------------------------------------------
+test	1234	테스트	 test@itbank.com 남성	'n'
+
+select * from member where deleted != 'n'
+
+
+인터셉터의 preHandle() 이 false 를 반환한 후
+로그인으로 이동하는데
+로그인 이후 다시 원래 이동하려던 페이지로 연결하는 방법
+
+요청을 만들어내는 종류
+1) <a>
+2) location.href
+3) <form><input type="submit"></form>
+   <form><button>이것도 제출</button></form>
+   <form><input type="button" value="이거는 제출아님"></form>
+
+4) XMLHttpRequest (javascript, XHR)
+   AJAX
+   
+Asynchronous	비동기식으로
+JavaScript	자바스크립트
+And		와
+XML		XML을 이용한 요청 및 응답방식
+		(요즘은 XML대신 json형식을 더 많이 사용한다)
+   
+
+
+
+
+
+
+
+
+

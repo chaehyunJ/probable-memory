@@ -1,0 +1,2266 @@
+jsp 지식
+
+=========================================
+
+<jsp:useBean id="user" class="beans.Account"></jsp:useBean>
+// 기본 생성자가 있어야지  -> setProperty를 생성할 수 있다.
+
+
+// Beans 클래스는 작성 규칙이 있다.
+
+// 1. private 멤버 변수
+// 2. public 메서드
+// 3. 자동으로 생성되는 생성자나, 혹은 직접 작성한 기본 생성자
+*********************
+// 4. 생성자는 오버로딩을 해서 여러개를 작성할 수 있지만 ****** 기본 생성자는 무조건 있어야 한다.
+****************************
+// 5. input태그의 name 이름과 beans의 멤버 변수 이름은 가급적 맞추도록 한다.
+
+	<jsp:useBean id="user" class="beans.Account"/>
+	<jsp:setProperty property="*" name="user"/>
+
+accs[i].equals(user.getId()) && accs[i].equals(user.getPw())
+
+
+	자바의 객체 비교를 위한 구현
+	// 내가 작성한 클래스의 객체가 같은지 비교하기 위해선 
+	// hashCode와 equals를 overriding해서 직접 구현해야 한다.
+
+============================================
+
+redirect은 로그인이 필요한 페이지가 있다 그런 페이지를 위해서 redirect가 필요함
+
+
+
+===============================================
+
+
+		클라이언트가 서버에 요청을 보내면,<br>
+		서버는 요청에 알맞는 응답을 생성해서 클라이언트에 전달<br><br>
+		
+		요청을 받은 서버가, 현재 페이지에서 요청을 처리할 수 없거나 <br>
+		이미 만들어진 다른 페이지나 다른 사이트에서 처리가능하면 <br>
+		그쪽으로 응답을 재지정하는 메세지를 전달할 수 있다 <br><br>
+		
+		이러한 이동 방식을 redirect, forward라고 한다.
+		MVC 패턴 2
+	
+==============================
+	<p>a태그는 사용자가 직접 선택해서 이동하는 방식</p>
+	<p>redirect는 server에서 응답한 페이지로 이동하는 방식</p>
+	<p>
+	<a href="ex01.jsp"><button>ex01.jsp</button></a>
+	</p>
+	<p>
+	<a href="https://youtube.com/"><button>youtube</button></a>
+	</p>
+===============================================
+
+redirect는 요청정보를 다시 갱신해서 새로운 페이지를 요청하는 방식이다.
+이때, 이전 요청 정보의 파라미터 값이 사라진다.
+즉, redirect는 파라미터 정보가 유지되지 않는다. 
+응답으로 어떤 페이지에 가야하는지 알려주기 때문에
+클라이언트가 어떤페이지에서 결과를 받았는지 알 수 있다.
+
+forward : 들어온 요청정보를 서버 내부의 다른 페이지로 전달한다.
+이때 요청정보를 유지한 상태에서 다른 페이지로 이동한다.
+즉, forward는 파라미터 정보가 유지된다.
+forward는 그대로 파라미터 정보를 전달한다.
+내부에서 바뀐페이지를 클라이언트에게 알려주지 않기 때문에 
+클라이언트는 실제로 어떤 페이지가 응답했는지 알 수 없다.
+-> 데이터 관리할 때 사용한다.
+-> 요청주소와 응답화면이 별도로 관리되어야 하는 경우(MVC2???뭐지 이제 알지 , Spring)
+-> 요청정보가 유지되어서 다른 페이지로 이동되어야 하는 경우
+-> 요청정보를 유지해서 전달하기 때문에 요청정보에 대한 내용을 아는 내부 사이트로만 이동 가능ㄴ
+========================================
+
+redirect 복습 ok  
+
+String site = request.getParameter("site");
+response.sendRedirect(site);
+
+if(조건){
+	response.sendRedirect(로그인 성공시);
+}
+else{
+	response.sendRedirect(로그인 실패시);
+
+
+forward 복습
+String result = LoginPro(user);
+if(result != null){
+	RequestDispatcher rd = request.getRequestDispatcher("ex05_Main.jsp");
+	RequestDispatcher rd = request.getRequestDispatcher
+	rd.forward(request, response);
+	}
+else{
+	response.sendRedirect("ex05_Login.jsp");
+	}
+
+아 이제 redirect랑 forward개념 알겠다 클라이언트랑 서버에서 주고 받는 관계
+redirect는 클라이언트가 서버로 요청을 보내면 서버는 요청에 알맞는 정보를 전달해요 
+그래서 파라미터 값이 저장되지 않는 것이죠
+forward는 클라이언트가 서버로 요청을 보내면 서버 내부에서 다른 페이지로 이동해서 
+클라이언트에게 정보를 제공하기 때문에 파라미터값이 유지돼요.
+다만 클라이언트는 어떤 서버에서 요청되었는지 알 수 없어요!!
+
+==========================================
+
+
+attribute 
+session  -> 로그인 정보 유지시킬 때
+========================
+
+method = "post"
+한글 깨짐 시 
+<% request.setCharacterEncoding("UTF-8"); %>를 추가해 준다. 어디에?? 
+
+===============================================
+
+header.jsp   main.jsp   footer.jsp 이런 순서대로 만들어진다.
+
+<%@ include file="header.jsp" %>
+<%-- include는 다른 jsp 파일의 내용을 이 파일에 가져와서 한번에 컴파일 한다 --%>
+<%-- 즉, 반복 사용되는 메뉴 같은 페이지를 불러서 재사용하는 방식이다 --%>
+	<main>
+		<div id="home">
+			<img src="src/main.png">
+		</div>
+	
+	
+	
+	
+	</main>
+<%@ include file="footer.jsp" %>
+
+이런 방식으로 
+include를 사용해서 블록을 만들어 준다.  종이를 오려쓰는 느낌
+
+<jsp: forward> 알아보자!
+
+
+<%@ include file="header"%>
+<%@ include file="footer"%>
+이런식으로 원하는 위치에 순서대로 입력한다.
+
+================
+
+
+
+<li>parameter : 클라이언트가 입력한 정보를 서버에 전달</li>
+<li>attribute : 서버에서 임의의 객체를 생성해서, jsp의 "내장객체"에 저장해 두고 필요시에 깨내쓰는 데이터</li>
+		
+	
+		
+<h2>JSP 내장 객체 4가지</h2>
+	<li>pageContext : 페이지가 실행될 때 생성되며, 다른 페이지로 바뀌면 사라진다</li>
+	<li>request : pageContext처럼, 해당 페이지 내에서만 유효하지만 단, forward시 데이터가 유지된다</li>
+	<li>session : 웹 브라우저를 종료하기 전까지 유지된다. 주로 사용자마다 계정정보를 유지시킬 때 사용한다 -> 로그인 계속 유지되는 것 </li>
+	<li>application : 웹 프로그램이 다시 시작하거나 종료도기 전까지 유지한다. 서버를 꺼지면 사라진다.</li>
+	<li>아래로 올수록 살아남는 시간이 길다</li>
+
+===========================================
+
+===========================
+
+HTTP 프로토콜의 통신 방식
+session  -> session.getAttribute();
+- 정보가 서버에 저장이 된다.
+- 보안성이 비교적 우수하다
+- 쿠기보다 느리다
+- 주로 로그인 정보를 유지하는 데 사용한다
+cookie
+- 정보가 클라이언트에 저장이 된다.
+- 보안성이 비교적 떨어진다.
+- 수명이 있다. 
+- 세션보다 빠르다.
+- 쇼핑몰의 장바구니, 팝업창의 며칠간 띄우지 않기, 자동 로그인, 로그인 정보 유지
+
+
+===============================
+		Account result = loginPro(user);
+	
+		if(result != null){
+			out.println(result.getNick());
+		}
+		else{
+			out.println("존재하지 않는 계정입니다");
+		}
+
+===============================
+
+void setAttribute가 업캐스팅된다.
+
+업캐스팅 -> 학생 경찰, 의사를 사람이라고 부르는 느낌
+하위클래스를 한번에 처리할 수 있다.
+
+업캐스팅 문제점
+
+ - 자식클래스를 가져다 사용할 수 없다.
+
+다운캐스팅 해야하는 이유 - 자식 클래스의 기능을 사용하기 위해서 
+
+=================
+null -> 데이터 없다. 메모리 값이 비어있다.
+객체가 없다.
+
+==============
+
+		if(login != null){
+			session.setAttribute("login", login);
+			// login 객체를 세션에 저장
+			// setAttribute ("이름", Object value);
+			// 이때, 모든 객체를 받기 위해 Object로 업캐스팅 된다. -> 꺼낼 때 다운캐스팅을 해야한다.
+			
+			
+		}
+		response.sendRedirect("ex02.jsp");
+=================================================
+
+	<% if (result != null)  {%>
+	<div id="isLogin">
+		<p><%= result.getNick() %> 님  로그인</p>
+	</div>
+	<%} else{ %>
+		<div id="isLogin">
+		<p>로그인 중이 아님</p>
+	</div>
+	<% } %>
+
+로그인 아이디어
+
+	<div id="isLogin">
+		<%
+		if(result == null){
+			out.println("로그인 중이 아님");
+		}
+		else{
+			out.println(result.getNick() + "님 환영합니다.");
+		}
+		
+		
+		%>
+	
+	</div>
+
+============
+
+            <% if (result != null ){ %>
+            <div><a href="login.jsp">로그아웃</a></div>
+            <%} else { %>
+            <div><a href="logout.jsp">로그인</a></div>
+            <% } %>
+====================================
+            <div>
+            	<a href="<%=(result == null) ? "login.jsp" : "logout.jsp"%>">
+            	<%=(result == null) ? "로그인" : "로그아웃" %>
+            
+            
+            </a>
+            
+            </div>
+
+=====================
+오늘의 수업은 세션을 활용해서 로그인을 유지하는 것
+일단 헤더파일에 
+Login result = session.getAttribute("login");을 만들어서 
+login이라는 이름으로 세션들을 저장해서 관리합니다.
+그리고 
+헤더파일에 
+div로 묶여 있는 로그인 표시가 로그인이 되면 로그아웃으로 변경되도록 구현할 것입니다.
+<div><a href =<%=(result == null)? "login.jsp" : "logout.jsp"%>">
+	<%=(result==null)? "로그인" : "로그아웃"%>
+</a>
+</div>
+이런식으로 조건식을 사용해서 간단하게 result의 값에 따라서 두가지를 구현할 수 있어요
+그러면 이제 logout 파일을 만들겁니다.
+
+로그아웃 파일은 
+<%
+	session.removeAttribute("login");  //이걸 사용해서 세션을 지워서 로그아웃 상태로 만들어버리는 거죠
+%>
+<script>
+	alert('로그아웃 되었습니다');
+	location.href="main.jsp";
+</script>
+이런식으로 로그아웃 파일을 구현해 줍니다. 
+
+그리고 로그인프로 파일에서 
+if(result != null){
+	session.setAttribute("login", result);  
+	// 로그인이 성공하면 null이 아니기 때문에 setAttribue에 값을 저장하는 것입니다.
+	response.sendRedirect("main.jsp");
+}
+<script>
+alert('로그아웃 되었습니다.');
+location.href='main.jsp';
+</script>
+이렇게 로그인이 되었을 때와 아닐 때를 구분해 줍니다.
+
+그 다음은 
+
+메인파일로 와서 
+중간에 로그인 중이 아님을 로그인이 되었을 경우 닉네임을 호출하도록 해보겠습니다.
+
+메인파일 fieldset 위에 div를 만들어서 해볼게요
+
+<div>
+	<%
+		if(result == null){
+		out.println("로그인 중이 아닙니다.");
+		}
+		else{
+		out.println(result.getNick() + "님 환영합니다");
+		}
+	%>
+</div>
+
+이렇게 해서 로그인이 되면 닉네임을 호출하도록 구현을 했습니다.
+
+그리고 로그인 파일에서
+	<%	// 주소창으로 login.jsp로 이동하면 값을 해킹할 수 있기 때문에 해주는 것이다.
+		// 세션이 남아있기 때문에 다시 메인페이지로 보내는 것이다.
+		if(result != null){
+			response.sendRedirect("main.jsp");
+		}
+	%>
+
+이렇게 구현을 해줄게요
+왜?? 로그인이 되어 있는 상태에서는 세션이 남아있기 때문에 login.jsp로 이동하면 값을 해킹당할 수 있기 때문에
+세션이 있으면 main.jsp로 가버려 이런 것입니다.
+
+
+ **** 로그인 결과 파일에서 로그인이 성공하면
+session.setAttribute("login");으로 세션을 만들어주고
+로그인 창에서 
+String login = session.getAttribute("login"); 으로 가져오면 되는 것이다.
+그리고 로그아웃 할 떄
+session.removeAttribute("login"); 해주면 된다.
+이렇게하면 세션을 구현할 수 있다.
+***************
+==================================
+
+
+구현이 안된애들은 hashCode와 equals 를 override해서 비교를 해야 한다
+HashSet도 마찬가지 이다.
+
+==============================================
+
+게시판도 로그인된 상태에서 글을 쓸 수 있게 한다. <= session을 이용해서 구현한다.
+세션과 쿠키를 이용해서 로그인 정보 
+
+oracle db 18c xe <- 무료 db
+
+<p><input name="auto" type="checkbox" value="yes">로그인 정보 저장</p>
+auto라는 파라미터로 yes면 저장
+
+
+Cookie public Cookie(String name, String value) 
+<div class="block">Constructs a cookie with the specified name and value. 
+-> 쿠키는 이런 이름과 value 형태로 저장한다.
+
+			<p><input name="id" placeholder="ID" required value="<%=id %>"></p>
+			<p><input type="password" placeholder="PW" name="pw" required value="<%=pw %>"></p>
+
+이런식으로 value로 로그인 폼에 id pw를 미리 채워둘 수 있다.
+========================================
+
+sql 테이블 생성 (SQL ->Struct Query Language)
+열 데이터 타입
+VARCHAR2 : 가변 문자열
+
+
+=============
+ORACLE DB 를 설치하고 SQL DELVELOPER로 보는 것이다.
+==========================================
+
+==========================================
+
+oracle db 새로 시트 열 때 도구 -> SQL 워크 시트
+
+테이블을 만들 때 CAREATE TABLE (열 정보 1, 열 정보2 ,,,,);
+
+빨리 안 생기면 테이블에 오른쪽 클릭 새로고침한다.
+
+*****DB사용하는 이유 중복제거와 신뢰성으로 사용한다. 즉, 무결성 보장이되는 데이터라는 것을 말한다.
+
+중복을 제거하는 방법 중에 KEY를 사용한다.
+
+
+-- CREATE TABLE 테이블 명 (열 정보1, 열 정보2 ...
+--          열이름 1 자료형 제약조건                     
+--          열이름 2 자료형 제약조건
+-- );
+
+
+CREATE TABLE MEMBER(
+    USERID VARCHAR2(20),
+    USERPW VARCHAR2(20),
+    AGE NUMBER,
+    HEIGHT NUMBER,
+    CREATIONTIME DATE
+);
+
+SELECT * FROM MEMBER;
+
+-- DROP TABLE 테이블 명; <<- 해당 테이블을 삭제시키는 명령어다
+DROP TABLE MEMBER;
+DROP TABLE TEST;
+
+INSERT INTO MEMBER VALUES ('TEST', '1', 20, 176, '2021-07-21');
+
+-- PRIMARY KEY를 사용해서 중복을 컷한다
+-- PRIMARY KEY :기본키, 테이블 내에서 한개만 기능하며, 중복된 값이 들어갈 수 없는 열이 된다.
+
+
+CREATE TABLE MEMBER2(
+        USERID VARCHAR2(20) PRIMARY KEY,
+        USERPW VARCHAR2(20),
+        AGE NUMBER,
+        HEIGHT NUMBER,
+        CREATIONTIME DATE
+
+
+);
+
+INSERT INTO MEMBER2 VALUES ('TEST2', '1', 20, 176, '2021-07-21');
+SELECT * FROM member2;
+
+===============================================
+
+PRIMARY 키는 하나의 열에만 주자!!
+SQL로 복합키 만들기는 구문이 좀 복잡하기 때문이다
+NOT NULL 을 몇개든 상관없이 줄 수 있다.
+
+DELETE MEMBER WHERE AGE IS NULL;
+-- IS : NULL 값인지 판별하는 것  ****
+
+DELETE MEMBER WHERE AGE IS NOT NULL;
+-- IS NOT : NULL 값이 아닌지 판별하는 것 ****
+
+=====================================
+코드는 비트로 조합된 부호를 말한다.
+최초의 코드는 아스키코드이다.
+=====================================
+
+자바코드로 DB연결 시켜야해!
+이 과정을 connection이라고 해
+connection은 클래스 관리해
+라이브러리 파일을 자바에 넣어줘야 해
+statement가 있어야 해!
+connection을 다 사용하면 끊어줘야 해!
+아이디 패스워드를 전송해주기 때문에 끊어줘야 해!
+
+ojdbc 8 이라는 라이브러리를 오라클에서 다운 받아야 해요!!
+ojdbc 8은 다이나믹 웹 프로젝트 에서 web-inf에 보면 lib가 보인다 
+거기 안에 넣어주면 프로젝트에 라이브러리를 넣어줄 수 있다.
+
+실무로 가면 maven으로 간다
+라이브러리 의존성이 높아지게 되는데 이미 완성된 것을 가지고 와서 쓰는 것이 효율적이기 때문이다.
+의존성이 높아지면 라이브러리에서 설정에 따라서 실행이 되는게 있고 안되는게 있다
+그래서 maven이 프로젝트 다운하면 자동으로 라이브러리를 다운시켜주는 것이다.
+
+=============================
+
+java.lang.class 클래스
+-> 클래스의 정보를 얻어오는 클래스입니다.
+java.lang.class클래스 안에 forName()메서드는 물리적인 클래스 파일명을 인자로 넣어주면 이에 해당하는 클래스를 반환해 준다.
+
+================
+
+항상 이렇게 많이 적을 수 없으니까
+ DAO를 사용함 그리고 DTO(=VO)를 클래스로 만들어서 불러서 사용하자
+-> connection해주는 것. 
+-> sql구문은 변하지 않으니까 
+
+======================
+
+
+
+멤버변수 - 클래스의 속성, 특성을 말하는 것입니다.
+멤버 변수는 클래스의 속성을 말한다
+멤버 변수는 클래스의 속성을 말한다
+멤버 변수는 클래스의 속성을 말한다
+멤버 변수는 클래스의 속성을 말한다
+멤버 변수는 클래스의 속성을 말한다
+
+
+============
+
+DB의 DATE 자료형은 자바에서 JAVA.UTIL.DATE 클래스를 받아서 처리 가능하다.
+
+==================================
+
+java.sql.SQLException: 부적합한 열 이름
+
+-> 이런 오류는 
+dto.setId(rs.getString("id")) 이렇게 가져오는데 "id"가 db랑 이름이 달라서 생기는 오류이다.
+dto 객체에서 setid 메서드로 아이디을 가져오는 데 어디서 가지고 올거냐 
+rs에 저장해둔 getString으로 문자열로 가지고 오겠다. db에서 id라는 이름을 가지고 오겠다라는 의미지
+================================================================
+
+아 시붕 오라클 db에서 커밋을 안눌러서 테이블이 저장이 안된 상태였다 ㅁㅊ
+커밋을 안누르면 실제 DB에 안들어가기 때문에 항상 저장을 해야한다.
+
+===============================================
+DTO -> data transform object
+
+날짜를 출력할 때 
+DTO에서 creation 자료형을 date로 줘서 구현한다.
+
+이때 , dto.setCreation(rs.getDate("creation"));
+이렇게 날짜 정보를 가지고 올때는 getDate로 가지고 온다 okokokok!
+
+내가 한 방식은  메인 파일에 
+
+Date creation = new Date();를 가지고 와서
+사용했다. 근데 뒤에 00-00-00-00이 나와서 db에서 이렇게 온다고 생각을 했었다 착각함
+
+==============================================
+ArrayList<QuizDTO> list = new ArrayList<QuizDTO>();
+
+여기서 for -each문 말고  인덱스로 자료를 가지고 오려면
+
+for(int i =0; i < list.size(); i++){
+list.get(i).getId()
+이렇게 가지고 와야 한다.
+list에서 get가지고 온다 i번째 그리고 getId로 id를 가지고 온다.
+
+for - each로 돌리려면
+
+for(QuizDTO list : accs){
+accs.getId() 이렇게 가지고 오면 된다.
+=============================
+
+Exception in thread "main" java.sql.SQLException: 마지막 행 다음의 결과 집합
+
+-> 이때 해결책은 DB에서 가져오는 아이디와 DTO에서 만든 아이디를 다르게 해준다.
+
+
+SQL 구문 예외부적합한 열 이름
+java.sql.SQLException: 부적합한 열 이름
+
+-> 이렇게 뜨면
+ 무조건 getInt나 getString에서 오타 친거다 무적권이다 3연벙 당함
+============================================
+
+org.apache.jasper.JasperException: java.lang.NullPointerException
+
+->> 서버가 연결에서 null 값이 발견 
+-->> 이때 실수한건 db 아이디가 c##itbank인데 c#itbank로 입력해서 DB연결 접속 오류가 발생
+
+===============================================
+
+insert into 구문으로 회원가입을 구현할 것이다.
+
+<p><input name ="id", placeholder="ID" required></p>
+required가 빈칸이 없다는 것을 말하기 때문에 따로 검사할 필요가 없다.
+
+
+===============================================
+
+JDBC에서 
+SELECT의 결과는 테이블을 전달받는데 자바에서 ResultSet 객체에 저장 받을 수 있다.
+L> executeQuery를 사용한다.
+
+insert, delete, update 같은 구문은 실행한 결과 수를 반환하기 때문에 정수로 받아서 처리한다.
+L> executeUpdate를 사용한다. 반환형이 int
+ok무슨말인지 알겠다.
+
+====================================
+
+	String sql = "insert into account values('%s','%s','%s','%s','%s','%s','%s')";
+		
+		// 회원가입 날짜를 넣을 때문 simpledateformat을 사용해서 따로 생성하지 않고 한다.
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		String time = sdf.format(new Date());
+		
+		sql = String.format(sql, user.getId(), user.getPw(), user.getName(), 
+				user.getBirth(), user.getEmail(), user.getPhone(), time);
+====================================================
+
+PreparedStatement -> SQLinjection을 막아줄 수 있다.
+DB의 성능을 높여줄 수 있다
+DBCP -> DB를 관리하는 라이브러리 
+
+화면 변화없이 특정부분만 바꾸고 싶을 때는 AJAX -> 비동기 
+
+Tomcat DBCP 
+
+
+JDBC, DBCP란? 웹 어플리케이션의 DB접속에 대한 고찰
+
+ 
+
+자바 웹 어플리케이션에서 DB 접속과 관련된 라이브러리가
+
+JDBC, DBCP 입니다.
+
+ 
+
+JDBC는 Java DataBase Connectivity 의 약자로 자바에서 데이터베이스에 연결하기 위한 인터페이스죠.
+
+Oracle, MySQL, MsSQL 등 데이터 베이스는 JDBC를 사용하기 위한 각각의 Driver를 제공합니다.
+
+JDBC는 이 Driver를 통해 DB에 접속을 합니다.
+
+ 
+
+그럼 JDBC만 있으면 DB접속이 되는데 DBCP는 왜 쓰지? 라는 궁금증이 생기실 겁니다.
+
+답은 '효율' 입니다.
+
+ 
+
+효율적인 DB 커넥션을 위해 DBCP를 사용하는 것이죠.
+
+그럼 DBCP가 뭔지 알아보겠습니다.
+
+ 
+
+DBCP는 DataBase Connection Pool 의 약자로 DB와 커넥션을 맺고 있는 객체를 관리하는 역할을 합니다.
+
+JDBC만을 사용할 경우라면 DB접속 시 아래와 같은 순서가 반복되게 됩니다.
+
+ 
+
+ 
+
+ 
+
+1. DB 접속을 위한 JDBC 드라이버 로드
+
+2. getConnection Method로 부터 DB 커넥션 객체를 얻음
+
+3. 쿼리 수행을 위한 PreparedStatement 객체 생성
+
+4. excuteQuery를 실행해서 결과를 받아옴.
+
+ 
+
+여기서 비효율적인 부분은 1번과 2번 입니다.
+
+DB 연결 시 마다 Driver를 로드하고 커넥션 객체를 얻는 작업을 반복하죠.
+
+이 부분을 효율적으로 처리하도록 바꾸는 것이 DBCP의 역할 입니다.
+
+ 
+
+DBCP를 사용하게 되면,
+
+WAS 실행 시 미리 일정량의 DB Connection 객체를 생성하고 Pool 이라는 공간에 저장해 둡니다.
+
+그리고 DB 연결 요청이 있으면, 이 Pool 이라는 공간에서 Connection 객체를 가져다 쓰고 반환 하게 됩니다.
+
+ 
+
+DBCP를 사용하므로써 설정할 수 있는 옵션은 아래와 같습니다.
+
+ 
+
+maxActive : 동시에 사용할 수 있는 최대 커넥션 개수
+maxIdle : Connection Pool에 반납할 때 최대로 유지될 수 있는 커넥션 개수
+minIdle : 최소한으로 유지할 커넥션 개수
+initialSize : 최소로 getConnection() Method를 통해 커넥션 풀에 채워 넣을 커넥션 개수
+
+
+
+출처: https://aljjabaegi.tistory.com/402 [알짜배기 프로그래머]
+===========================================
+
+xml에서 설정하는 값
+===========================================
+
+
+Statement 와 PreparedStatement
+
+SQL 을 실행할 수 있는 객체입니다.
+
+
+
+Statement
+
+1. 단일로 사용될 때 빠른 속도를 지닙니다.
+
+2. 쿼리에 인자를 부여할 수 없습니다.
+
+3. 매번 컴파일을 수행해야 합니다.
+
+
+
+PreparedStatement
+
+1. 쿼리에 인자를 부여할 수 있습니다.
+
+2. 처음 프리컴파일 된 후, 이후에는 컴파일을 수행하지 않습니다.
+
+3. 여러번 수행될 때 빠른 속도를 지닙니다.
+
+=======================
+
+JDBC, DBCP : 자바 DB접속과 관련된 라이브러리
+
+JDBC : java database connectivity의 약자로, DB에 접급하기 위한 라이브러리
+
+그럼  JDBC만 쓰면 접속 되는데 DBCP는 왜 쓰는거지>>?? 효율성 때문에
+
+DBCP : DB connection Pooling, DB의 Connection을 관리하는 라이브러리
+
+JDBC만 사용하는 경우 아래의 루틴을 반복한다.
+1. JDBC 드라이버 로딩을 한다.
+2. DB 접속을 위해서 Connection을 생성한다.
+3. Connection을 통해서 statement를 생성한다.
+4. 실행후 Connection을 닫음
+
+여기서, 비효율적인 구간은 1,2,4 -> 매번 드라이버 로딩 후 커넥션 생성 후 제거
+
+이를 효율적으로 바꾸는 것이 DBCP가 된다.
+
+DBCP 사용시
+WAS(=tomcat)이 미리 일정량의 Connection을 미리 생성하고 Pool이라는 공간에 저장한다.
+
+DB연결 요청이 발생시 (ex, 로그인, 회원가입, 게시판 글 작성 및 조회 등등)
+
+Pool이라는 공간에 Connection 객체를 가져다 쓰고, 다시 Pool에 반납하는 과정을 가진다.
+
+이게 사람이 많을수록 효율적이다.
+
+==============================
+
+EL과 JSTL을 배울꺼다
+
+EL 표현식 -> 출력하기 위한 방식이다.
+
+${param.이름} 	: 파라미터
+${이름}		: Attribute
+${*Scope.이름}	: 지정 Attribute
+
+		<li>EL 태그는 파라미터의 형변환을 알아서 해주고, null값을 출력하지 않는다.</li>
+		<li>이름 : ${param.name } </li>  <%-- ${param.파라미터 명} --%>
+		<li>나이 : ${param.age }</li>		<%-- 자동으로 파라미터의 자료형을 맞춰준다 --%>
+		<li>나이 + 12 : ${param.age + 12 }</li>
+
+			<li>${p1.getName() } </li>
+			<li>${P1.name }</li>
+			<li>EL은 멤버 변수를 바로 접근 가능한데, getter가 있어서 가능한 것 </li>
+			<li>${list.get(1).name }</li>
+			<li>${list[1].name }</li>
+			<li>list는 원래 get()메서드로 index에 접근하는데 ,EL은 []도 지원한다. </li>
+			<li>${map.get("df").name }</li>
+			<li>${map["df"].name }</li>
+
+
+================================================
+JSTL
+jsp는 자바코드와 html 코드가 섞여있는 구조로 복잡한 구조로 이루어짐
+이때, jsp에서 자주 사용되는 자바코드를 태그로 만들어서 사용가능하다.
+커스텀 태그 : JSP에서 기본 제공되는 태그가 아니라, 자신이 직접 추가한 태크
+커스템 태크 라이브러리 : 잘 만들어진 커스텀 태그를 모아서, 압축 후 배포한 형태이다
+다른 개발자들은 이를 받아서 사용할 수 있다.
+JSTL : 커스텀 태그를 개별적으로 작성되다보니, 일관성이 없더라
+이를 표준화한 것을 JSTL이라고 한다.
+			
+
+커스텀태그	설명
+핵심 기능(core)	일반 프로그래밍 언어에서 제공하는 변수 선언 및 제어문을 제공한다
+		그 외, redirect같은 웹에서의 이동 기능도 있다
+		핵심 기능만 많이 사용한다
+형식화(format)	숫자, 날짜, 시간의 형식을 지정하는데 사용
+데이터베이스(sql)	데이터베이스에 입력/수정/삭제/조회 기능을 제공한다
+XML		XML 문서 처리를 위한 기능 제공한다
+함수(functions)	문자열을 처리하거나, 기타 유용한 함수를 제공한다
+
+
+	<h1>core 기능</h1>
+	<hr>
+	<%-- c:set으로 Attribute를 추가한다 --%>
+	
+	<h3>c:set -> Attribute를 추가한다. scope 지정하지 않으면 기본 pageContext에 저장된다</h3>
+	<c:set var="p1" value="홍길동"/>
+	<%--  pageContext.setAttribute("p1", "홍길동"); --%>
+		
+		
+	<c:set var = "p2" value="김길동" scope="page"/>	
+	<%-- pageContext나 pageScope로 작성하는 것이 아니니 주의  --%>
+	
+	
+	<c:set var = "p3" value="이길동" scope="request"/>
+	<%--  request.setAttribute("p1", "홍길동"); --%>
+	
+	<c:set var = "p4" value="박길동" scope="session"/>
+	<%--  session.setAttribute("p1", "홍길동"); --%>
+	
+	<c:set var = "p5" value="최길동" scope="application"/>
+	<%--  application.setAttribute("p1", "홍길동"); --%>
+	
+이런식으로 <c:set> </c:set> 이렇게 해서 사용한다
+다만 이걸사용하려면  taglib를 해줘야 한다.
+
+<%@ taglib prefix = "c" uri = "java.sun.com/jsp/jstl/core %>
+태그를 사용해야 사용할 수 있다.
+
+=======================================
+
+EL과 JSTL로 게시판 만들기
+
+IF-ELSE 구문 만들기
+	<c:if test="${not empty param.age }">
+		<c:choose> <%-- choose는 내부 when 조건을 가지고 판별한다 --%>
+			<c:when test="${param.age > 20 }">
+				<h2>성인입니다.</h2>
+			</c:when>
+			
+			<c:when test="${param.age >= 17 }">
+				<h2>고등학생입니다</h2>
+			</c:when>
+			
+			<c:when test="${param.age >= 14 }">
+				<h2>중학생입니다.</h2>
+			</c:when>
+			
+			<c:when test="${param.age >= 8 }">
+				<h2>초등학생입니다.</h2>
+			</c:when>
+		
+			<c:otherwise>
+				<h2>미취학 아동입니다.</h2>
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+=========================================================
+
+	<c:forEach var ="i" begin="1" end="5" step="1"> <%--for(int i = 1; i <= 5; i++) --%>
+	->> Attribute에 들어간다.
+		<p>hello! </p>
+		
+	</c:forEach
+
+
+=========================
+
+EL 태그는 Attribute에 저장되어 있어서 스크립틀릿안에 있는 것을 가지고 올 수 없다.
+그래서 스크립틀릿 안에서 변환을 해줘야 사용이 가능하다.
+
+=====================
+		<%
+		DAO dao = new DAO();
+		
+		AccountDTO result = dao.selectAccountOne(user);
+		
+		String auto = request.getParameter("auto");
+		
+		if(result != null){
+			session.setAttribute("login", result);
+			
+			Cookie cid = new Cookie("id", result.getId());
+			Cookie cpw = new Cookie("pw", result.getPw());
+			
+			cid.setMaxAge(60 * 60 * 24);
+			cpw.setMaxAge(60 * 60 * 24);
+			
+			if(auto == null){
+				cid.setMaxAge(0);
+				cpw.setMaxAge(0);
+			}
+			response.addCookie(cid);
+			response.addCookie(cpw);
+		}
+			
+		response.sendRedirect("main.jsp");
+			
+		===================
+열 자동 증가
+
+select * from board order by idx desc; -> 게시글 최신순서대로 작성 가능
+
+insert into board values(board_seq.nextval,'wjss','asdd','게시글 테스트', '2021-07-01','0.0.0.0',0 );
+
+============
+ 테이블 편집에 들어가서 id열 수정해야 됨 -> 열 시퀀스로 
+
+그러면 시퀀스 파일에 시퀀스가 생기는데 거기에 들어가서 캐시없음으로 변경해준다.
+
+캐시가 무작위로 생기기 때문이다.
+=======================
+
+eclipse  vs. intellij
+
+eclipse 
+
+장점
+
+ - 무료다! 
+
+ - 여러 프로젝트를 동시에 관리할 수 있다.
+
+ 
+
+단점
+
+ - 다른 IDE 툴들에 비해 느림, 하지만 하드웨어의 비약적인 발달로 인해 엄청많이 차이가 나지는 않음.
+
+ - 자바로 만들어져서 자바가상머신(JVM) 위에서 실행되므로 다른 IDE에 비교해서 속도가 느리다.
+
+ - 지속적인 패치에도 불구하고 자잘한 버그들이 있음
+
+ - C/C++, PHP, Rust, Groovy, Scala, Python 등 다양한 언어를 지향한다고 되어 있지만 JAVA를 제외한 언어는 개발하기 불편
+
+
+
+
+intellij
+
+장점
+
+ - 개발의 질을 한층 높여줄수 있는 플러그인을 간편하게 설치할 수 있음
+
+ -  직관적이고 예쁜 UI
+
+ - 다양한 벡엔드&프론트엔드 프로젝트 생성
+
+ -  우수한 스마트 코드 작성 기능들 덕분에 개발자의 생산성을 대폭 높여준다.
+
+ -  자동완성(auto completion), 소스코드분석, 지능형리펙토링, 디버거, 테스트러너 기능이 이클립스와 비교하여 우수하다.
+
+ - 형상관리를 git으로 하고있다면 intelliJ가 편하다.
+
+ 
+
+단점
+
+ - 단축키, 툴적응에 약간의 시간이 필요하다
+
+ - eclipse로 주로 이루어지는 프로젝트 개발환경과 구조와 맞지 않는 경우 존재
+
+ - 유료다.. 결제 금액도 기업이 아닌 개인결제 기준으로 1년에 149달러, 풀패키지는 249달러로 꽤 비싸다
+
+기능이 제한된 무료 버전(커뮤니티 버전)이 있지만, 유료인 Ultimate 버전을 사용해야 인텔리제이의 장점을 살릴 수 있다
+
+
+
+
+===================================================
+
+maven  vs. gradle
+
+1. 빌드 관리 도구란?
+
+​
+
+- 우리가 프로젝트에서 작성한 java 코드와 프로젝트 내에 필요한 
+
+각종 xml, properties, jar 파일들을 JVM이나 WAS가 인식할 수 있도록 패키징 해주는 빌드 과정 == "빌드 자동화 도구" 라고 할 수 있다!
+
+- 프로젝트 생성, 테스트 빌드, 배포 등의 작업을 위한 전용 프로그램이라 할 수 있다.
+
+- 애플리케이션을 개발하면서, 일밙겅르로 개발에 필요한 다양한 외부 라이브러리들을 다운로드하고, 
+
+해당 라이브러리를 사용하여 개발해야하는 상황이 많다.
+
+이 때 각 라이브러리들을 번거롭게 모두 다운받을 필요없이, 
+
+빌드도구 설정파일에 필요한 라이브러리 종류와 버전들, 종속성 정보를 명시하여
+
+필요한 라이브러리들을 설정파일을 통해 자동으로 다운로드 해주고 이를 간편히 관리해주는 도구이다.
+
+
+===============================================================
+
+Maven???
+
+​
+
+- Maven은 Java용 프로젝트 관리도구로 Apache의 Ant 대안으로 만들어졌다.
+
+- 빌드 중인 프로젝트, 빌드 순서, 다양한 외부 라이브러리 종속성 관계를 pom.xml파일에 명시한다.
+
+- Maven은 외부저장소에서 필요한 라이브러리와 플러그인들을 다운로드 한다음, 로컬시스템의 캐시에 모두 저장한다.
+
+​
+
+- 예를 들어, "Spring Boot Data JPA Starter" 모듈을 사용하여 프로젝트를 개발하고 싶다면 
+
+메이븐레포지토리에서 해당 모듈을 검색하여 xml 설정파일에 추가하여 사용할 수 있다. 
+
+(참고로 maven용 코드 이외에도 gradle용 코드도 탭에 있다.)
+
+==============================================
+
+gradle??
+
+​
+
+- Apacahe Maven과 Apache Ant에서 볼수 있는 개념들을 사용하는 대안으로써 나온 프로젝트 빌드 관리 툴이다. (완전한 오픈소스)
+
+- Groovy 언어를 사용한 Domain-specific-language를 사용한다. (설정파일을 xml파일을 사용하는 Maven보다 코드가 훨씬 간결하다.)
+
+- 2007년에 처음 개발되었고, 2013년에 구글에 의해 안드로이드 프로젝트의 빌드 시스템으로 채택되었다.
+
+- 꽤 큰규모로 예상되는 multi-project 빌드를 도울 수 있도록 디자인되었다.
+
+- Gradle은 프로젝트의 어느부분이 업데이트되었는지 알기 때문에, 빌드에 점진적으로 추가할 수 있다.
+
+-> 업데이트가 이미 반영된 빌드의 부분은 즉 더이상 재실행되지 않는다. (따라서 빌드 시간이 훨씬 단축될 수 있다!)
+
+============================================================================
+
+
+maven  vs. gradle???
+
+​
+
+두 시스템이 빌드에 접근하는 방식에는 몇 가지 근본적인 차이점이 있다. 
+
+Gradle은 작업 의존성 그래프를 기반으로하는 반면 Maven은 고정적이고 선형적인 단계의 모델을 기반으로한다고 한다.
+
+성능 측면에서는 둘 다 다중 모듈 빌드를 병렬로 실행할 수 있지만, 
+
+Gradle은 어떤 task가 업데이트되었고 안되었는지를 체크하기 때문에 incremental build를 허용한다. 
+
+이미 업데이트된 테스크에 대해서는 작업이 실행되지 않으므로 빌드 시간이 훨씬 단축된다. 
+
+-> 빌드 설정 규모가 점점 커지면 커질수록, 빌드시간의 차이도 Maven과 비교하여 꽤 격차가 벌어질 수 있을것같다.
+
+​
+
+ -maven 의 경우 멀티 프로젝트에서 특정 설정을 다른 모듈에서 사용하려면 상속을 받아야 
+
+하지만 gradle 은 설정 주입 방식을 제공한다.
+
+​
+
+- 또한 Gradle은 concurrent에 안전한 캐시를 허용한다. 
+
+-> 2개 이상의 프로젝트에서 동일한 캐시를 사용할 경우, 서로 overwrite되지 않도록 checksum 기반의 캐시를 사용하고, 
+
+캐시를 repository와 동기화시킬 수 있다.
+
+​
+
+- 고도로 사용자 정의된 빌드를 작성하기 위해서는 커스터마이징이 간편한 Gradle을 사용하는게 훨씬 낫다. 
+
+아래 비교 예시 코드를 보면 확실히 와닿는느낌.
+
+​
+
+​
+
+위 내용만 보면, 속도나 캐시 사용 안전성에 대하여 당연히 Gradle로 사용하는게 이득이겠다는 생각이 든다. 
+
+Maven으로 설정된 프로젝트는 Gradle로 마이그레이션 할 수 있다고 한다.
+
+​
+
+확실히 와닿지 않은 상태에서는, 아래 코드를 통해 비교해보자.
+
+아래는 Maven 코드이다.
+
+ 
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.programming.mitra</groupId>
+    <artifactId>java-build-tools</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+ 
+
+프로젝트에 기본으로 테스트 도구인 JUnit 라이브러리를 의존성 리스트에 추가하고 빌드 도구로 maven을 설정하였다.
+
+​Gradle에선 이러한 복잡하고 장황한 코드에 마법을 일으킨다. (매우 간-결-, 가독성 상승)
+
+​
+
+ 
+
+apply plugin:'java'
+apply plugin:'checkstyle'
+apply plugin:'findbugs'
+apply plugin:'pmd'
+version ='1.0'
+repositories {
+    mavenCentral()
+}
+dependencies {
+    testCompile group:'junit', name:'junit', version:'4.11'
+}
+
+==============================================
+
+​oracle db io 오류 
+오라클 데이터베이스 에러 (상태: 실패 -테스트 실패: IO 오류: The Network Adapter could not establish the connection)
+
+디바이스의 이름을 변경해서 발생한 오류로
+
+OracleXETNListener가 실행이 정지되었을 가능성이 높다 이것을 시작으로 변경해 준다.
+
+이 때는 net Configuration Assistant 에 들어가서 새로운 리스너를 만들어서 호스트 네임을 변경해주는 것이 좋다.
+
+
+listener refused the connection with the following error ora-12505
+
+12505 오류는 DB의 SID 이름이 잘못되어서 그런 것이다. 
+
+oracle lsnrctl status -> cmd 창에 lsnrctl status 를 입력하면 현재 상태를 확인할 수 있다.
+
+oracle의 리스너는 ???
+
+Oracle : 리스너(Listener)
+
+오라클 리스너는 네트워크를 이용하여 클라이언트에서 오라클 서버로 연결하기 위한 오라클 네트워크 관리자 입니다. 
+
+네트워크를 통한 연결은 모두 리스너가 담당하며 리스너와 연결되기 
+
+위해서는 클라이언트에 오라클 NET8(오라클 클라이언트)이 설치되어 있고 이를 통해 
+
+오라클 서비스명이라는 것을 만들어 접속을 해야 합니다.
+
+ 
+
+오라클 서버에서 리스너를 시작시켜줘야 클라이언트들이 접속을 할 수 있습니다.
+
+lsnrctl 명령어로 리스너를 관리 할 수 있습니다
+
+ 
+
+<windows cmd콘솔에서 명령>
+
+c:\>lsnrctl help -> 도움말
+
+c:\>lsnrctl status -> 현재 상태
+
+c:\>lsnrctl start-> 시작
+
+c:\>lsnrctl stop -> 죽이기
+
+c:\>lsnrctl reload -> 재시작
+
+또는
+
+c:\>lsnrctl ->관리모드 실행
+
+ 
+
+<관련파일>
+
+c:\>oracle\ora92\network\admin
+
+listener.ora / tnsnames.ora 파일이 있다. 만약 내가 서버라면 두개의 파일이 모두 있고, 클라이언트라면 tnsnames.ora 파일만 있는 것을 확인 할 수 있다.
+
+ 
+
+oracle - client 간의 네트워크 설정을 하기 위한 파일로써.
+
+서버 - listener.ora  // 클라이언트 - tnsnames.ora  을 설정.
+
+ 
+
+listener.ora -> 오라클 서버에서 클라이언트의 요청을 듣고, 클라이언트와의 통신 환경을 설정하는 파일. 오라클 클라이언트에서 서버로 접속할 때 플요한 프로토콜(주로TCP/IP) 및 포트 등을 설정
+
+ 
+
+tnsnames.ora -> 클라이언트에서 서버로 접속할 때 필요한 프로토콜, 포트, 서버주소, 인스턴트등을 설정함. 클라이언트에 위치
+
+===========================================================================
+
+spring boot 
+
+maven 과 gradle은 의존성 관계
+
+실무에서는 기록을 남기기 위해서 logging로 출력을 해야한다.
+
+로깅과 관련된 두가지 
+
+logback 
+
+slf4j -> interface 
+
+
+테스트할 때 junit을 사용한다.
+(assertj 테스트를 도와주는 것)
+
+Gradle은 의존관계가 있는 라이브러리를 함께 다운로드한다.
+
+스프링 부트 라이브러리
+
+- spring boot starter-web
+-> spring boot starter-tomcat : 톰캣
+-> spring webmvc : 스프링 웹 MVC
+- spring boot starter thymeleaf : 타임리프 템플릿 엔진(view)
+- spring boot starter (공통) : 스프링부트 + 스프링코어 + 로깅
+-> spring boot
+--->spring core
+-> spring boot starter logging
+---> logback, slf4j
+
+테스트 라이브러리
+- spring boot starter-test
+-> junit : 테스트 프레임워크
+-> mockito : 목 라이브러리
+-> assertj : 테스트 코드를 좀 더 편하게 작성하게 도와주는 라이브러리
+-> spring-test : 스프링 통합 테스트 지원
+
+
+=================================
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+
+->> 그 파일 때문에 에러난게 아니라, 
+
+아마 pom.xml에 spring-boot-starter-data-jpa 라는 의존성을 넣었는데, 
+
+DB관련 의존성을 넣지 않아서 에러가 난거 같습니다.
+
+ spring-boot-starter-data-jpa 의존성을 삭제하거나, 
+
+위 메시지에서 제시하는대로 임베드 DB 라이브러리 중 아무거나 하나 추가하시면 저 에러는 사라질 거에요.
+
+==========================================================
+
+Web server failed to start. Port 8080 was already in use.
+
+이 경우 지금 8080포트가 켜져 있어서 실행이 안되는 것이다
+
+그래서 cmd로 들어가서 netstat -ano 명령어로 8080의 pid 를 알아낸다.
+
+그리고 taskkill /pid ???? /f 명령어를 입력해서 포트를 닫아준다. 
+==============================================
+
+[ attribute란? : 메소드를 통해 저장되고 관리되는 데이터 ]
+
+PageContext / Request에서 사용될때
+
+setAttribute("key", value) → 값을 넣는다.
+
+getAttribute("key") → 값을 가져온다.
+
+removeAttribue("key") → 값을 지운다.
+
+session에서 사용될때
+
+set / get / remove 동일하고 추가로++
+
+invalidate( ) → 값을 전부 지운다
+
+
+
+출처: https://hunit.tistory.com/203 [HunIT Blog]
+
+=============================
+
+반응형 웹 만들기
+viewport 사용법
+
+반응형 웹 (responsive web)이란 하나의 웹사이트로 
+
+데스크탑 PC, 스마트폰, 태블릿 PC 등 접속하는 디스플레이의 종류에 따라 
+
+화면의 크기가 자동으로 변하도록 만든 웹 페이지를 말합니다.
+
+
+미디어 쿼리는 CSS3 부터 지원이 되는 CSS기술로 미디어 타입, 화면 크기 등을 기준으로 다른 스타일 시트를 적용할 수 있도록 해줍니다. 
+
+이를 이용해서 화면 크기가 변할때 스타일을 바뀌도록 해서 반응형 웹을 구현할 수 있습니다.
+
+
+모바일 웹을 작성하게 되면 뷰포트(viewport)라는 것을 고려하게 됩니다. 
+
+뷰포트는 웹페이지가 사용자에게 보여지는 영역을 말합니다. 
+
+데스크탑 PC에서 브라우저의 크기를 줄이면 웹페이지의 내용이 다보여지지 않고 스크롤 해서 봐야 되는 경우가 있습니다. 
+
+이때도 브라우저에 보여지는 부분이 뷰포트입니다. 데스크탑 PC는 브라우저의 크기를 바꿔서 뷰포트의 크기를 바꿀 수 있는 것입니다.
+
+반면에 휴대폰이나 태블릿의 경우는 브라우저의 크기를 변경할 수 가 없습니다.(요즘은 멀티뷰를 지원하는 기기도 있지만, 일반적이지는 않습니다.) 
+
+하지만, 워낙 다양한 기기들이 존재하기 때문에, 뷰포트의 크기도 다양합니다.
+
+휴대폰이나 태블릿이 나오기 이전의 웹페이지는 데스크탑 PC용으로만 만들었기 때문에 고정된 크기를 가지는 것이 대부분이 었습니다. 
+
+이렇게 고정된 크기를 가진 웹페이지를 화면이 작은 휴대폰에서 보면 한 화면에 다보이지 않게 됩니다.
+
+대부분의 휴대폰등 모바일 기기의 웹브라우저에서 웹페이지가 그려지는 렌더링 영역은 사용자에게 보여지는 영역인 뷰포트 보다 큽니다. 
+
+1024 x 768 사이즈에 고정되어 있는 웹페이지를 320 x 568 사이즈를 가지는 아이폰에서 보면 스크롤해야만 모두를 볼 수가 있습니다.
+
+
+HTML5에서 소개된 뷰포트 <meta> 태그를 사용하면 모바일 기기에서 실제 렌더링되는 영역과 뷰포트의 크기를 조절할 수 있습니다. 또한 줌 레벨도 조정할 수 있습니다. 아래는 가장 일반적으로 사용되는 설정 입니다.
+
+ 
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+
+- width=device-width : 페이지의 너비를 기기의 스크린 너비로 설정합니다. 즉, 렌더링 영역을 기기의 뷰포트의 크기와 같게 만들어 줍니다.
+
+- initial-scale=1.0 : 처음 페이지 로딩시 확대/축소가 되지 않은 원래 크기를 사용하도록 합니다. 0~10 사이의 값을 가집니다.
+
+
+
+이것외에도 다음과 같은 값을 지정할 수 있습니다.
+
+
+
+- minimum-scale : 줄일 수 있는 최소 크기를 지정합니다. 0~10 사이의 값을 가집니다.
+
+- maximum-scale : 늘릴 수 있는 최대 크기를 지정합니다. 0~10 사이의 값을 가집니다.
+
+- user-scalable : yes 또는 no 값을 가지며 사용자가 화면을 확대/축소 할 수 있는지는 지정합니다.
+
+
+
+위의 줌 레벨은 1이 원래크기이고, 0.5 라면 50% 축소를 뜻합니다.
+
+
+
+그러므로 위의 설정은 페이지 너비를 휴대기기 화면너비에 맞추고, 처음 로딩시 줌을 하지 않는 것입니다. 적용한 결과는 다음과 같습니다.
+
+
+이미지에 대해서는 모바일에서 사용하기 위해서는 좀 더 처리가 필요합니다. 
+
+화면이 클 때는 자신의 크기를 유지하고 화면이 이미지의 크기보다 작아지면 화면크기에 맞춰서 크기가 줄어들도록 CSS를 지정할 수 있습니다.
+
+ 
+
+img {
+    width: 100%;
+    height: auto;
+}
+========================
+
+JSTL 안에서는 javascript가 사용이 불가하지만 javascript안에서는 JSTL 사용이 가능하다는 것이다.
+
+============================================================
+
+VO( Value Object )
+
+개념
+
+Value Object는 DTO와 동일한 개념이나 차이점은 read only 속성을 갖는다.
+
+Value Object는 관계 데이터 베이스의 레코드에 대응되는 자바 클래스이다. 
+
+형태는 db 레코드를 구성하는 필드들을 Value Object의 Attribute로 하고 
+
+해당 변수에 접근할 수 있는 Getter, Setter 메소드의 조합으로 클래스가 형성되어진 클래스이다.
+
+특성은 대체로 불변성이고 equlas()로 비교할 때 객체의 모든 값을 비교해야 한다.
+
+
+
+프로그램의 사용자가 화면에서 어떤 데이터를 입력하거나 조회 요청이 왔을 때 
+
+입력된 데이터나 조회하는 조건을 VO에 담아서 DAO에 요청하면 DAO는 저장소(일반적으로 Database )로부터 
+
+데이터를 입력하거나 조회한 후 그 결과를 돌려주게 된다.
+
+
+
+VO는 간단한 독립체( Entity )를 의미하는 작은 객체를 의미한다. 
+
+VO의 같음은 그 정체성에 의해 결정되지 않는데, 
+
+그 뜻은 두 VO 들은 그 두 가지가 같은 값을 같고 있을 때 같은 것이지 같은 객체라고 해서 같지 않다는 것이다.
+
+
+
+작기 때문에, 같은 독립체를 대변하는 복수의 같은 VO들이 존재할 수 있다. 
+
+가끔 하나의 인스턴스에 의존하고 그에 기반한 레퍼런스를 사용하기 보다는 새 객체를 생성하는 것이 더 간편하다.
+
+필요성
+
+Network traffic을 줄임으로 인해 효과적이다.
+
+기대효과
+
+Network traffic이 줄어든다.
+
+장단점
+
+장점은 비 서버 측 클라이언트도 네트워크 오버헤드 없이 영속성 데이터에 액세스 할 수 있다는 점이다.
+
+데티어 전달을 위해 가장 효율적인 방법이지만, 클래스의 선언을 위해 많은 코드가 필요하다.
+
+즉 파일수가 많아지게 되고 관리도 힘들어진다.
+
+
+
+DTO( Data Transfer Object : 데이터 전송 객체 )
+
+개념
+
+데이터가 포함된 객체를 한 시스템에서 다른 시스템으로 전달하는 작업을 처리하는 개체이다.
+
+Data에 접속하는 객체이다. 여기서 Data란 일반적인 Database도 될 수 있고, 파일도 될 수 있으며, 메모리도 될 수 있고, 기타 다른 저장소도 될 수 있다.
+
+
+
+DTO는 프로세스 사이에서 데이터를 전송하는 객체를 의미한다. 이것은 이용하는 이유는 프로세스 간의 커뮤니케이션이 주로 개별 호출이 부담스러운 작업일 경우가 많은 원격 인터페이스(예:웹 서비스)에 의해 이루어지기 때문이다.
+
+대부분의 개별 호출이 클라이언트와 서버 간의 왕복 시간을 소모하기 때문에, 호출 횟수를 줄이는 방법 중 하나는 몇 번의 호출에 의해 전송될 데이터를 모으는 DTO를 이용해서 한번만 호출하게 하는 것이기 때문이다.
+
+VO와 DTO의 비교
+
+DTO의 나머지 속성은 VO와 똑같다고 생각된다.
+
+Core J2EE Patterns라는 책에서는 Value Object와 Transfer Object를 동일한 뜻으로 사용하지만, 반대로 Martin Fowler는 저서 Patterns of Enterprise Applicatino Architecture에서 약간 다른 의미로 이야기 한다. 
+
+DTO는 메소드 호출 횟수를 줄이기 위해 데이터를 담고 있는 녀석으로, VO는 값이 같으면 동일 오브젝트라고 볼 수 있는 것으로 표현하고 있다.
+
+
+
+DTO a = new DTO(1);
+
+DTO b = new DTO(1);
+
+
+
+이라고 했을 때, a != b 이지만,
+
+
+
+VO a = VO(1);
+
+VO b = VO(1);
+
+
+
+이라고 했을 때는 a == b 라고 정의하는 형태이다.
+
+
+
+대부분의 검색에서 사람들은 VO와 DTO를 같은 개념으로 이야기 하고 있어서, 
+
+아직도 VO와 DTO가 "이런거다"라기 보다 거의 똑같은 개념으로 생각하고 있다.
+
+
+
+DAO( Data Access Object : 데이터 접근 객체 )
+
+개념
+
+데이터 접근을 목적하는 객체이다. 
+
+커넥션 같은 것을 하나만 두고 여러 사용자가 DAO의 인터페이스를 사용하여 필요한 자료에 접근 하도록 하는 것이 DAO의 개념이다.
+
+DB에 대한 insert, update, delete, select를 처리한다.
+
+
+
+DAO는 특정 타입의 데이터베이스나 다른 지속적인 메커니즘( Persistence Mechanism )에 추상 인터페이스를 제공하는 객체이다. 
+
+어플리케이션 호출을 데이터 저장 부분( Persistence Layer )에 매핑함으로써 
+
+DAO는 데이터베이스의 세부 내용을 노출하지 않고 특정 데이터 조작 기능을 제공한다. 
+
+이 고립성은 단일 책임 원칙( Single Responsibilty Principle )에 기반한다.
+
+
+
+이 패턴은 대부분의 프로그래밍 언어에, 영속성이 필요한 대부분의 소프트웨어에, 대부분의 데이터베이스에 적용될 수 있다.
+
+
+
+단일 책임 원칙 : 객체 지향 프로그래밍에서 모든 컨텍스트( 클래스, 기능, 변수 등 )은 하나의 책임만 가져야 한다는 것이며, 
+
+이는 컨텍스트에 의해 완전히 캡슐화 되어야 한다는 것이다. 그리고 모든 서비스들은 해당 책임에 맞춰 조정되어야 한다.
+
+다른 말로는 "클래스를 수정해야 할 이유는 오직 하나여야 한다"고 한다.
+
+필요성
+
+모든 데이터베이스에 공통적으로 접속 할 수 있는 ODBC가 나왔지만 여전히 로우 레벨의 API를 포함하고 있었기 때문에 개발 장벽이 높았다.
+
+이런 이유 때문에 개발자들은 정작 데이터베이스에 들어 있는 데이터를 어떻게 이용할지에 초점을 맞추기 보다, 
+
+어떻게 데이터베이스에 접속해서 데이터베이스와 교류하는지에 더 초점을 기울였다.
+
+즉, 데이터를 활용하는 논리적 고민보다 기술적 고민에 더 많은 신경을 썼었다. 이런 이유로 DAO란 대안이 나오게 되었다.
+
+기대 효과
+
+사용자는 자신이 필요한 interface를 DAO에게 던지고 DAO는 이 인터페이스를 구현한 객체를 사용자에게 편리하게 사용 할 수 있도록 반환해준다.
+
+장단점
+
+DB에 대한 접근을 DAO가 담당하도록 하여 데이터베이스 액세스를 DAO에서만 하게 되면 
+
+다수의 원격 호출을 통한 오버헤더를 VO나 DTO를 통해 줄일 수 있고, 다수의 DB 호출 문제를 해결할 수 있다. 
+
+또한 단순히 읽기만 하는 연산이므로 트랜젝션 간의 오버헤드를 감소할 수 있다.
+
+그러나 Persistent Storage를 너무 밀접하게 결합해서 작성을 하게 되면 Persistent Storage를 다시 작성할 경우가 생기는데 
+
+이러한 경우 유지 보수의 문제가 생길 수도 있다.
+==========================================================================================
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+					<div class="paging">
+						<div class="element">					
+							<c:set var="page" value="${currentpage}"/>
+							
+							<!-- page maxpage를 넘었을 경우 제한 -->
+							<c:if test="${page > maxpage}">
+								<c:set var="page" value="${maxpage}"/>
+							</c:if>
+							
+							<!-- 페이지를 8개씩 나누기 위해 현재 페이지에 보여줄 max값 설정 -->
+							<fmt:formatNumber value="${page/8 - (page/8 % 1)}" type="pattern" pattern="0" var="full"/>
+							<c:set var="full" value="${full * 8}"/>	
+													
+							<!-- prev(전페이지), next(다음페이지) 개수 설정 -->
+							<c:set var="scope" value="${page%8}"/>			
+							<c:choose>
+								<c:when test="${scope == 0}">
+									<c:set var="prev" value="8"/>
+									<c:set var="next" value="1"/>
+								</c:when>
+								<c:when test="${scope < 9}">
+									<c:set var="prev" value="${scope}"/>
+									<c:set var="next" value="${9-scope}"/>
+								</c:when>
+							</c:choose>								
+							
+							<!-- prev 버튼 -->
+							<c:if test="${page > 8}">
+								<fmt:formatNumber value="${(page-1)/8 - (((page-1)/8) % 1)}" type="pattern" pattern="0" var="prevb"/>
+								<c:set value="${(prevb-1)*8 + 1}" var="prevb"/>
+								<span id="prevBtn" class="prev button" value="${prevb}"></span>
+							</c:if>
+							
+							<!-- 전 페이지 -->
+							<c:if test="${page != 1}">							
+								<c:set var="j" value="${prev}"/>				
+								<c:forEach var="i" begin="1" end="${prev-1}">
+									<c:set var="j" value="${j - 1}"/>			
+									<c:if test="${(page - j) > 0}">								
+										<span class="no">${page - j}</span>
+									</c:if>
+								</c:forEach>
+							</c:if>
+							
+							<!-- 현재 페이지 -->
+							<span class="no selected">${page}</span>
+							
+							<!-- 다음 페이지 -->
+							<c:if test="${page != maxpage}">
+								<c:forEach var="i" begin="1" end="${next-1}">
+									<c:if test="${maxpage >= page+i}">
+										<span class="no">${page+i}</span>
+									</c:if>
+								</c:forEach>
+							</c:if>
+							
+							<!-- next 버튼 -->
+							<c:if test="${maxpage >= page + next}">
+								<fmt:formatNumber value="${(page-1)/8 - (((page-1)/8) % 1)}" type="pattern" pattern="0" var="nextb"/>
+								<c:set value="${(nextb+1)*8 + 1}" var="nextb"/>
+								<span id="nextBtn" class="next button" value="${nextb}"></span>
+							</c:if>							
+						</div>
+					</div>
+
+
+-> 페이징 알고리즘 아이디어
+==========================================================
+
+<c:set var="page" value="${(param.p == null) ? 1 : param.p}"/>
+<c:set var="startNum" value="${page - (page-1) % 5 }"/>
+<c:set var="lastNum" value="23"/>	
+<c:set var="isLast" value="4" />
+ 
+<div>
+	<c:if test="${startNum >= 6 }">
+		<a href="?p=${startNum - 5 }&t=&q=" class="btn btn-prev">이전</a>
+	</c:if>
+	<!--<c:if test="${startNum == 0}">
+		<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+	</c:if>
+        -->
+	
+</div>
+
+
+<%-- <!-- 직전 -1 으로 보내는 경우 -->
+<div>
+	<c:if test="${startNum - 1 > 0 }">
+		<a href="?p=${startNum - 1 }&t=&q=" class="btn btn-prev">이전</a>
+	</c:if>
+	<c:if test="${startNum <= 0}">
+		<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
+	</c:if>
+	
+</div>  --%>
+
+
+<ul class="-list- center">
+	<c:if test="${startNum + 5 >= lastNum }">
+		<c:set var="isLast" value="${lastNum - startNum }" />	
+	</c:if>
+
+		<c:forEach var="i" begin="0" end="${isLast }">
+			<li><a class="-text- orange bold" href="?p=${startNum + i}&t=&q=" >${startNum + i}</a></li>
+		</c:forEach>			
+	
+</ul>
+<div>
+<!-- 마지막번호는 DB레코드 수와 연관이 있다!
+     우선은 lastpage 개수를 임의로 지정. -->
+	<c:if test="${startNum + 5 < lastNum }">
+		<a href="?p=${startNum + 5}&t=&q=" class="btn btn-next">다음</a>
+	</c:if>
+	<%-- <c:if test="${startNum + 5 >= lastNum }">
+		<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
+	</c:if> --%>
+	
+</div>
+
+-> 페이징 알고리즘 아이디어
+===================================
+
+<%@  %> : 지시자 
+-> 페이지 전반에 적용되는 설정, 다른 JSP파일 포함, 다른 라이브러리 불러오기
+
+<%!  %> : 선언부
+-> 멤버 필드나 멤버 메서드를 선언하거나 정의하는 영역
+
+<%  %>  : 스크립틀릿
+-> 메인에 해당하는 자바 코드를 작성하는 함수영역, service()
+
+<%=  %> : 표현식
+-> 스크립틀릿 out.print()을 이용해 HTML문서에 자바 값을 출력하는 구문
+
+===================================
+
+내장 객체 : 생성자를 통해서 생성하지 않아도, JSP페이지가 기본저긍로 참조할 수 있는 객체
+
+입출력 : request, response, out
+
+서블릿 : page, config
+
+외부환경 정보 제공 : session, application, pageContext
+
+예외 : Exception
+
+
+==================================
+
+request 내장 객체
+
+
+request : 클라이언트가 웹 서버에 전달하는 요청을 객체화한 형태
+request : 클라이언트가 웹 서버에 전달하는 요청을 객체화한 형태
+
+보내는 사람 : 클라이언트 (ip)
+받는 사람 : 웹 서버(ip)
+요청 방식 : 내가 문서를 받고 싶다면 get, 내가 어떤 내용을 담아서 보낸다면 post
+요청 내용 : 받고 싶은 문서의 이름이나, 클라이언트가 보내는 내용을 받기 원하는 서버의 페이지 이름 (자원의 위치)
+URL : Uniform Resource Locator (웹 브라우저의 주소창을 통해서 전달)
+
+
+http://search.naver.com/search.naver?query=이지은
+
+http://				프로토콜, 서버와 클라이언트가 통신하는 규칙과 약속
+search.naver.com		서버 도메인(IP), 어떤 서버에게 요청을 전달하는가 (받는 사람)
+search.naver			문서, 페이지의 이름 (자원의 이름)
+?query=이지은			파라미터, ?변수이름1=변수값1&변수이름2=변수값...
+				클라이언트가 서버에게 전달하고자 하는 값 (내가 원하는 문서를 특정하기 위해서)
+		
+http://도서관.com/대여.html?책이름=드래곤볼&책번호=3
+도서관에 가서 대여 창구에서 "책 이름은 드래곤볼이구요, 번호는 3권입니다. 이 책을 저에게 주세요(GET)"
+
+
+	<h4>보내는 사람 : <%=request.getRemoteAddr() %></h4>
+	<h4>받는 사람 : <%=request.getLocalAddr() %></h4>
+	<h4>요청 방식 : <%=request.getMethod() %></h4>
+	<h4>요청 내용 : <%=request.getRequestURL() %></h4>
+	<h4>자원 식별자 : <%=request.getRequestURI() %></h4>
+
+
+================================================================================
+
+<h2>다수의 파라미터 한번에 처리하는 방법</h2>
+<%
+	// 처리만 담당
+	// Ex01DTO의 객체를 만든다
+	Ex01DTO dto = new Ex01DTO();
+
+	// dto 참조변수에 request.getparameter로 입력받은 값을 넣어준다
+	dto.setAddress(request.getParameter("address"));
+	dto.setAge(request.getParameter("age"));
+	dto.setEmail(request.getParameter("email"));
+	dto.setId(request.getParameter("id"));
+	dto.setPw(request.getParameter("pw"));
+
+%>
+
+<%
+	// getparameteMap을 사용해서 key : value형태로 출력
+	Map<String, String[]> map = request.getParameterMap();
+	
+	Set<String> keyset = map.keySet();
+	
+	for(String key : keyset){
+		String value = map.get(key)[0];
+		out.print(key + ":" + value);
+	}
+
+%>
+
+<%	
+	// getparameterName을 사용해서 key : value형태로 출력
+	// Enumeration도 String 형식
+	Enumeration<String> enu =request.getParameterNames();
+	
+	while(enu.hasMoreElements()){		// while문을 돌면서
+		String key = enu.nextElement();	// 키를 가져오고
+		String value = request.getParameter(key);	// request.parameter로 key의 value를 요청한다
+		
+		out.print(key + ": " + value); 
+	}
+%>
+
+	id<%=dto.getId() %>
+	pw<%=dto.getPw() %>
+	age<%=dto.getAge() %>
+	address<%=dto.getAddress() %>
+	email<%=dto.getEmail() %>
+	
+	<%-- 자바빈 사용 파라미터의 위치를 class로 확인하고 id의 이름으로 가져온다 --%>
+	<%-- 자바빈으로 dto객체를 생성 --%>
+	<%-- setproperty에서 property로 모든 값을 가져온다고 지정하고 name이 dto2인 녀석들의 모든 값을 가져오겠다 --%>
+
+	<jsp:useBean id="dto2" class="day2.Ex01DTO"/>
+	<jsp:setProperty property="*" name="dto2"/>
+
+	<%--객체 생성 (기본생성자) --%>
+	<jsp:useBean id="dto2" class="day02.Ex01DTO" />
+		
+	<%--클래스가 가지는 setter와 input의 name이 일치한다면 파라미터를 받아서 객체에 대입 --%>			
+	<jsp:setProperty property="*" name="dto2" />
+
+
+	<%
+		if(dto2.getId() == null){
+			response.sendRedirect("ex01-input.jsp");
+		}	// dto2.getId()가 null이라면 ex01-input으로 보내
+	%>
+	id<%=dto2.getId() %>
+	pw<%=dto2.getPw() %>
+	age<%=dto2.getAge() %>
+	address<%=dto2.getAddress() %>
+	email<%=dto2.getEmail() %>
+
+========================================================
+
+	<fieldset>
+		<legend>설문</legend>
+		<form>
+			<input type="checkbox" value="네트워크" name="part">네트워크
+			<input type="checkbox" value="웹 (프런트)" name="part">웹 (프런트)
+			<input type="checkbox" value="웹(백엔드)" name="part">웹(백엔드)
+			<input type="checkbox" value="시스템" name="part">시스템
+			<input type="checkbox" value="앱개발" name="part">앱개발
+			<p><input type="submit" value="입력"><p>
+		</form>
+	</fieldset>
+
+	<%
+		// checkbox같은 경우 name은 동일한데 값이 여러개인 경우가 있다
+		// 이럴때는 배열의 형태로 처리해서 배열을 출력하도록 하면 된다
+		// 이때 주의할 점은 아무것도 입력을 안할 경우도 있으니 part != null 이라는 조건을 걸어주는 것이 좋다
+		// arr.length가 0이면 NPE가 발생한다
+		// 배열의 형태로 사용하려면 request.getParameterValues를 사용해야한다
+		String [] arr = request.getParameterValues("part");
+	
+		out.print("희망 분야 : ");
+		
+		for(int i =0; part != null && i < arr.length; i++){
+			out.print(arr[i]);
+			
+			out.print(i== arr.length-1 ? "<br>" : ",");
+		}
+	%>
+
+===========================================================================
+
+
+<%
+		String name = null;
+		switch(request.getMethod()){
+		
+		case "GET":
+	%>
+	<h3>여기서 GET</h3>
+	<form action="" method="post">
+		<input type="text" name="name" placeholder="이름입력">
+		<%-- form 내부의 input이 하나인 경우 엔터키가 submit의 역할을 한다 --%>
+	</form>
+	
+	<%  	break;
+		case "POST":
+	%>
+	
+	<h3>여기서 POST</h3>
+	<%
+		request.setCharacterEncoding("UTF-8");
+		name = request.getParameter("name");
+	%>
+	
+	<h3><%=name %>님 안녕하세요</h3>
+	<button onclick="location.href='get-post.jsp'">다시 GET으로 </button>
+	
+	<%
+			break;
+		}
+	%>
+
+=======================================================================
+
+redirect : 서버가 클라이언트에게 새로운 주소를 알려주고, 클라이언트가 전달받은 주소로 새로운 요청을 시도
+
+- 서버 내 페이지는 물론, 서버 외부의 다른 주소도 요청 가능
+- 클라이언트가 새로운 요청을 시도하므로, 주소창이 변경됨
+- 클라이언트가 요청한 번호를 서버가 알려주고 그 번호로 클라이언트가 이동하는 것
+
+forward : 서버가 가지고 있는 다른 문서로 응답을 바꿔치기함
+
+- 요청을 분석하여 다른 응답이 필요한 경우, 서버가 가진 문서 중 하나로 응답을 변경
+- 클라이언트가 A를 요청한 경우, 서버가 임의로 B를 응답으로 보내주기 때문에 주소창은 A가 떠있다
+- 요청한 번호를 서버가 가지고 있으면 해당 번호로 돌려주는 것
+- 클라이언트가 중국집인줄 알고 전화했는데 옷가게다.. 근데 옷가게랑 중국집이 내선이 된다 그래서 옷가게가 전화를 돌려줘서 클라이언트가 중국집으로 연결됨
+(여기서 중요한 것은 클라이언트와 서버의 연결이 끊어지지 않았다는 점이다)
+- 페이지를 변경해도 request가 유지되므로, 파라미터를 다른페이지로 이동이 가능하다
+- 요청과 응답을 분리하고 싶을 경우 사용
+
+
+=======================================================================
+
+<%
+	String redirectURL = request.getParameter("redirectURL");
+	String forwardURI = request.getParameter("forwardURI");
+	
+	// redirectURL이 null이 아니라면 response 보내라 sendRedirect(파라미터로 입력 받아온 주소로)
+	if(redirectURL != null){
+		response.sendRedirect(redirectURL);	
+	}
+	
+	// forwardURI가 null이 아니라면 일단 post로 받았으니까 인코딩해주고
+	// RequestDispatcher를 불러오는데 이건 request.getRequestDispatcher메서드를 사용해서 forwardURI 파라미터를 
+	// 입력받아서 객체화 한다
+	// 그리고 만들어 두었던 RequestDispatcher의 참조변수인 rd의 forwar메서드를 이용해서 화면을 전환시켜주는 것이다
+	if(forwardURI != null){
+		request.setCharacterEncoding("UTF-8");
+		
+		// 이동하고 싶은 주소를 전달하면서 요청을 지속적으로 따라갈 수 있는 객체를 받는다
+		RequestDispatcher rd = request.getRequestDispatcher(forwardURI);
+		
+		// 여기서 요청받은 request를 이동한 페이지에서도 그대로 사용할 수 있도록 request를 같이 전달한다
+		rd.forward(request, response);
+	}
+
+%>
+
+===================================================================
+
+<%
+	// Real 처리만 한다
+	request.setCharacterEncoding("UTF-8");
+	
+	String name = request.getParameter("name");
+	int age = Integer.parseInt(request.getParameter("age"));
+	
+	if(age > 20){
+		String msg = String.format("%s 님은 %d살이므로 입장 가능합니다!!!", name, age);
+		
+		// Object인자로 입력받은 msg를  "message"라는 객체로 감싸서 전달한다
+		request.setAttribute("message", msg);
+		RequestDispatcher rd = request.getRequestDispatcher("ex03-output.jsp");
+		rd.forward(request, response);
+		response.sendRedirect("ex03-output.jsp");
+	}
+	else{
+		response.sendRedirect("ex03-input.jsp");
+	}
+
+%>
+
+===================================================================
+
+JSP 내장 객체 중 attribute를 저장하고 불러올 수 있는 객체는 총 4가지 종류가 있다
+
+pageContext : 현재 페이지에서만 유효함, 페이지가 변경되면 새로운 내장 객체가 생성되므로 attribute가 사라짐
+
+request : 현재 요청에서만 유효함, 기본적으로 pageContext와 비슷하지만 forward상황이라면 조금 더 긴 시간 유지됨
+
+session : 현재 세션에서만, 유효함, 클라이언트가 브라우저 종료/로그아웃 하기전까지 유지됨
+
+application : 현재 서버가 지속중인 경우에 유효함, 서버를 종료하거나 재시작하면 사라짐
+
+
+request.setAttribute(String name, Object o)
+
+- 지정한 name으로 객체 o를 attribute로 등록한다. 모든 유형의 객체를 저장할 수 있다
+
+request.getAttribute(String name)
+
+- 지정한 name으로 객체를 찾아서 반환한다. 반환되는 타입은 Object이며, 필요하다면 형변환(Casting)을 해줘야 한다
+(반환형이 Object이다보니까 상위 이기 때문에 받으려는 타입에 맞게 형변환을 해줘야 한다)
+
+- 만약 지정한 name의 객체가 없으면 null을 반환한다
+
+--> 서로 다른 JSP페이지 간의 원할한 객체 전달을 위해서이다
+--> Attribute는 페이지 간의 데이터를 주고 받기 위한 임시 저장소이다
+
+
+=================================================================
+
+<tbody>
+	<%
+		// ArrayList에 담는데 타입은 ApplicationDTO타입으로 담을게 
+		// application.getAttribute("list")로
+		// application 내장 객체에 list를 담는다
+		// 그리고 application은 Object타입이니까 형변환을 해주기 위해서
+		// (ArrayList<ApplicationDTO>)를 앞에 붙여주었다
+		ArrayList<ApplicationDTO> list = (ArrayList<ApplicationDTO>)application.getAttribute("list");
+				
+			
+		// dto에 list의 get(i)요소를 담겠다
+		for(int i = 0; list != null && i < list.size(); i++){
+			ApplicationDTO dto = list.get(i);
+				
+	%>
+			
+		<tr>
+			<td><%=dto.getName() %></td>
+			<td><%=dto.getAge() %></td>
+		</tr>
+		<%
+			}
+		%>
+</tbody>
+
+
+===================================================================
+	<%
+		request.setCharacterEncoding("UTF-8");
+		
+		// ApplicationDTO타입의 ArrayList를 하나 만든다
+		ArrayList<ApplicationDTO> list = (ArrayList<ApplicationDTO>)application.getAttribute("list");
+		
+		if(list == null){
+			// 더미 데이터를 넣기 위해서 dto를 두개 만든다
+			ApplicationDTO dto1 = new ApplicationDTO();
+			ApplicationDTO dto2 = new ApplicationDTO();
+			
+			// dto에 더미 데이터를 넣어준다
+			dto1.setAge(29);
+			dto1.setName("이지은");
+			dto2.setAge(40);
+			dto2.setName("홍진호");
+			
+			// dto를 ApplicationDTO타입의 배열에 넣어준다
+			ApplicationDTO [] arr = {dto1, dto2};
+			
+			// list는 arr를 ArrayList로 만들어서 넣는 과정
+			list = new ArrayList<ApplicationDTO>(Arrays.asList(arr));
+		}
+	
+	
+	%>
+	<jsp:useBean id="dto3" class="day2.ApplicationDTO"/>
+	<jsp:setProperty property="*" name="dto3"/>
+	
+	
+	<%
+		if(request.getParameter("name") != null){
+			list.add(dto3);
+		}
+		// - 지정한 name으로 객체 o를 attribute로 등록한다. 모든 유형의 객체를 저장할 수 있다
+		// application에 담았으니까 application의 setAttribute를 사용해야 한다
+		application.setAttribute("list", list);
+
+		// application.removeAttribute("list");
+		// 지정한 이름의 attribute를 제거한다
+
+		response.sendRedirect("application.jsp");
+	%>
+
+========================================================================
+
+pageContext : jsp 페이지마다 생성되는 내장 객체이다
+- 다른 내장객체에 접근하기 위해서 활용할 수 있다
+- attribute를 저장할 수 있다
+- <jsp:useBean id="join" class="day03.MemberDTO"/>태그로 객체를 생성하면 기본적으로 pageContext에 객체를 저장한다
+-> 왜냐하면 scope의 기본값이 pageContext이기 때문에 객체를 생성하면 pageContext에 객체가 저장되는 것이다
+
+
+ServletRequest myRequest = pageContext.getRequest();
+String test1 = "내장객체 request와 pageContext에서 불러낸 myRequest는 동일한 객체인가?";
+System.out.println(test1 + (myRequest == request));
+		
+HttpSession mySession = pageContext.getSession();
+String test2 = "내장객체 session과 pageContext에서 불러낸 mySession이 동일한 객체인가?";
+System.out.println(test2 + (mySession == session));
+	
+ServletContext ctx = pageContext.getServletContext();
+String test3 = "내장 객체 application과 pageContext에서 불러낸 ctx가 동일한 객체인가?";
+System.out.println(test3 + (ctx == application));
+		
+JspWriter myOut = pageContext.getOut();
+myOut.println("<h4>여기에 작성하면 문서에 기록 된다 </h4>");
+
+=======================================================================
+
+<jsp:useBean id="join" class="day03.MemberDTO"/>
+<jsp:setProperty property="*" name="join"/>
+
+이렇게 useBean으로 객체를 생성하고 setProperty로 클래스의 setter와 input의 name이 일치한다면 파라미터를 객체에 삽입하는 과정을 거치면
+page객체에 파라미터의 값이 들어가 있는 상태이다
+
+그럼 
+<%= ((MemberDTO)pageContext.getAttribute("join")).getUserid()%>
+-> 이런식으로 표현식을 사용해서 getUserid를 가져올 수 있지만 
+-> EL태그를 사용하면 더 쉽게 값을 가져올 수 있다
+
+${ join.userid } 이렇게 해주면 join객체 안에 있는 getUserid 값을 문자열로 가져온다
+-> ${} 로 접근하는 join은 스크립틀릿 안에 지역변수가 아니라 attribute안에 저장된 객체를 참조하는 것이다
+
+-> 주의 (${} 를 주석에 넣으면 이걸 인식해서 500대 오류를 발생시킨다 주의할 것)
+
+-> EL Tag는 값이 null이면 null이라고 출력하지 않는다
+
+-> ${ emtpy login ? '' : '로그아웃'} 이런식으로 해당 객체의 유무로 삼항연산자를 사용할 수 있다
+
+
+=======================================================================
+
+EL Tag 정리하기
+
+1. 내장 객체의 attribute에 접근할 수 있다
+
+- attribute에 접근하여, 내부 멤버 요소를 참조할 때, getter 형식은 생략한다
+- 별도의 형 변환이 필요없다
+- pageContext -> request -> session -> application 순서로 탐색한다
+- 특정 scope의 attribute로 지정하여 접근할 수 있다
+- 만약, attribute의 자료형이 Collection이면, 내부 요소에도 접근이 가능하다
+
+2. 파라미터에도 접근하여 출력할 수 있다
+- ${ param.name} 으로 바로 사용자가 입력한 name으로 접근할 수 있다 // param의 값을 주소에서 변경해도 값을 가져올 수 있다
+
+
+3. 연산자를 사용할 수 있다
+
+- 산술연산자 : +, -, *, /, %
+- 비교 연산자 : >, <, >=, <=, ==, !=
+- null 여부 : empty(== null), not empty(!= null)
+- EL Tag 내부에서는 + 연산이 무조건 숫자에 대한 연산으로 취급된다
+- 문자열 상수는 ' 로 묶어준다
+
+4. EL Tag에서 pageContext를 출발점으로, 다른 내장객체에 접근이 가능하다
+
+=====================================================================
+
+	${ '안녕하세요' }<br>
+	${ '123' + 1 }<br>
+	${ pageContext }<br>
+	${ pageContext.request }<br>
+	${ pageContext.session }<br>
+	${ pageContext.servletContext }<br>
+	
+	<%
+		pageContext.setAttribute("num", 1);
+		request.setAttribute("num", 2);
+		session.setAttribute("num", 3);
+		application.setAttribute("num", 4);
+	
+	%>
+	
+	<p>${ num }</p>
+	<p>${ pageScope.num }</p>
+	<p>${ requestScope.num }</p>
+	<p>${ sessionScope.num }</p>
+	<p>${ applicationScope.num }</p>
+	<p>${ empty param.name ? 'Guest' : 'param.name' }님 안녕?</p>
+	
+	<%
+		// 배열
+		String [] arr = {"aaa", "bbb", "xxx"};
+		pageContext.setAttribute("arr", arr);
+		
+		//리스트
+		List<String> list = Arrays.asList(arr);
+		request.setAttribute("list", list);
+		
+		//맵
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("aaa","bbb");
+		map.put("ccc","ddd");
+		session.setAttribute("map", map);
+	%>
+	
+	${ arr[0] }<br>
+	${ list.get(0) }<br>
+	${ map['ccc'] }
+
+
+=====================================================================
+
+기능 구현 작업 순서
+
+네이버의 회원가입과 로그인 기능을 모방하여 페이지를 구현하세요
+
+1. 메인페이지(로그인 및 가입 링크)
+2. 회원가입 페이지 (약관 동의 생략) -> (가입 성공 ? 로그인 : 회원가입 페이지)
+3. 로그인 페이지
+
+- 회원 정보를 저장할 수 있는 ArrayList 를 application에 attribute로 만들어야 한다
+
+- 각 회원 정보는 DTO 클래스를 통해서 구성하며, userid, userpw, username, year, month, date, gender
+(O)
+- 로그인에 성공하면 회원 정보가 담긴 DTO객체를 session에 attribute로 저장한다
+(O)
+- 로그인 상태에서는 로그인 폼 대신 , 로그 아웃 메뉴 링크가 있어야 한다
+(O)
+- 로그아웃 클릭하면 <% session.invalidate(); %> 코드로 로그아웃 처리한다
+(O)
+- css 가능한 만큼만 진행
+
+
+작업 순서
+
+1. 데이터 모델링 - 내가 프로그램에서 어떤 형태의 데이터를 다룰 것인가
+(MemberDTO userid, userpw, uswrname, year, month, date, gender)
+(O)
+2. 화면 구현 - 프로그램에서 사용될 주요 기능을 메뉴형태로 배치(회원 가입과 로그인)
+(O)
+3. 기능 구현 - 가입은 (insert) , 로그인(select) 
+
+4. 페이지 간 연결 확인 및 예외 처리
+
+- jsp:useBean, jsp:setProperty, EL Tag를 적극 활용하세요
+- 처리는 자바코드(스크립틀릿)으로 진행하고, 출력은 EL Tag나 표현식을 활용하세요
+- 회원가입 form의 모든 데이터는 반드시 입력해야 하는 요소입니다(not null, required)
+
+String userid, userpw, username, 
+==============================================================================
+JSP (Java Server Page) : 자바를 이용해서 웹 서버쪽에서 처리하는 것을 말함
+
+지시자<%@page import %>
+선언부<%! 멤버 필드 멤버 메서드 선언와 작성하는 곳%>
+스크립틀릿<% 일반적인 자바코드 %>
+표현식<%= 스크립틀릿에서 정의한 dto.getId()로 출력가능%>
+주석 <%-- --%>
+
+
+내장객체
+
+request -> 클라이언트에서 웹 서버로 전달하는 요청을 객체화한 형태를 말한다
+
+요청 내용 : URL, URI, ServerName, ServerPort
+
+요청 방식 : GET, POST
+
+요청에 포함되는 사용자 입력값 Parameter / Parameter형식은 String이다
+
+response -> 서버에서 클라이언트로 응답을 보내는 것
+사용자에게 보낼 응답을 만들어내는 객체
+
+
+응답코드
+200	OK (요청의 성공)
+300	
+301	이름이 바뀌거나, 경로가 바뀌어서 찾을 수 없다
+400	클라이언트 에러	
+401	인증 X
+403	접근 권리 X
+404	요청받은 리소스를 찾을 수 없다
+405
+415
+500	서버문제(서버 내부 문제) -> JSP나 자바코드가 잘못된 것
+
+요청받은 문서가 존재하면 해당 문서를 컴파일 -> HTML텍스트 파일 형태로 보내준다
+(.jsp -> .java -> .class 로 해서 다시 컴파일 해서 HTML + jsp로 해서 클라쪽으로 보내준다)
+
+
+
+JSP 내장 객체
+
+out	문서에 문자열을 출력하기 위해 사용하는 내장객체
+	<%= %> 으로 대체할 수 있다
+	out 객체는 response에서 참조할 수 있다
+	
+	PrintWriter out = response.getWriter();
+
+pageContext
+	현재 문서에서 유효한 정보를 가지고 있다
+	뿐만 아니라, attribute를 저장할 수 있는 최소 범위이며, 대부분 기본값이다
+	JSP에서 다른 attribute 저장 가능한 객체에 접근하려면
+	pageContext 에서부터 찾아갈 수 있다
+
+session
+	주로 로그인 정보를 저장하는데 많이 사용한다
+	쿠키와 대비되는 개념이며, 특정 정보를 서버에 저장하기 위해 많이 활용된다
+	서로 다른 페이지에서도 동일한 객체에 대해서 접근이 가능하다
+
+application
+	서버가 열러 있는 동안 유지되는 attribute 저장소 이면서
+	동시에 서블릿 정보를 포함하고 있다
+
+
+=============================================================
+
+parameter(매개변수)
+	사용자가 서버에게 전달하는 데이터
+	문자열이 기본 타입이다
+	사용자에 의해서 만들어지는 값이므로, setParameter()는 없다
+	<jsp:useBean/> <jsp:setProperty/>로 객체화 할 수 있다
+
+attribute
+	서버에서 만들어내는 데이터
+	Object가 기본 타입이다
+	서버에서 만들어낼 수 있으며, 내장 객체에 저장할 수 있다
+	스크립틀릿에서 참조하려면 형변환을 거쳐야 하지만
+	EL Tag를 통해서 손쉽게 접근할 수 있다
+
+
+============================================================
+새 파일에 문제파일의 코드를 한줄 한줄 붙여넣기해서 어떤 문장이 문제가 되는지 찾아봤는데 결국
+
+"<!-- ${ }  = ~~~~ --> " 라고 수업내용필기를 위해 주석 처리한 문장 속 
+
+${ }가 문제였다. 
+
+
+주석이 문제가 될거라곤 생각도 못했는데 삭제하니 오류가 해결되었다.
+
+-> 500번 오류 발생함
+
+============================================================
+
+// 현재 웹 프로젝트에서 문서를 배치하는 최상위 폴더
+String contextPath = request.getContextPath();
+	
+// 경로만 요청하고 자원이름이 없으면, 경로 안에 index.***가 있는지 보고 있으면 그 문서를 보여준다
+response.sendRedirect(contextPath);
+
+============================================================

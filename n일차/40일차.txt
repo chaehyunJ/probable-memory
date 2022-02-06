@@ -1,0 +1,194 @@
+40일차
+
+
+<link type="text/css" rel="stylesheet" href="/css/style.css">
+=> 이렇게 절대경로를 지정해주면 css라는 프로젝트는 없기 때문에 해당 주소를 찾을 수 없다
+http://localhost:8080/css/style.css 이렇게 주소가 뜨기 때문에 찾을 수 없는 거다
+
+<link type="text/css" rel="stylesheet" href="./css/style.css">
+http://localhost:8080/day06_book_2/css/style.css 상대경로로 지정하면 이렇게 주소를 찾아가기 때문에 css 적용
+
+
+<link type="text/css" rel="stylesheet" href="<c:url value="/css/style.css"/>">
+
+
+<c:url value="css/style.css"></c:url>
+파일 이름 앞에 문서 경로를 자동으로 붙여준다
+
+
+-> <link type="text/css" rel="stylesheet" href="/day06_book_2/css/style.css"> 
+-> 소스코드에서 보면 이렇게 컴파일 해준다 그래서 바로 찾아갈 수 있는 것
+-> c:url로 링크 걸어주는 방법
+-> 나중에 배포했을 때 상대경로로 걸어주면 클라이언트쪽에서 링크가 깨질 수 있기 때문에 ****
+-> 상대경로 보다는 이렇게 사용해주는 것이 바람직 하다
+-> 나중에 찾아와야 하는 파일이 jsp안에 있을 수 있기 때문에 링크가 제대로 작동 안할 수 있다
+
+
+링크 걸때 최상위로 걸어줘야 찾아간다
+
+
+
+<%=request.getContextPath() %>
+${ pageContext.request.contextPath }
+
+contextPath 경로 확인
+=> 하나의 서버가 여려개의 프로젝트를 다루기 때문에 경로가 필요하다
+
+<%=request.getContextPath() %>
+${ pageContext.request.contextPath }
+
+<c:url value="/"/>
+<c:set var="cpath" value="${ pageContext.request.contextPath }"/>
+
+<a href="${cpath}">logo</a> 이렇게 사용해서 a태그의 경로를 지정해 줄 수 있다
+
+<%-- url과 set을 이용해서 contextPath를 객체에 담아서 사용할 수 있다 --%>
+
+/day06_book_2 이렇게 값이 나온다
+
+
+<c:if test="${ empty list}>
+-> empty를 쓰면 null값을 잡아 준다 NPE 처리해줌
+
+varStatus="st"
+
+st.index -> 0부터 시작
+st.count -> 1부터 시작
+
+
+===============================================================
+
+<div>
+<fmt:formatNumber value="${dto.price }" type="currency" currencySymbol="\\" groupingUsed="true"/>원
+</div>
+
+--> 원 단위 붙이기 
+
+================================================================
+<c:if test="${ not empty param.name && dto.name.contains(param.name) }">
+
+--> 메서드 불러서 사용가능
+
+==================================================================
+
+<div>
+<fmt:formatNumber value=“1234567.8912345” pattern=“#,#00.0#” />
+</div>
+
+=================================
+
+delete에서 list만 사용할 경우 application에 저장되어 있기 때문에 header를 굳이 참조할 필요가 없다
+
+================================
+
+입력받은 idx와 책이름을 for문을 돌면서 <c:set>에 session으로 값을 받아서 저장하고 
+<c:choose> <c:when>으로 값을 출력해준다
+
+================================
+
+		<form action="modifyProcess.jsp">
+				<hr>
+				<div class="modifyInfo">
+					<table>
+						<tr>
+							<td>책이름</td>
+							<td><input type="text" name="name" value="${dto.name }" required autofocus></td>
+						</tr>
+						<tr>
+							<td>저자</td>
+							<td><input type="text" name="author"  value="${dto.author }"required ></td>
+						</tr>
+						<tr>
+							<td>출판사</td>
+							<td><input type="text" name="publisher" value="${dto.publisher }" required ></td>
+						</tr>
+						<tr>
+							<td>책 가격</td>
+							<td><input type="number" name="price"  value="${dto.price }" required ></td>
+						</tr>
+						<tr>
+							<td>출판 일자</td>
+							<td><input type="date" name="date"  value="${dto.date }" required></td>
+						</tr>
+						
+						<tr>
+							<td>책 소개</td>
+							<td><textarea name="intro" cols="30" rows="5"  placeholder="${modifyDTO.intro }" required ></textarea></td>
+						</tr>
+										
+					</table>
+					<input type="hidden" name="index" value="${ st.index }">
+					<input type="submit" value="수정하기">
+				</div>
+			</form>
+
+==============================================================
+
+//create table book (
+//	    idx         number          default BOOK_SEQ.nextval primary key,
+//	    name        varchar(200)    not null,
+//	    author      varchar(50)     not null,
+//	    publisher   varchar(50)     not null,
+//	    publishDate date            not null,
+//	    price       number          check(0 < price) not null,
+//	    description varchar(2000)   not null
+//	    );
+
+
+=============================
+
+DBCP 사용하면 dao를 한번만 출력해서 여러번 재사용성이 높아진다아아아
+
+===============================
+
+
+SELECT * FROM tab;
+
+select category from mall where idx = 12;
+
+
+select * from book order by idx;
+
+drop table book;
+drop sequence book_seq;
+
+
+create sequence book_seq
+    start with 1
+    maxvalue 9999999999999
+    increment by 1
+    nocache
+    nocycle;
+    
+    
+create table book (
+    idx         number          default BOOK_SEQ.nextval primary key,
+    name        varchar(200)    not null,
+    author      varchar(50)     not null,
+    publisher   varchar(50)     not null,
+    publishDate date            not null,
+    price       number          check(0 < price) not null,
+    description varchar(2000)   not null
+    );
+    
+insert into book (name, author, publisher, publishDate, price, description)
+    values ('트랜드 코리아 2022', '강난도', '미래의 창','2021-10-11',16200, 'tiger or cat');
+    
+insert into book (name, author, publisher, publishDate, price, description)
+    values ('작은 별이지만 빛나고 있어', '송프로', '북로망스','2021-03-24',13500, '하늘 위 수억개의 별들 중 너라는 별');
+
+insert into book (name, author, publisher, publishDate, price, description)
+    values ('오케팅', '오두환', '대한출판사', '2021-07-01', 11700, '특별하지 않아도 누구나 부자가 될 수 있다');
+    
+insert into book (name, author, publisher, publishDate, price, description)
+    values ('단 1줄로 사로잡는 전달의 법칙', '모토하시 아도', '밀리언서재', '2021-10-15', 12600, '익숙하고 간단하지만 점점 빨려들어가는 전달력');
+insert into book (name, author, publisher, publishDate, price, description)
+
+    values ('소크라테스 익스프레스', '에릭 와이너', '어크로스', '2021-04-28', 16200, '인생에서 길을 잃는 수많은 순간마다');
+
+insert into book 
+    values (BOOK_SEQ.nextval, '소크라테스 익스프레스', '에릭 와이너', '어크로스', '2021-04-28', 16200, '인생에서 길을 잃는 수많은 순간마다');
+
+select * from book order by idx;
+
+select * from book order by idx;

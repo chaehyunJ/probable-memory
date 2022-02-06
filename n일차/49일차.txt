@@ -1,0 +1,85 @@
+49일차
+
+cat -n ifconfig | head -20 | tail - 10이랑 서브쿼리에 rownum을 사용하는게 동일하다
+
+
+select * from board2
+    where 1=1
+    order by idx desc
+    offset 10 rows                  -- 시작지점 이후 10번째 글에서
+    fetch first 10 rows only;       -- 5개 만큼 가져와라
+
+
+
+1 2 3 4 5	page -(page-1) % 5 나머지가 1 이 나오게 만들어
+
+6 7 8 9 10				
+
+11 12 13 14 15
+
+16 17 18 19 20
+
+
+=========================
+
+
+select * from (
+    select rownum num, b.* from(
+        select * from board where writer like '%ccc%') b
+    )
+where num between 1 and 10;
+
+-- rownum은 1이 아닌 다른 값을 세어나가는 것은 안된다
+-- 결과를 불러온 이후에 rownum을 매기는 방식이다
+-- 
+select * from board;
+
+select count(idx) count from board2;
+
+insert into board2 (writer, title, content, ipaddress)
+    select writer, title, content, ipAddress from board2;
+    
+commit;
+
+select count(*) boardCount from board2;
+-- 게시글의 총 개수를 파악하는 sql
+
+-- 1. rownum과 중첩 쿼리문(서브쿼리)를 활용한 페이징 구문
+-- where 에는 1=1 (true라서 모든 조건을 다 가지고 온다)
+-- start 와 end
+select * from
+    ( select rownum st, a.* from 
+        ( select * from board2 where 1=1 order by idx desc) a
+        where rownum <= 20)
+where st >= 11;
+
+-- 2. oracle 12c 이상 버젼에서 사용 가능한 offset
+-- 의미전달이 명확하다
+select * from board2
+    where writer like'%bbb%'
+    order by idx desc
+    offset 10 rows                  -- 시작지점 이후 10번째 글에서
+    fetch first 10 rows only;       -- 5개 만큼 가져와라
+    
+    
+select count(*) boardCount from board2 where writer like '%bbb%';
+
+select * from board2 
+    where writer like '%bbb%' 
+    order by writedate desc 
+    offset 10 rows 
+    fetch first 10 rows only;
+    
+        
+select * from board2 
+    where writer like '%bbb%' 
+    order by writedate desc;
+
+select count(*) count from 
+    ( select * from board2 where writer like '%bbb%');
+    
+
+select * from board2 where title like '%c%' order by writedate desc offset 10 rows fetch first 10 rows only;
+
+select count(*) boardCount from board2;
+select count(*) boardCount from board2 where title like '%cc%';

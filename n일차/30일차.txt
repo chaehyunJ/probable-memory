@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보배드림 따라 만들기</title>
+    <style>
+        body {
+            width: 100%;            /* 문서의 너비는 전체의 100% */
+            overflow-x: hidden;     /* 너비를 초과하는 내용이 있어도 하단의 스크롤바를 보여주지 않는다 */
+            margin: 0;              /* 외부 여백 0 */
+            padding: 0;             /* 내부 여백 0 */
+        }
+        header, nav, main, section, article, footer, aside {
+            margin: 0;
+            box-sizing: border-box;
+            /* border: 3px dashed skyblue; */
+        }
+        div {
+            box-sizing: border-box; /* 테두리를 포함한 크기로 계산한다 */
+        }
+        a {
+            color: inherit;         /* 글자색은 보라색이 아닌, 상위 요소에서 상속받은 형태로 사용(기본:검정)*/
+            text-decoration: none;  /* 링크라고 해서 밑줄을 통한 글자 꾸밈을 사용하지 않는다 */
+        }
+        .component {
+            width: 1024px;
+            margin: 0 auto;
+        }
+        .top > .component {
+            display: flex;
+            justify-content: space-between;
+        }
+        .logo {
+            background-image: url('header_logo_v3.png');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 232px;
+            height: 50px;
+            cursor: pointer;    /* 요소에 마우스를 올리면 링크처럼 손가락 모양으로 바뀐다 */
+        }
+        .member-menu {
+            line-height: 54px;
+        }
+        .member-menu > ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        .member-menu > ul > li {
+            padding: 5px;
+            border-right: 1px solid #dadada;
+            height: 6px;
+            line-height: 1px;
+        }
+        .member-menu > ul > li:last-child { /* 연속된 요소중 가장 마지막 요소에 대하여 */
+            border: 0;
+        }
+        .member-menu > ul > li > a {
+            font-size: 11px;
+        }
+        .member-menu > ul > li > a:hover {
+            text-decoration: underline;
+        }
+        .member-menu > ul {
+            float: left;
+        }
+        .member-menu > a {
+            float: right;
+            padding: 0 5px;
+            font-size: 11px;
+        }
+        nav.menu {
+            background-color: #0070bd;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        nav.menu > .component {
+            display: flex;
+            justify-content: space-between;
+        }
+        ul.main-menu {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: inherit;
+        }
+        ul.main-menu > li {
+            margin-left: 15px;
+            text-align: center;
+            line-height: 50px;;
+        }
+        ul.main-menu > li:first-child {
+            margin: 0;
+        }
+        ul.main-menu > li > a {
+            display: block;
+        }
+        ul.main-menu > li > a:hover {
+            text-decoration: underline;
+        }
+        ul.sub-menu {
+            margin-top: -1px;           /* margin 이나 padding에 음수값을 적용할 수 있다 */
+
+            background-color: white;
+            color: #333;
+            font-weight: normal;
+            font-size: 13px;
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+
+            position: absolute;
+            border: 1px solid grey;
+            flex-flow: column wrap;
+            width: 240px;
+            height: 180px;
+
+            display: none;
+        }
+        ul.main-menu > li:hover > ul.sub-menu {
+            display: flex;
+        }
+        ul.sub-menu > li {
+            width: 110px;
+            height: 25px;
+            line-height: 25px;
+            padding-left: 5px;
+            padding-right: -10px;
+            margin-left: 5px;
+            margin-right: 15px;
+            margin: 0;
+        }
+        ul.sub-menu > li:hover {
+            background-color: #dadada;
+        }
+        ul.sub-menu > li > a {
+            display: block;
+            width: 110px;
+        }
+        .vertical-line {
+            height: 160px;
+            border-left: 1px solid #dadada;
+            margin: 0px;
+            position: absolute;     /* 주변요소 상관없이 독자적인 위치를 가지도록 */
+            top: 10px;              /* 부모 요소 기준 상단 위치 */
+            left: 47%;              /* 부모 요소 기준 왼쪽 위치 */
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="top">
+            <div class="component">
+                <div class="logo"></div>
+                <nav class="member-menu">
+                    <ul>
+                        <li><a href="">로그인</a></li>
+                        <li><a href="">회원가입</a></li>
+                        <li><a href="">사이버매장 차량등록</a></li>
+                        <li><a href="">고객센터</a></li>
+                        <li><a href="">마이페이지</a></li>
+                    </ul>
+                    <a href="">♡</a>
+                    <a href="">🕒</a>
+                </nav>
+            </div>
+        </div>
+        <nav class="menu">
+            <div class="component">
+                <ul class="main-menu">
+                    <li>
+                        <a href="">사이버매장</a>
+                        <ul class="sub-menu">
+                            <li><a href="">전체매물</a></li>
+                            <li><a href="">국산차매장</a></li>
+                            <li><a href="">수입차매장</a></li>
+                            <li><a href="">승용차매장</a></li>
+                            <li><a href="">스포츠카매장</a></li>
+                            <li><a href="">SUV·지프매장</a></li>
+                            <li><a href="">밴·RV·버스매장</a></li>
+
+                            <div class="vertical-line"></div>
+
+                            <li><a href="">픽업·트럭매장</a></li>
+                            <li><a href="">캠핑카매장</a></li>
+                            <li><a href="">튜닝카매장</a></li>
+                            <li><a href="">올드카·클래식매장</a></li>
+                            <li><a href="">슈퍼카매장</a></li>
+                            <li><a href="">희귀차매장</a></li>
+                            <li><a href="">오토갤러리매장</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="">국산차</a></li>
+                    <li><a href="">수입차</a></li>
+                    <li><a href="">튜닝카</a></li>
+                    <li><a href="">중고차시세</a></li>
+                    <li><a href="">커뮤니티</a></li>
+                    <li><a href="">내차팔기</a></li>
+                    <li><a href="">오토바이</a></li>
+                    <li><a href="">중고장터</a></li>
+                    <li><a href="">업체검색</a></li>
+                </ul>
+                <ul class="category">
+                    검색하기
+                    전체메뉴
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main></main>
+
+    
+</body>
+</html>
+
+postition의 기본값 static
+
+고정 위치를 정하고 싶으면 부모요소가 static이면 안된다
+상위 요소중에 static인 요소가 아예 없으면 body를 기준으로 위치를 지정
+절대적인 위치도 기준이 있어야 한다
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보배드림 따라 만들기</title>
+    <style>
+        body {
+            width: 100%;            /* 문서의 너비는 전체의 100% */
+            overflow-x: hidden;     /* 너비를 초과하는 내용이 있어도 하단의 스크롤바를 보여주지 않는다 */
+            margin: 0;              /* 외부 여백 0 */
+            padding: 0;             /* 내부 여백 0 */
+        }
+        header, nav, main, section, article, footer, aside {
+            margin: 0;
+            box-sizing: border-box;
+            /* border: 3px dashed skyblue; */
+        }
+        div {
+            box-sizing: border-box; /* 테두리를 포함한 크기로 계산한다 */
+        }
+        a {
+            color: inherit;         /* 글자색은 보라색이 아닌, 상위 요소에서 상속받은 형태로 사용(기본:검정)*/
+            text-decoration: none;  /* 링크라고 해서 밑줄을 통한 글자 꾸밈을 사용하지 않는다 */
+        }
+        .component {
+            width: 1024px;
+            margin: 0 auto;
+        }
+        .top > .component {
+            display: flex;
+            justify-content: space-between;
+        }
+        .logo {
+            background-image: url('header_logo_v3.png');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 232px;
+            height: 50px;
+            cursor: pointer;    /* 요소에 마우스를 올리면 링크처럼 손가락 모양으로 바뀐다 */
+        }
+        .member-menu {
+            line-height: 54px;
+        }
+        .member-menu > ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        .member-menu > ul > li {
+            padding: 5px;
+            border-right: 1px solid #dadada;
+            height: 6px;
+            line-height: 1px;
+        }
+        .member-menu > ul > li:last-child { /* 연속된 요소중 가장 마지막 요소에 대하여 */
+            border: 0;
+        }
+        .member-menu > ul > li > a {
+            font-size: 11px;
+        }
+        .member-menu > ul > li > a:hover {
+            text-decoration: underline;
+        }
+        .member-menu > ul {
+            float: left;
+        }
+        .member-menu > a {
+            float: right;
+            padding: 0 5px;
+            font-size: 11px;
+        }
+        nav.menu {
+            background-color: #0070bd;
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        nav.menu > .component {
+            display: flex;
+            justify-content: space-between;
+        }
+        ul.main-menu {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            height: inherit;
+        }
+        ul.main-menu > li {
+            margin-left: 15px;
+            text-align: center;
+            line-height: 50px;;
+        }
+        ul.main-menu > li:first-child {
+            margin: 0;
+        }
+        ul.main-menu > li > a {
+            display: block;
+        }
+        ul.main-menu > li > a:hover {
+            text-decoration: underline;
+        }
+
+        /* 여기서부터 서브메뉴 관련 스타일 */
+
+        .sub-menu {
+            background-color: white;
+            border: 1px solid #dadada;
+            border-top: 0;
+            color: #333;
+            font-weight: normal;
+            text-align: left;
+            font-size: 13px;
+            display: none;
+
+            position: absolute;
+        }
+        .main-menu > li:hover > .sub-menu {
+            display: flex;
+        }
+        .sub-menu > .sub-inner {
+            list-style: none;
+            padding: 0;
+            border-right: 1px solid #dadada;                        
+        }
+        .sub-menu > .sub-inner:last-child {
+            border: 0;
+        }
+        .sub-menu > .sub-inner > li {
+            padding: 0 5px;
+            width: 110px;
+            height: 27px;
+            display: flex;
+            align-items: center;
+        }
+        .sub-menu > .sub-inner > li:hover {
+            background-color: #dadada;
+        }
+        .sub-menu > .sub-inner > li > a {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .main-menu > li {
+            position: relative;     /* position의 기본값 : static   */
+        }
+        .triangle {
+            position: absolute;     /* 고정 위치를 가지게 하기 위해서 : 부모요소의 position이 static이 아니여야 함*/
+                                    /* 상위 요소중에서 static인 요소가 아예 없으면 body를 기준으로 위치를 지정 */
+            top: 37%;
+            left: 50%;
+            color: white;
+            display: none;
+        }
+        .main-menu > li:hover > .triangle {
+            display: block;
+        }
+        
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div class="top">
+            <div class="component">
+                <div class="logo"></div>
+                <nav class="member-menu">
+                    <ul>
+                        <li><a href="">로그인</a></li>
+                        <li><a href="">회원가입</a></li>
+                        <li><a href="">사이버매장 차량등록</a></li>
+                        <li><a href="">고객센터</a></li>
+                        <li><a href="">마이페이지</a></li>
+                    </ul>
+                    <a href="">♡</a>
+                    <a href="">🕒</a>
+                </nav>
+            </div>
+        </div>
+        <nav class="menu">
+            <div class="component">
+                <ul class="main-menu">
+                    <li>
+                        <a href="">사이버매장</a>
+                        <span class="triangle">▲</span>
+                        <div class="sub-menu">
+                            <ul class="sub-inner">
+                                <li><a href="">전체매물</a></li>
+                                <li><a href="">국산차매장</a></li>
+                                <li><a href="">수입차매장</a></li>
+                                <li><a href="">승용차매장</a></li>
+                                <li><a href="">스포츠카매장</a></li>
+                                <li><a href="">SUV·지프매장</a></li>
+                                <li><a href="">밴·RV·버스매장</a></li>
+                            </ul>
+                            <ul class="sub-inner">
+                                <li><a href="">픽업·트럭매장</a></li>
+                                <li><a href="">캠핑카매장</a></li>
+                                <li><a href="">튜닝카매장</a></li>
+                                <li><a href="">올드카·클래식매장</a></li>
+                                <li><a href="">슈퍼카매장</a></li>
+                                <li><a href="">희귀차매장</a></li>
+                                <li><a href="">오토갤러리매장</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="">국산차</a></li>
+                    <li><a href="">수입차</a></li>
+                    <li><a href="">튜닝카</a></li>
+                    <li><a href="">중고차시세</a></li>
+                    <li><a href="">커뮤니티</a></li>
+                    <li><a href="">내차팔기</a></li>
+                    <li><a href="">오토바이</a></li>
+                    <li><a href="">중고장터</a></li>
+                    <li><a href="">업체검색</a></li>
+                </ul>
+                <ul class="category">
+                    검색하기
+                    전체메뉴
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main></main>
+
+    
+</body>
+</html>
