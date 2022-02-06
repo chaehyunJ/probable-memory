@@ -1,0 +1,35 @@
+
+[리눅스 서비스 설치 및 운용]
+
+	기본 포트		서비스 이름	용도
+---------------------------------------------------------------
+apache	80/tcp		httpd		정적 웹 파일 서비스
+tomcat	8080/tcp	apache-tomcat	스프링 프로젝트 배포
+oracle	1521/tcp	oracle-xe-18c	Database
+ssh	22/tcp		sshd		원격접속/파일전송
+---------------------------------------------------------------
+
+systemctl enable ***.service	// 서비스 활성화 (재부팅시 자동 시작)
+systemctl restart ***.service	// 서비스 재시작 (설정 적용)
+
+firewall-cmd --add-port=[포트] --permanent	// 방화벽 영구적 허용
+firewall-cmd --reload				// 방화벽 재시작
+firewall-cmd --list-all		// 방화벽 적용 상태 출력
+
+
+
+[기타 설치 관련 명령어]
+
+yum -y install [서비스이름]	// 리눅스 패키지 저장소에 등록된 프로그램을 다운받고 설치한다
+yum -y remove [서비스이름]		// 리눅스 패키지 저장소에 등록된 프로그램을 제거한다
+yum -y reinstall [서비스이름]	// 설치되어 있더라도 강제로 다시 설치한다
+
+wget [URL]	// 지정한 URL에 있는 파일을 현재 리눅스 위치로 다운로드한다
+
+--------
+
+winscp 가상으로 접근하기
+다운로드해서 vmware에 ip주소와 사용자 계정하고 비밀번호 입력해서
+usr/local/tomcat/bin에 들어가서 이클립스에서 export해서 만든 war파일을 넣어준다
+그럼 자동으로 압축이 풀리고 8080포트가 열러있으면 해당 주소로 접근할 수 있다
+

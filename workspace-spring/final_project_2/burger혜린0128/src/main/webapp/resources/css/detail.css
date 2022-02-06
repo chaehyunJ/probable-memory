@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+*{
+	font-family: SpeedeeK, Malgun Gothic,'맑은 고딕', Dotum,'돋움', Arial, sans-serif;
+}
+
+div{
+	box-sizing: border-box;
+}
+.menu-detail{
+	width: 850px;
+	margin: 0 auto;
+	text-align: center;
+}
+.menu-detail-name{
+	font-size: 35px;
+	font-weight: bold;
+}
+.menu-detail table{
+	margin: 0 auto;
+}
+.menu-detail-desc{
+	font-size: 18px;
+	font-weight: bold;
+	color: #808080;
+}
+

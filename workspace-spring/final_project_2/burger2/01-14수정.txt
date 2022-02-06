@@ -1,0 +1,7 @@
+join 폴더에 nonmemberJoin 페이지 만들고
+
+joincontroller에 nonmemberJoin GET, POST요청 처리할 수 있게 만듬
+
+sql-member.xml insert 구문 
+
+<if test="userpw != null">userpw = #{userpw},</if> 이렇게 바꿨는데 누락된 콤마 에러가 

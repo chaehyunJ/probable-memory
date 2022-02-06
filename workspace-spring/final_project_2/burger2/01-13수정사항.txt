@@ -1,0 +1,15 @@
+.join-main-form > input {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #dadada;
+}
+
+step2 form 인증확인 버튼 input 속성이 적용되지 않도록 <span>태그 추가
+사용가능한 ID / 비밀번호가 일치합니다 문구 <p>태그로 처리해서 input창 밑으로 뜨게 함
+
+
+
+최종 배달주소 입력 창에 베이지색 삭제
+마이페이지 주소창도 동일
+
+dsa
